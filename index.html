@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EduHub - Empowering Education</title>
+<meta name="description" content="EduHub - Simplifying school management with modern tools for teachers, students, and institutions.">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  .tooltip { position: relative; display: inline-block; }
+  .tooltip .tooltiptext {
+    visibility: hidden; width: auto;
+    background-color: black; color: #fff; text-align: center;
+    padding: 4px 6px; border-radius: 4px; position: absolute; z-index: 10;
+    bottom: 125%; left: 50%; transform: translateX(-50%);
+    font-size: 0.75rem; opacity: 0; transition: opacity 0.2s ease;
+  }
+  .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+<!-- Header -->
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+
+    <!-- Desktop Menu -->
+    <nav class="hidden md:flex space-x-8 font-medium items-center relative">
+      <a href="index.html" class="hover:text-yellow-300 transition">Home</a>
+
+      <!-- Features Dropdown (desktop click) -->
+      <div class="relative" id="features-desktop">
+        <button
+          id="features-btn"
+          type="button"
+          class="hover:text-yellow-300 transition flex items-center gap-1"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="features-menu"
+        >
+          Features
+          <i id="features-chevron" class="fas fa-chevron-down text-sm transition-transform duration-200"></i>
+        </button>
+
+        <div
+          id="features-menu"
+          class="absolute top-full left-0 mt-2 w-56 bg-white text-blue-900 shadow-lg rounded-lg overflow-hidden hidden z-[60]"
+          role="menu"
+          aria-labelledby="features-btn"
+        >
+          <a href="policies.html" class="block px-4 py-2 hover:bg-gray-100" role="menuitem" tabindex="-1">Our Policies</a>
+          <a href="how-it-works.html" class="block px-4 py-2 hover:bg-gray-100" role="menuitem" tabindex="-1">How It Works</a>
+          <a href="why.html" class="block px-4 py-2 hover:bg-gray-100" role="menuitem" tabindex="-1">Why Use EduHub</a>
+        </div>
+      </div>
+
+      <a href="#about" class="hover:text-yellow-300 transition">About</a>
+      <a href="#contact" class="hover:text-yellow-300 transition">Contact</a>
+      <a href="signin.html" class="bg-yellow-400 text-blue-900 px-4 py-2 rounded hover:bg-yellow-500 transition">Sign In</a>
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <button id="menu-btn" class="md:hidden bg-yellow-400 text-blue-900 px-4 py-2 rounded" aria-expanded="false" aria-controls="mobile-menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden bg-blue-800 text-white md:hidden">
+    <nav class="flex flex-col space-y-4 px-6 py-4">
+      <a href="index.html" class="hover:text-yellow-300">Home</a>
+      <div>
+        <button
+          id="mobile-features-btn"
+          class="font-semibold flex items-center w-full justify-between"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="mobile-features-menu"
+          type="button"
+        >
+          Features <i id="mobile-chevron" class="fas fa-chevron-down ml-2 text-sm transition-transform duration-200"></i>
+        </button>
+        <div id="mobile-features-menu" class="hidden flex-col space-y-2 ml-4 mt-2">
+          <a href="policies.html" class="hover:text-yellow-300">Our Policies</a>
+          <a href="how-it-works.html" class="hover:text-yellow-300">How It Works</a>
+          <a href="why.html" class="hover:text-yellow-300">Why Use EduHub</a>
+        </div>
+      </div>
+      <a href="#about" class="hover:text-yellow-300">About</a>
+      <a href="#contact" class="hover:text-yellow-300">Contact</a>
+      <a href="signin.html" class="bg-yellow-400 text-blue-900 px-4 py-2 rounded text-center">Sign In</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-24 text-center">
+  <div class="max-w-3xl mx-auto px-4">
+    <h2 class="text-5xl font-extrabold mb-4">Empowering Education for the Future</h2>
+    <p class="text-lg mb-6">Simplifying school management with modern tools for teachers, students, and institutions.</p>
+
+    <!-- Advanced Search Bar -->
+    <div class="relative max-w-xl mx-auto">
+      <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-200/80"><i class="fas fa-search"></i></span>
+      <input type="text" placeholder="Search for Institution / Courses / Classes..."
+        class="w-full pl-10 pr-4 py-3 rounded-full shadow-lg text-gray-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+    </div>
+
+    <a href="#features" class="mt-6 inline-block bg-yellow-400 text-blue-900 px-6 py-3 font-semibold rounded hover:bg-yellow-500 transition">Explore Features</a>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+  <button type="button" class="feature-card bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transition-transform cursor-pointer text-left focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300">
+    <i class="fas fa-school text-blue-600 text-4xl mb-4"></i>
+    <h3 class="text-2xl font-semibold mb-2">Our Partners</h3>
+    <p>We collaborate with top educational institutions to deliver quality learning experiences.</p>
+  </button>
+  <button type="button" class="feature-card bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transition-transform cursor-pointer text-left focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300">
+    <i class="fas fa-users text-blue-600 text-4xl mb-4"></i>
+    <h3 class="text-2xl font-semibold mb-2">Who We Are</h3>
+    <p>Revolutionizing school administration with innovative and user-friendly solutions.</p>
+  </button>
+  <button type="button" class="feature-card bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transition-transform cursor-pointer text-left focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300">
+    <i class="fas fa-cogs text-blue-600 text-4xl mb-4"></i>
+    <h3 class="text-2xl font-semibold mb-2">Features</h3>
+    <p>Comprehensive tools for managing classrooms, schedules, and student progress seamlessly.</p>
+  </button>
+</section>
+
+<!-- About Section -->
+<section id="about" class="bg-gray-100 py-16 text-center">
+  <div class="max-w-3xl mx-auto px-4">
+    <h3 class="text-4xl font-bold mb-4">Why Choose EduHub?</h3>
+    <p class="text-lg text-gray-700">EduHub provides an intuitive platform designed to streamline education, foster collaboration, and drive student success through data-driven solutions.</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-blue-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <!-- Address -->
+    <div id="contact">
+      <h4 class="font-semibold mb-4">Contact Us</h4>
+      <p>📍 Tehrathum, Dangapa</p>
+      <p>📞 9842767486</p>
+    </div>
+
+    <!-- About EduHub -->
+    <div>
+      <h4 class="font-semibold mb-4">About EduHub</h4>
+      <ul>
+        <li><a href="policies.html" class="hover:underline">Our Policies</a></li>
+      </ul>
+    </div>
+
+    <!-- Using EduHub -->
+    <div>
+      <h4 class="font-semibold mb-4">Using EduHub</h4>
+      <ul>
+        <li><a href="how-it-works.html" class="hover:underline">How It Works</a></li>
+        <li><a href="why.html" class="hover:underline">Why Use EduHub</a></li>
+      </ul>
+    </div>
+
+    <!-- Social Links -->
+    <div>
+      <h4 class="font-semibold mb-4">Follow Us</h4>
+      <div class="flex space-x-4">
+        <div class="tooltip"><a href="#"><i class="fab fa-github text-xl hover:text-yellow-400 transform hover:scale-125 transition"></i></a><span class="tooltiptext">GitHub</span></div>
+        <div class="tooltip"><a href="#"><i class="fab fa-linkedin text-xl hover:text-yellow-400 transform hover:scale-125 transition"></i></a><span class="tooltiptext">LinkedIn</span></div>
+        <div class="tooltip"><a href="#"><i class="fab fa-facebook text-xl hover:text-yellow-400 transform hover:scale-125 transition"></i></a><span class="tooltiptext">Facebook</span></div>
+        <div class="tooltip"><a href="#"><i class="fab fa-twitter text-xl hover:text-yellow-400 transform hover:scale-125 transition"></i></a><span class="tooltiptext">Twitter</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-blue-800 text-center py-4">
+    © <span id="year"></span> Susil. All rights reserved.
+  </div>
+</footer>
+
+<script>
+  // ===== Utilities
+  const show = el => el.classList.remove('hidden');
+  const hide = el => el.classList.add('hidden');
+  const toggle = el => el.classList.toggle('hidden');
+  const isHidden = el => el.classList.contains('hidden');
+
+  // ===== Mobile menu
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+    menuBtn.setAttribute('aria-expanded', String(!expanded));
+    toggle(mobileMenu);
+  });
+
+  // Close mobile menu on outside click
+  document.addEventListener('click', (e) => {
+    if (!mobileMenu.contains(e.target) && !menuBtn.contains(e.target) && !isHidden(mobileMenu)) {
+      hide(mobileMenu);
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // ===== Mobile features dropdown
+  const mobileFeaturesBtn = document.getElementById('mobile-features-btn');
+  const mobileFeaturesMenu = document.getElementById('mobile-features-menu');
+  const mobileChevron = document.getElementById('mobile-chevron');
+
+  mobileFeaturesBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const expanded = mobileFeaturesBtn.getAttribute('aria-expanded') === 'true';
+    mobileFeaturesBtn.setAttribute('aria-expanded', String(!expanded));
+    toggle(mobileFeaturesMenu);
+    mobileChevron.style.transform = expanded ? 'rotate(0deg)' : 'rotate(180deg)';
+  });
+
+  // ===== Desktop features dropdown (CLICK to open)
+  const featuresBtn = document.getElementById('features-btn');
+  const featuresMenu = document.getElementById('features-menu');
+  const featuresChevron = document.getElementById('features-chevron');
+  const featuresWrap = document.getElementById('features-desktop');
+
+  const closeDesktopDropdown = () => {
+    hide(featuresMenu);
+    featuresBtn.setAttribute('aria-expanded', 'false');
+    featuresChevron.style.transform = 'rotate(0deg)';
+  };
+
+  const openDesktopDropdown = () => {
+    show(featuresMenu);
+    featuresBtn.setAttribute('aria-expanded', 'true');
+    featuresChevron.style.transform = 'rotate(180deg)';
+  };
+
+  featuresBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (isHidden(featuresMenu)) {
+      openDesktopDropdown();
+    } else {
+      closeDesktopDropdown();
+    }
+  });
+
+  // Keep open when clicking inside
+  featuresMenu.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!featuresWrap.contains(e.target) && !isHidden(featuresMenu)) {
+      closeDesktopDropdown();
+    }
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (!isHidden(featuresMenu)) closeDesktopDropdown();
+      if (!isHidden(mobileMenu)) {
+        hide(mobileMenu);
+        menuBtn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+
+  // Set current year
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

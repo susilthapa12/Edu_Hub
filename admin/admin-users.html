@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth" x-data>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Users Management (Students & Admins)</title>
+
+  <!-- Tailwind Play CDN (great for prototyping) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+          colors: { brand: { 500: '#ef5da8', 600: '#db4f9a' } }
+        }
+      }
+    }
+  </script>
+
+  <!-- Alpine.js -->
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>[x-cloak]{display:none!important}</style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-purple-900 to-purple-700 text-white">
+  <div class="mx-auto max-w-7xl p-4 md:p-8" x-data="usersDashboard()" x-init="init()">
+
+    <!-- Header -->
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-bold tracking-tight">Users Management</h1>
+        <p class="text-white/80">Manage <strong>students</strong> and <strong>admins</strong>, securely.</p>
+      </div>
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div class="flex w-full gap-2 sm:w-auto">
+          <input x-model="query" @input.debounce.250ms="applyFilters"
+                 class="w-full sm:w-72 rounded-lg border-0 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-brand-500"
+                 placeholder="Search by ID…" />
+          <select x-model="roleFilter" @change="applyFilters"
+                  class="rounded-lg border-0 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-brand-500">
+            <option value="all">All roles</option>
+            <option value="student">Students</option>
+            <option value="admin">Admins</option>
+          </select>
+          <select x-model.number="perPage" @change="go(1)"
+                  class="rounded-lg border-0 bg-white px-2 py-2 text-gray-900 focus:ring-2 focus:ring-brand-500">
+            <option :value="5">5</option><option :value="10">10</option><option :value="20">20</option>
+          </select>
+        </div>
+
+        <div class="flex gap-2">
+          <button @click="openModal()"
+                  class="rounded-lg bg-brand-500 px-4 py-2 font-semibold hover:bg-brand-600 transition">+ Add User</button>
+
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="file" class="absolute inset-0 opacity-0 cursor-pointer" accept=".csv" @change="importCSV($event)">
+            <span class="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm hover:bg-white/20 transition">
+              Import CSV
+            </span>
+          </label>
+
+          <button @click="exportCSV()"
+                  class="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm hover:bg-white/20 transition">
+            Export CSV
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div class="rounded-2xl bg-white/10 p-4 ring-1 ring-white/10 shadow">
+        <div class="text-sm text-white/80">Total</div>
+        <div class="mt-1 text-2xl font-semibold" x-text="list.length"></div>
+      </div>
+      <div class="rounded-2xl bg-white/10 p-4 ring-1 ring-white/10 shadow">
+        <div class="text-sm text-white/80">Students</div>
+        <div class="mt-1 text-2xl font-semibold" x-text="list.filter(u=>u.role==='student').length"></div>
+      </div>
+      <div class="rounded-2xl bg-white/10 p-4 ring-1 ring-white/10 shadow">
+        <div class="text-sm text-white/80">Admins</div>
+        <div class="mt-1 text-2xl font-semibold" x-text="list.filter(u=>u.role==='admin').length"></div>
+      </div>
+    </div>
+
+    <!-- Mobile cards -->
+    <div class="mt-6 grid grid-cols-1 gap-3 sm:hidden">
+      <template x-for="u in pageItems" :key="u.id">
+        <div class="rounded-xl bg-white/10 p-4 ring-1 ring-white/10">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <div class="text-sm text-white/70">ID</div>
+              <div class="font-mono text-lg" x-text="u.id"></div>
+              <div class="mt-1 text-sm text-white/70">Role</div>
+              <div class="font-semibold capitalize" x-text="u.role"></div>
+              <div class="mt-1 text-sm text-white/70">Verified</div>
+              <div class="font-semibold" x-text="u.verified ? 'Yes' : 'No'"></div>
+            </div>
+            <div class="flex flex-col items-end gap-2">
+              <input type="checkbox" x-model="u.selected" class="h-4 w-4 rounded" />
+              <div class="flex gap-2">
+                <button @click="openModal(u)" class="rounded bg-blue-500 px-3 py-1 text-sm hover:bg-blue-400">Edit</button>
+                <button @click="confirmDelete(u.id)" class="rounded bg-red-600 px-3 py-1 text-sm hover:bg-red-500">Del</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+      <p x-show="filtered.length===0" class="text-center text-white/80">No users found</p>
+    </div>
+
+    <!-- Desktop table -->
+    <div class="mt-6 hidden overflow-x-auto rounded-2xl bg-white/10 ring-1 ring-white/10 shadow sm:block">
+      <table class="min-w-full table-auto text-left">
+        <thead class="bg-purple-800/70 text-sm">
+          <tr>
+            <th class="p-3 text-center">
+              <input type="checkbox" @click="toggleAll($event)" class="h-4 w-4 rounded" />
+            </th>
+            <th class="p-3">
+              <button class="inline-flex items-center gap-1" @click="sortBy('id')">
+                ID <span x-text="sortIcon('id')"></span>
+              </button>
+            </th>
+            <th class="p-3">Password</th>
+            <th class="p-3">
+              <button class="inline-flex items-center gap-1" @click="sortBy('role')">
+                Role <span x-text="sortIcon('role')"></span>
+              </button>
+            </th>
+            <th class="p-3">
+              <button class="inline-flex items-center gap-1" @click="sortBy('verified')">
+                Verified <span x-text="sortIcon('verified')"></span>
+              </button>
+            </th>
+            <th class="p-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template x-for="u in pageItems" :key="u.id">
+            <tr class="border-t border-white/15 hover:bg-white/10 transition">
+              <td class="p-3 text-center"><input type="checkbox" x-model="u.selected" class="h-4 w-4 rounded" /></td>
+              <td class="p-3 font-mono" x-text="u.id"></td>
+              <td class="p-3 font-mono text-white/70" x-text="maskPass(u.password)"></td>
+              <td class="p-3 capitalize" x-text="u.role"></td>
+              <td class="p-3">
+                <span class="rounded-full bg-white/10 px-2 py-1 text-xs" x-text="u.verified ? 'Yes' : 'No'"></span>
+              </td>
+              <td class="p-3">
+                <div class="flex flex-wrap gap-2">
+                  <button @click="openModal(u)" class="rounded bg-blue-500 px-3 py-1 hover:bg-blue-400">Edit</button>
+                  <button @click="confirmDelete(u.id)" class="rounded bg-red-600 px-3 py-1 hover:bg-red-500">Delete</button>
+                </div>
+              </td>
+            </tr>
+          </template>
+          <tr x-show="filtered.length===0">
+            <td colspan="6" class="p-6 text-center text-white/80">No users found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Bulk actions + pagination -->
+    <div class="mt-4 flex flex-col items-center justify-between gap-4 sm:flex-row">
+      <div class="flex flex-wrap items-center gap-3">
+        <button @click="bulkDelete()" :disabled="!anySelected()"
+                class="rounded-lg bg-red-600 px-4 py-2 hover:bg-red-500 disabled:opacity-50">
+          Delete Selected
+        </button>
+
+        <!-- Quick role switches for selected -->
+        <div class="flex items-center gap-2">
+          <span class="text-white/80 text-sm">Set role:</span>
+          <button @click="bulkSetRole('student')" :disabled="!anySelected()"
+                  class="rounded-lg border border-white/20 bg-white/10 px-3 py-1 text-sm hover:bg-white/20 disabled:opacity-50">
+            Student
+          </button>
+          <button @click="bulkSetRole('admin')" :disabled="!anySelected()"
+                  class="rounded-lg border border-white/20 bg-white/10 px-3 py-1 text-sm hover:bg-white/20 disabled:opacity-50">
+            Admin
+          </button>
+        </div>
+      </div>
+
+      <nav class="flex items-center gap-1">
+        <button @click="go(1)" :disabled="page===1" class="rounded px-3 py-1 bg-white/10 hover:bg-white/20 disabled:opacity-50">First</button>
+        <button @click="go(page-1)" :disabled="page===1" class="rounded px-3 py-1 bg-white/10 hover:bg-white/20 disabled:opacity-50">Prev</button>
+        <template x-for="p in pages" :key="p">
+          <button @click="go(p)" :class="p===page ? 'bg-brand-500 text-white' : 'bg-white/10 hover:bg-white/20'"
+                  class="rounded px-3 py-1"><span x-text="p"></span></button>
+        </template>
+        <button @click="go(page+1)" :disabled="page===total" class="rounded px-3 py-1 bg-white/10 hover:bg-white/20 disabled:opacity-50">Next</button>
+        <button @click="go(total)" :disabled="page===total" class="rounded px-3 py-1 bg-white/10 hover:bg-white/20 disabled:opacity-50">Last</button>
+      </nav>
+    </div>
+
+    <!-- Modal -->
+    <div x-cloak x-show="modal" x-transition.opacity class="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4">
+      <div @click.outside="closeModal()" x-transition.scale
+           class="w-full max-w-md rounded-2xl bg-white p-6 text-gray-900 shadow-2xl">
+        <h2 class="text-xl font-semibold" x-text="editing ? 'Edit User' : 'Add User'"></h2>
+        <form class="mt-4 space-y-4" @submit.prevent="save()">
+          <div>
+            <label class="mb-1 block text-sm font-medium">ID</label>
+            <input x-model="form.id" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-brand-500 focus:ring-2 focus:ring-brand-500"
+                   required placeholder="e.g. 200000">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="mb-1 block text-sm font-medium">Role</label>
+              <select x-model="form.role"
+                      class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-brand-500 focus:ring-2 focus:ring-brand-500">
+                <option value="student">Student</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+            <div class="flex items-end">
+              <label class="inline-flex items-center gap-2">
+                <input type="checkbox" x-model="form.verified" class="h-4 w-4 rounded border-gray-300">
+                <span>Verified</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="mb-1 block text-sm font-medium">Password</label>
+            <input x-model="form.passwordPlain" type="password"
+                   class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-brand-500 focus:ring-2 focus:ring-brand-500"
+                   :required="!editing" placeholder="Set or change password">
+            <p class="mt-1 text-xs text-gray-500" x-show="editing">Leave blank to keep the existing password.</p>
+          </div>
+
+          <div class="mt-2 flex justify-end gap-2">
+            <button type="button" @click="closeModal()" class="rounded-lg border border-gray-300 bg-white px-4 py-2 hover:bg-gray-50">Cancel</button>
+            <button type="submit" class="rounded-lg bg-brand-500 px-4 py-2 font-semibold text-white hover:bg-brand-600">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Shared with your sign-in page:
+    const USERS_KEY = 'edu_users_v1';
+
+    // --- hashing helpers (Web Crypto API) ---
+    async function sha256Hex(text) {
+      const enc = new TextEncoder().encode(text);
+      const buf = await crypto.subtle.digest('SHA-256', enc); // MDN: SubtleCrypto.digest('SHA-256', data)
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+    const isHashed = (v) => typeof v === 'string' && v.startsWith('sha256:');
+    const mask = (n=10) => '•'.repeat(n);
+
+    function usersDashboard(){
+      return {
+        // state
+        list: [],
+        filtered: [],
+        query: '',
+        roleFilter: 'all',
+        page: 1, perPage: 10,
+        sortField: 'id', sortAsc: true,
+
+        // modal
+        modal: false, editing: null,
+        form: { id:'', role:'student', verified:true, passwordPlain:'' },
+
+        async init(){
+          // load users
+          const raw = localStorage.getItem(USERS_KEY);
+          this.list = raw ? JSON.parse(raw) : [];
+          // migrate shape (default role=student, verified=true)
+          for (const u of this.list) {
+            if (!u.role) u.role = 'student';
+            if (u.verified === undefined) u.verified = true;
+            u.id = String(u.id);
+          }
+          this.persist();
+          this.applyFilters();
+        },
+
+        persist(){ localStorage.setItem(USERS_KEY, JSON.stringify(this.list)); },
+
+        // computed
+        get total(){ return Math.max(1, Math.ceil(this.filtered.length / this.perPage)); },
+        get pageItems(){ const s=(this.page-1)*this.perPage; return this.filtered.slice(s, s+this.perPage); },
+        get pages(){
+          const t=this.total, c=this.page, span=7;
+          if (t<=span) return Array.from({length:t},(_,i)=>i+1);
+          const out=[1]; let a=Math.max(2,c-2), b=Math.min(t-1,c+2);
+          if (c<=3) b=5; if (c>=t-2) a=t-4; for(let p=a;p<=b;p++) out.push(p); out.push(t); return out;
+        },
+
+        // filters + sort
+        applyFilters(){
+          const q=(this.query||'').toLowerCase().trim();
+          this.filtered = this.list.filter(u=>{
+            const matchQ = !q || u.id.toLowerCase().includes(q);
+            const matchRole = this.roleFilter==='all' || u.role===this.roleFilter;
+            return matchQ && matchRole;
+          });
+          this.sortNow(); this.go(1, true);
+        },
+        sortBy(f){ if(this.sortField===f) this.sortAsc=!this.sortAsc; else { this.sortField=f; this.sortAsc=true; } this.sortNow(); },
+        sortNow(){
+          const f=this.sortField, asc=this.sortAsc?1:-1;
+          this.filtered.sort((a,b)=> ((a[f]<b[f])? -1 : (a[f]>b[f])? 1 : 0) * asc);
+        },
+        sortIcon(f){ return this.sortField===f ? (this.sortAsc?'▲':'▼') : ''; },
+        go(p,silent=false){ if(p<1||p>this.total) return; this.page=p; },
+
+        // helpers
+        maskPass(p){ return isHashed(p) ? mask(10) : mask(Math.max(6, String(p||'').length)); },
+
+        // selection/bulk
+        toggleAll(e){ const on=e.target.checked; this.pageItems.forEach(u=>u.selected=on); },
+        anySelected(){ return this.filtered.some(u=>u.selected); },
+        bulkDelete(){
+          if(!this.anySelected()) return;
+          if(!confirm('Delete selected users?')) return;
+          this.list = this.list.filter(u=>!u.selected);
+          this.persist(); this.applyFilters();
+        },
+        bulkSetRole(role){
+          if(!this.anySelected()) return;
+          this.list.forEach(u=>{ if(u.selected) u.role=role; });
+          this.persist(); this.applyFilters();
+        },
+
+        // modal CRUD
+        openModal(u=null){
+          this.editing = u;
+          this.form = u ? { id:String(u.id), role:u.role, verified:!!u.verified, passwordPlain:'' }
+                        : { id:'', role:'student', verified:true, passwordPlain:'' };
+          this.modal = true;
+        },
+        closeModal(){ this.modal=false; },
+        async save(){
+          if(!this.form.id){ alert('ID is required'); return; }
+          const id = String(this.form.id);
+
+          // if creating or changing password, hash it; otherwise keep existing
+          let password;
+          if (this.editing && !this.form.passwordPlain) {
+            const cur = this.list.find(u=>u.id===this.editing.id);
+            password = cur?.password || '';
+          } else {
+            if (!this.form.passwordPlain) { alert('Password is required for new users'); return; }
+            password = 'sha256:' + await sha256Hex(this.form.passwordPlain);
+          }
+
+          const rec = { id, role:this.form.role, verified:!!this.form.verified, password, selected:false };
+          const idx = this.list.findIndex(u=>u.id===id);
+          if (idx>-1) this.list[idx] = rec; else this.list.unshift(rec);
+          this.persist(); this.applyFilters(); this.modal=false;
+        },
+        confirmDelete(id){
+          if(confirm('Delete this user?')){
+            this.list = this.list.filter(u=>u.id!==String(id));
+            this.persist(); this.applyFilters();
+          }
+        },
+
+        // CSV (id,password,role,verified) – if password is plain, it will be hashed on import
+        exportCSV(){
+          const rows=[['id','password','role','verified'], ...this.list.map(u=>[u.id,u.password,u.role,u.verified])];
+          const csv=rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('\n');
+          const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}); const url=URL.createObjectURL(blob);
+          const a=document.createElement('a'); a.href=url; a.download='users.csv'; a.click(); URL.revokeObjectURL(url);
+        },
+        importCSV(e){
+          const f=e.target.files?.[0]; if(!f) return;
+          const reader=new FileReader();
+          reader.onload=async () => {
+            const lines=String(reader.result).split(/\r?\n/).filter(Boolean);
+            const header=(lines.shift()||'').split(',').map(s=>s.replaceAll(/^"|"$/g,'').trim().toLowerCase());
+            const idI=header.indexOf('id'), passI=header.indexOf('password'), roleI=header.indexOf('role'), verI=header.indexOf('verified');
+            if (idI<0 || passI<0) { alert('CSV must include headers id,password[,role,verified]'); return; }
+            for(const line of lines){
+              const cols=line.split(',').map(s=>s.replaceAll(/^"|"$/g,'').replaceAll('""','"'));
+              const id=String(cols[idI]||'').trim(); if(!id) continue;
+              let password=cols[passI]||'';
+              const role=(cols[roleI]||'student').toLowerCase()==='admin' ? 'admin' : 'student';
+              const verified = verI>=0 ? (cols[verI]==='true') : true;
+              if (!isHashed(password)) password = 'sha256:' + await sha256Hex(password);
+              const idx=this.list.findIndex(u=>u.id===id);
+              const rec={id, password, role, verified, selected:false};
+              if (idx>-1) this.list[idx]=rec; else this.list.push(rec);
+            }
+            this.persist(); this.applyFilters(); e.target.value='';
+          };
+          reader.readAsText(f);
+        }
+      }
+    }
+  </script>
+</body>
+</html>

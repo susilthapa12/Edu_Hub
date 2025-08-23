@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Dashboard | Routine</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+}
+.sidebar {
+    width: 220px;
+    background-color: #333;
+    color: white;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+.sidebar h2 { text-align: center; margin-bottom: 20px; }
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    margin: 10px 0;
+    display: block;
+    padding: 8px;
+    border-radius: 4px;
+}
+.sidebar a:hover { background-color: #444; }
+.main { flex-grow: 1; padding: 20px; }
+h1, h2 { margin-bottom: 10px; }
+section { background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+table, th, td { border: 1px solid #ccc; }
+th, td { padding: 8px; text-align: left; }
+tr:hover { background-color: #f1f1f1; }
+input[type="text"] {
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+footer { text-align: center; padding: 10px; background-color: #333; color: white; margin-top: 20px; }
+
+@media(max-width: 768px) {
+    body { flex-direction: column; }
+    .sidebar { width: 100%; flex-direction: row; overflow-x: auto; }
+    .sidebar a { flex: 1; text-align: center; margin: 0 5px; }
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Dashboard</h2>
+    <a href="#home">Home</a>
+    <a href="#routine">Routine</a>
+</div>
+
+<div class="main">
+    <section id="home">
+        <h1>Welcome, User!</h1>
+        <p>Here is your daily routine.</p>
+    </section>
+
+    <section id="routine">
+        <h2>Daily Routine</h2>
+        <input type="text" id="searchInput" placeholder="Search routines...">
+        <table id="routineTable">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Course</th>
+                    <th>Instructor</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic routines -->
+            </tbody>
+        </table>
+    </section>
+
+    <footer>&copy; 2025 User Dashboard</footer>
+</div>
+
+<script>
+let routines = JSON.parse(localStorage.getItem('routines')) || [];
+
+function displayRoutines(list) {
+    const tbody = document.querySelector('#routineTable tbody');
+    tbody.innerHTML = '';
+    list.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${r.time}</td><td>${r.course}</td><td>${r.instructor}</td><td>${r.location}</td>`;
+        tbody.appendChild(tr);
+    });
+}
+
+displayRoutines(routines);
+
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', function() {
+    const filter = this.value.toLowerCase();
+    const filtered = routines.filter(r =>
+        r.time.toLowerCase().includes(filter) ||
+        r.course.toLowerCase().includes(filter) ||
+        r.instructor.toLowerCase().includes(filter) ||
+        r.location.toLowerCase().includes(filter)
+    );
+    displayRoutines(filtered);
+});
+</script>
+
+</body>
+</html>

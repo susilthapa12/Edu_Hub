@@ -1,0 +1,224 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - EduHub</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e6f0ff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #1e3a8a; /* Blue */
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin: 0 5px;
+    }
+    .tab.active {
+      border-bottom: 2px solid #1e3a8a;
+      font-weight: bold;
+      color: #1e3a8a;
+    }
+    .content {
+      max-width: 600px;
+      margin: 0 auto 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #1e3a8a;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+    #avatar-preview {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin-bottom: 10px;
+    }
+    footer {
+      background: #1e3a8a;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: auto;
+    }
+    .dark-mode {
+      background: #1f2937;
+      color: white;
+    }
+    .dark-mode .content {
+      background: #374151;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Account Settings</h1>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('profile')">Profile</div>
+  <div class="tab" onclick="showTab('appearance')">Appearance</div>
+  <div class="tab" onclick="showTab('security')">Security</div>
+</div>
+
+<div class="content" id="profile">
+  <h2>Profile</h2>
+  <img id="avatar-preview" src="https://via.placeholder.com/80" alt="Avatar">
+  <input type="file" id="avatar" onchange="previewAvatar(event)">
+  <input type="text" id="name" placeholder="Name">
+  <input type="email" id="email" placeholder="Email">
+  <input type="tel" id="phone" placeholder="Phone">
+  <button onclick="saveAndNotify()">Save Changes</button>
+</div>
+
+<div class="content" id="appearance" style="display:none;">
+  <h2>Appearance</h2>
+  <label>Dark Mode:
+    <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+  </label>
+  <p>Check the box to enable dark mode.</p>
+</div>
+
+<div class="content" id="security" style="display:none;">
+  <h2>Security</h2>
+  <input type="password" placeholder="Current Password">
+  <input type="password" placeholder="New Password">
+  <input type="password" placeholder="Confirm New Password">
+  <button>Update Password</button>
+</div>
+
+<div class="content">
+  <form method="POST" onsubmit="logout(event)">
+    <button type="submit" style="background:red;">Logout</button>
+  </form>
+</div>
+
+<footer>
+  © 2025 Susil. All rights reserved.
+</footer>
+
+<script>
+  // Tabs
+  function showTab(tabName) {
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.content');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    contents.forEach(c => c.style.display = 'none');
+
+    document.querySelector('.tab[onclick*="' + tabName + '"]').classList.add('active');
+    document.getElementById(tabName).style.display = 'block';
+  }
+
+  // Save Profile automatically
+  function saveProfile() {
+    const profile = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      avatar: document.getElementById('avatar-preview').src
+    };
+    localStorage.setItem('profile', JSON.stringify(profile));
+  }
+
+  // Save button with notification
+  function saveAndNotify() {
+    saveProfile();
+    alert("Profile changes saved!");
+  }
+
+  // Load Profile on refresh
+  function loadProfile() {
+    const profile = JSON.parse(localStorage.getItem('profile'));
+    if(profile) {
+      document.getElementById('name').value = profile.name || '';
+      document.getElementById('email').value = profile.email || '';
+      document.getElementById('phone').value = profile.phone || '';
+      document.getElementById('avatar-preview').src = profile.avatar || 'https://via.placeholder.com/80';
+    }
+  }
+
+  // Preview Avatar + save automatically
+  function previewAvatar(event) {
+    const reader = new FileReader();
+    reader.onload = function() {
+      document.getElementById('avatar-preview').src = reader.result;
+      saveProfile();
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
+  // Auto-save on input change
+  document.addEventListener("input", function(e) {
+    if (["name", "email", "phone"].includes(e.target.id)) {
+      saveProfile();
+    }
+  });
+
+  // Dark mode
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+  }
+
+  function loadDarkMode() {
+    if(localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark-mode');
+      document.getElementById('dark-mode-toggle').checked = true;
+    }
+  }
+
+  // Logout clears saved data
+  function logout(event) {
+    event.preventDefault();
+    localStorage.clear();
+    alert("You have been logged out.");
+    location.reload();
+  }
+
+  // Load data on page load
+  window.onload = function() {
+    loadProfile();
+    loadDarkMode();
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduHub - Our Policies</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+      <nav class="hidden md:flex space-x-8 font-medium items-center">
+        <a href="index.html" class="hover:text-yellow-300 transition">Home</a>
+        <a href="policies.html" class="text-yellow-400 font-semibold">Our Policies</a>
+        <a href="how-it-works.html" class="hover:text-yellow-300 transition">How It Works</a>
+        <a href="why.html" class="hover:text-yellow-300 transition">Why Use EduHub</a>
+        <a href="signin.html" class="bg-yellow-400 text-blue-900 px-4 py-2 rounded hover:bg-yellow-500 transition">Sign In</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-4 py-16 flex-grow">
+    <h1 class="text-4xl font-bold mb-6">Our Policies</h1>
+    <p class="text-gray-700 mb-4">EduHub is committed to providing a safe and transparent platform. Our policies include privacy, data protection, and usage guidelines:</p>
+    <ul class="list-disc list-inside space-y-2 text-gray-700">
+      <li>Privacy Policy: We respect user data and ensure confidentiality.</li>
+      <li>Terms of Use: Users must follow ethical guidelines and proper usage.</li>
+      <li>Data Protection: EduHub uses secure systems to protect student and institution data.</li>
+      <li>Code of Conduct: All users should maintain respectful interactions on the platform.</li>
+    </ul>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-8 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      © <span id="year"></span> Susil. All rights reserved.
+    </div>
+  </footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

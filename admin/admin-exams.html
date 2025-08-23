@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Exam Management</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f0f2f5; }
+  h1 { text-align: center; color: #333; }
+  .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  input, textarea, button { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
+  button { background: #007BFF; color: #fff; border: none; cursor: pointer; }
+  button:hover { background: #0056b3; }
+  ul { list-style: none; padding: 0; }
+  li { background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+  li div { flex: 1; }
+  .delete { background: red; padding: 5px 10px; border-radius: 5px; color: #fff; cursor: pointer; }
+  @media (max-width: 600px) { li { flex-direction: column; align-items: flex-start; } }
+</style>
+</head>
+<body>
+
+<h1>Admin Exam Management</h1>
+<div class="container">
+    <input type="text" id="examTitle" placeholder="Exam Title">
+    <textarea id="examDesc" placeholder="Exam Description"></textarea>
+    <input type="date" id="examDate">
+    <input type="file" id="examFile">
+    <button onclick="addExam()">Add Exam</button>
+
+    <h2>Current Exams</h2>
+    <ul id="examList"></ul>
+</div>
+
+<script>
+const examListEl = document.getElementById('examList');
+let exams = JSON.parse(localStorage.getItem('exams')) || [];
+
+function displayExams() {
+    examListEl.innerHTML = '';
+    exams.forEach((exam, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <div>
+                <strong>${exam.title}</strong> (${exam.date})<br>
+                ${exam.desc}<br>
+                File: ${exam.fileName || 'No file uploaded'}
+            </div>
+            <div>
+                <button class="delete" onclick="deleteExam(${index})">Delete</button>
+            </div>
+        `;
+        examListEl.appendChild(li);
+    });
+}
+
+function addExam() {
+    const title = document.getElementById('examTitle').value.trim();
+    const desc = document.getElementById('examDesc').value.trim();
+    const date = document.getElementById('examDate').value;
+    const fileInput = document.getElementById('examFile');
+    const fileName = fileInput.files[0] ? fileInput.files[0].name : '';
+
+    if (!title || !desc || !date) { alert('Please fill all fields'); return; }
+
+    exams.push({ title, desc, date, fileName });
+    localStorage.setItem('exams', JSON.stringify(exams));
+    displayExams();
+
+    document.getElementById('examTitle').value = '';
+    document.getElementById('examDesc').value = '';
+    document.getElementById('examDate').value = '';
+    document.getElementById('examFile').value = '';
+}
+
+function deleteExam(index) {
+    exams.splice(index, 1);
+    localStorage.setItem('exams', JSON.stringify(exams));
+    displayExams();
+}
+
+displayExams();
+</script>
+</body>
+</html>

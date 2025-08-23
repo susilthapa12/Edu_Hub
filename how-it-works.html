@@ -1,0 +1,109 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduHub - How It Works</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+      <nav class="hidden md:flex space-x-8 font-medium items-center">
+        <a href="index.html" class="hover:text-yellow-300 transition">Home</a>
+        <a href="policies.html" class="hover:text-yellow-300 transition">Our Policies</a>
+        <a href="how-it-works.html" class="text-yellow-400 font-semibold">How It Works</a>
+        <a href="why.html" class="hover:text-yellow-300 transition">Why Use EduHub</a>
+        <a href="signin.html" class="bg-yellow-400 text-blue-900 px-4 py-2 rounded hover:bg-yellow-500 transition">Sign In</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative bg-blue-700 text-white py-20">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h1 class="text-5xl font-bold mb-4">How EduHub Works</h1>
+      <p class="text-lg text-blue-100 max-w-2xl mx-auto">
+        EduHub makes managing education simple and efficient for institutions, teachers, and students.
+      </p>
+    </div>
+  </section>
+
+  <!-- Steps Section -->
+  <main class="max-w-6xl mx-auto px-6 py-16 flex-grow">
+    <div class="space-y-12 relative">
+
+      <!-- Step 1 -->
+      <div class="flex flex-col md:flex-row items-center gap-8 bg-white p-6 rounded-2xl shadow hover:shadow-2xl hover:scale-[1.02] transition duration-300">
+        <div class="flex-shrink-0 text-blue-700 text-5xl">
+          <i class="fas fa-university"></i>
+        </div>
+        <div>
+          <h2 class="text-2xl font-semibold mb-2">Institutions Register</h2>
+          <p class="text-gray-700">Schools and colleges create their profiles, set up courses, and onboard faculty members with ease.</p>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="flex flex-col md:flex-row items-center gap-8 bg-white p-6 rounded-2xl shadow hover:shadow-2xl hover:scale-[1.02] transition duration-300">
+        <div class="flex-shrink-0 text-blue-700 text-5xl">
+          <i class="fas fa-chalkboard-teacher"></i>
+        </div>
+        <div>
+          <h2 class="text-2xl font-semibold mb-2">Teachers Manage Classes</h2>
+          <p class="text-gray-700">Teachers can create and manage schedules, upload assignments, and communicate with students directly.</p>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="flex flex-col md:flex-row items-center gap-8 bg-white p-6 rounded-2xl shadow hover:shadow-2xl hover:scale-[1.02] transition duration-300">
+        <div class="flex-shrink-0 text-blue-700 text-5xl">
+          <i class="fas fa-user-graduate"></i>
+        </div>
+        <div>
+          <h2 class="text-2xl font-semibold mb-2">Students Enroll & Learn</h2>
+          <p class="text-gray-700">Students register for courses, track their progress, and submit assignments in an easy-to-use platform.</p>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="flex flex-col md:flex-row items-center gap-8 bg-white p-6 rounded-2xl shadow hover:shadow-2xl hover:scale-[1.02] transition duration-300">
+        <div class="flex-shrink-0 text-blue-700 text-5xl">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div>
+          <h2 class="text-2xl font-semibold mb-2">Admins Monitor Progress</h2>
+          <p class="text-gray-700">Administrators get full access to analytics dashboards, ensuring smooth academic and administrative operations.</p>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="flex flex-col md:flex-row items-center gap-8 bg-white p-6 rounded-2xl shadow hover:shadow-2xl hover:scale-[1.02] transition duration-300">
+        <div class="flex-shrink-0 text-blue-700 text-5xl">
+          <i class="fas fa-cloud"></i>
+        </div>
+        <div>
+          <h2 class="text-2xl font-semibold mb-2">Secure Cloud Access</h2>
+          <p class="text-gray-700">All data is encrypted and stored securely in the cloud, ensuring safe access anytime, anywhere.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-8 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      © <span id="year"></span> Susil. All rights reserved.
+    </div>
+  </footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
