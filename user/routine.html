@@ -1,47 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>User Dashboard | Routine</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-/* Custom scroll bar for sidebar */
-::-webkit-scrollbar { height: 6px; width: 6px; }
-::-webkit-scrollbar-thumb { background-color: #2563eb; border-radius: 4px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Routine Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="flex flex-col bg-gray-100 min-h-screen font-sans">
+<body class="flex flex-col min-h-screen bg-gray-100 font-sans">
 
-<!-- Header -->
-<header class="bg-blue-700 text-white sticky top-0 z-50 shadow-md">
-  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-    <h1 class="text-2xl font-bold">User Dashboard</h1>
-  </div>
-</header>
-
-<div class="flex flex-1">
-
-  <!-- Sidebar -->
-  <aside class="bg-blue-800 text-white w-56 flex-shrink-0 p-4 flex flex-col space-y-4 sticky top-16 h-screen overflow-y-auto">
-    <h2 class="text-xl font-semibold text-center mb-4">Menu</h2>
-    <a href="#home" class="px-3 py-2 rounded hover:bg-blue-700 transition">Home</a>
-    <a href="#routine" class="px-3 py-2 rounded hover:bg-blue-700 transition">Routine</a>
-  </aside>
+  <!-- Header -->
+  <header class="bg-blue-700 text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">User Routine Portal</h1>
+      <a href="user-dashboard.html" class="bg-white text-blue-700 px-3 py-1 rounded hover:bg-gray-100 transition">
+        Back to Dashboard
+      </a>
+    </div>
+  </header>
 
   <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-8 max-w-6xl mx-auto">
+  <main class="flex-1 p-6 max-w-6xl mx-auto space-y-6">
 
-    <!-- Home Section -->
-    <section id="home" class="bg-white p-6 rounded shadow-md">
-      <h2 class="text-2xl font-bold mb-2">Welcome, User!</h2>
-      <p>Here is your daily routine for easy reference and tracking.</p>
+    <!-- Search -->
+    <section class="bg-white p-4 rounded shadow-md">
+      <input 
+        type="text" 
+        id="searchRoutine" 
+        placeholder="Search by course, instructor, or location..." 
+        class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+        onkeyup="filterRoutines()"
+      >
     </section>
 
-    <!-- Routine Section -->
-    <section id="routine" class="bg-white p-6 rounded shadow-md">
-      <h2 class="text-2xl font-bold mb-4">Daily Routine</h2>
-      <input type="text" id="searchInput" placeholder="Search routines..." class="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <!-- Routine Table -->
+    <section class="bg-white p-6 rounded shadow-md">
+      <h2 class="text-xl font-bold text-blue-700 mb-4">Available Routines</h2>
       <div class="overflow-x-auto">
         <table id="routineTable" class="min-w-full border border-gray-300">
           <thead class="bg-blue-100">
@@ -53,56 +46,58 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
-            <!-- Dynamic routines will appear here -->
+            <!-- Routines will load here -->
           </tbody>
         </table>
       </div>
     </section>
 
   </main>
-</div>
 
-<!-- Footer -->
-<footer class="bg-blue-700 text-white py-4 text-center mt-auto">
-  <p>© 2025 Susil. All rights reserved.</p>
-</footer>
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-4 text-center mt-auto">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
 
-<!-- Scripts -->
-<script>
-let routines = JSON.parse(localStorage.getItem('routines')) || [
-  {time:"08:00 AM", course:"Mathematics", instructor:"Mr. John", location:"Room 101"},
-  {time:"09:00 AM", course:"Physics", instructor:"Mrs. Smith", location:"Room 102"},
-  {time:"10:00 AM", course:"Chemistry", instructor:"Mr. Lee", location:"Room 103"},
-  {time:"11:00 AM", course:"English", instructor:"Ms. Brown", location:"Room 104"},
-];
+  <!-- Scripts -->
+  <script>
+    let routines = JSON.parse(localStorage.getItem('routines')) || [];
 
-function displayRoutines(list) {
-  const tbody = document.querySelector('#routineTable tbody');
-  tbody.innerHTML = '';
-  list.forEach(r => {
-    const tr = document.createElement('tr');
-    tr.classList.add("hover:bg-blue-50");
-    tr.innerHTML = `<td class="py-2 px-3">${r.time}</td>
-                    <td class="py-2 px-3">${r.course}</td>
-                    <td class="py-2 px-3">${r.instructor}</td>
-                    <td class="py-2 px-3">${r.location}</td>`;
-    tbody.appendChild(tr);
-  });
-}
+    function displayRoutines(list = routines) {
+      const tbody = document.querySelector('#routineTable tbody');
+      tbody.innerHTML = '';
 
-displayRoutines(routines);
+      if(list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="text-center py-3 text-gray-500">No routines available</td></tr>`;
+        return;
+      }
 
-document.getElementById('searchInput').addEventListener('input', function() {
-  const filter = this.value.toLowerCase();
-  const filtered = routines.filter(r =>
-    r.time.toLowerCase().includes(filter) ||
-    r.course.toLowerCase().includes(filter) ||
-    r.instructor.toLowerCase().includes(filter) ||
-    r.location.toLowerCase().includes(filter)
-  );
-  displayRoutines(filtered);
-});
-</script>
+      list.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.classList.add("hover:bg-blue-50");
+        tr.innerHTML = `
+          <td class="py-2 px-3">${r.time}</td>
+          <td class="py-2 px-3">${r.course}</td>
+          <td class="py-2 px-3">${r.instructor}</td>
+          <td class="py-2 px-3">${r.location}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterRoutines() {
+      const query = document.getElementById('searchRoutine').value.toLowerCase();
+      const filtered = routines.filter(r => 
+        r.course.toLowerCase().includes(query) || 
+        r.instructor.toLowerCase().includes(query) || 
+        r.location.toLowerCase().includes(query) ||
+        r.time.toLowerCase().includes(query)
+      );
+      displayRoutines(filtered);
+    }
+
+    displayRoutines();
+  </script>
 
 </body>
 </html>
