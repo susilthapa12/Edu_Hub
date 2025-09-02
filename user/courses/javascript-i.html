@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Objects</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    iframe { border: 1px solid #ddd; width: 100%; min-height: 200px; }
+    pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+    code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #2563eb; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="javascript-h.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="javascript-j.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Intro -->
+    <section id="intro">
+      <h1 class="text-3xl font-bold mb-2">JavaScript Objects</h1>
+      <p>
+        Objects are variables that can hold **multiple related values** as properties.  
+        Each property has a <strong>key</strong> (name) and a <strong>value</strong>.  
+        Objects can also contain **functions** called methods.
+      </p>
+    </section>
+
+    <!-- Creating an Object -->
+    <section id="create">
+      <h2 class="text-2xl font-bold mb-2">Creating an Object</h2>
+      <p>Use curly braces <code>{}</code> to create an object.</p>
+      <pre><code>let person = {
+  name: "John",
+  age: 25,
+  city: "New York"
+};
+document.write(person.name + ", " + person.age + ", " + person.city);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <button onclick="runCode('example1')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
+      <iframe id="example1"></iframe>
+    </section>
+
+    <!-- Accessing Properties -->
+    <section id="access">
+      <h2 class="text-2xl font-bold mb-2">Accessing Object Properties</h2>
+      <p>You can access values using dot <code>.</code> or bracket <code>[]</code> notation.</p>
+      <pre><code>let person = {name: "Alice", age: 30};
+document.write(person.name); // Alice
+document.write(person["age"]); // 30</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Changing Properties -->
+    <section id="change">
+      <h2 class="text-2xl font-bold mb-2">Changing Object Properties</h2>
+      <pre><code>let person = {name: "Alice", age: 30};
+person.age = 31;
+person["name"] = "Bob";
+document.write(person.name + ", " + person.age); // Bob, 31</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Adding Properties -->
+    <section id="add">
+      <h2 class="text-2xl font-bold mb-2">Adding Properties</h2>
+      <pre><code>let person = {name: "Alice"};
+person.city = "Paris";
+document.write(person.name + ", " + person.city); // Alice, Paris</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Deleting Properties -->
+    <section id="delete">
+      <h2 class="text-2xl font-bold mb-2">Deleting Properties</h2>
+      <pre><code>let person = {name: "Alice", age: 30};
+delete person.age;
+document.write(person.age); // undefined</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Object Methods -->
+    <section id="methods">
+      <h2 class="text-2xl font-bold mb-2">Object Methods</h2>
+      <p>Objects can have functions as values. These are called methods.</p>
+      <pre><code>let person = {
+  name: "John",
+  greet: function() {
+    return "Hello, " + this.name;
+  }
+};
+document.write(person.greet()); // Hello, John</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Looping Through Objects -->
+    <section id="loop">
+      <h2 class="text-2xl font-bold mb-2">Looping Through Objects</h2>
+      <p>Use <code>for...in</code> to loop through object properties.</p>
+      <pre><code>let person = {name: "Alice", age: 30, city: "Paris"};
+for (let key in person) {
+  document.write(key + ": " + person[key] + "&lt;br&gt;");
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="javascript-h.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="javascript-j.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    function runCode(id) {
+      const iframe = document.getElementById(id);
+      const code = iframe.previousElementSibling.previousElementSibling.innerText;
+      iframe.srcdoc = code;
+      iframe.onload = () => {
+        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 40 + 'px';
+      };
+    }
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#2563eb';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

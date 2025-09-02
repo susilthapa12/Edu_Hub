@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Functions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    iframe { border: 1px solid #ddd; width: 100%; min-height: 200px; }
+    pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+    code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #2563eb; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="javascript-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="javascript-h.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Intro -->
+    <section id="intro">
+      <h1 class="text-3xl font-bold mb-2">JavaScript Functions</h1>
+      <p>
+        A <strong>function</strong> is a block of code that performs a specific task.  
+        You can call a function whenever you need it, instead of repeating code.
+      </p>
+    </section>
+
+    <!-- Defining a Function -->
+    <section id="define">
+      <h2 class="text-2xl font-bold mb-2">Defining a Function</h2>
+      <p>
+        A function is defined with the <code>function</code> keyword, followed by a name and parentheses <code>()</code>.
+      </p>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;script&gt;
+    function sayHello() {
+      alert("Hello, World!");
+    }
+    sayHello(); // Calling the function
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <button onclick="runCode('example1')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
+      <iframe id="example1"></iframe>
+    </section>
+
+    <!-- Function Parameters -->
+    <section id="parameters">
+      <h2 class="text-2xl font-bold mb-2">Function Parameters</h2>
+      <p>
+        Functions can take <strong>parameters</strong> (inputs) and use them inside the code.
+      </p>
+      <pre><code>function greet(name) {
+  document.write("Hello, " + name + "!&lt;br&gt;");
+}
+greet("Alice");
+greet("Bob");</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Returning Values -->
+    <section id="return">
+      <h2 class="text-2xl font-bold mb-2">Returning Values</h2>
+      <p>
+        Functions can <strong>return</strong> values using the <code>return</code> keyword.
+      </p>
+      <pre><code>function add(a, b) {
+  return a + b;
+}
+let result = add(5, 3);
+document.write("The sum is: " + result);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Anonymous Functions -->
+    <section id="anonymous">
+      <h2 class="text-2xl font-bold mb-2">Anonymous Functions</h2>
+      <p>
+        Functions can also be stored in variables. These are called <strong>anonymous functions</strong>.
+      </p>
+      <pre><code>let multiply = function(x, y) {
+  return x * y;
+};
+document.write("Result: " + multiply(4, 5));</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Arrow Functions -->
+    <section id="arrow">
+      <h2 class="text-2xl font-bold mb-2">Arrow Functions</h2>
+      <p>
+        Arrow functions are a shorter way to write functions.
+      </p>
+      <pre><code>let square = (n) =&gt; n * n;
+document.write("Square of 6: " + square(6));</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="javascript-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="javascript-h.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    function runCode(id) {
+      const iframe = document.getElementById(id);
+      const code = iframe.previousElementSibling.previousElementSibling.innerText;
+      iframe.srcdoc = code;
+      iframe.onload = () => {
+        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 40 + 'px';
+      };
+    }
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#2563eb';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

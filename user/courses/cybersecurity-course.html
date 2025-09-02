@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cybersecurity Course</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="cybersecurity-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Introduction -->
+    <section id="intro">
+      <h1 class="text-3xl font-bold mb-2">Introduction to Cybersecurity</h1>
+      <p>
+        Cybersecurity is the practice of protecting systems, networks, and programs from digital attacks. These attacks are usually aimed at accessing, changing, or destroying sensitive information; extorting money from users; or interrupting normal business processes.
+      </p>
+    </section>
+
+    <!-- Why Cybersecurity is Important -->
+    <section id="importance">
+      <h2 class="text-2xl font-bold mb-2">Why Cybersecurity is Important</h2>
+      <ul class="list-disc ml-6">
+        <li>Protect sensitive data from unauthorized access</li>
+        <li>Ensure privacy and security for users</li>
+        <li>Prevent financial loss from cyber attacks</li>
+        <li>Maintain trust and reputation of organizations</li>
+        <li>Comply with legal and regulatory requirements</li>
+      </ul>
+    </section>
+
+    <!-- Types of Cyber Threats -->
+    <section id="threats">
+      <h2 class="text-2xl font-bold mb-2">Common Cyber Threats</h2>
+      <ul class="list-disc ml-6">
+        <li>Malware (viruses, worms, trojans)</li>
+        <li>Phishing attacks</li>
+        <li>Ransomware attacks</li>
+        <li>Denial-of-Service (DoS) attacks</li>
+        <li>SQL Injection</li>
+        <li>Zero-day exploits</li>
+        <li>Man-in-the-Middle attacks</li>
+      </ul>
+    </section>
+
+    <!-- Cybersecurity Best Practices -->
+    <section id="best-practices">
+      <h2 class="text-2xl font-bold mb-2">Cybersecurity Best Practices</h2>
+      <ul class="list-disc ml-6">
+        <li>Use strong, unique passwords and a password manager</li>
+        <li>Enable multi-factor authentication (MFA)</li>
+        <li>Keep software and systems up-to-date</li>
+        <li>Regularly back up important data</li>
+        <li>Be cautious of suspicious emails and links</li>
+        <li>Use antivirus and firewall protections</li>
+        <li>Educate yourself and employees about cybersecurity threats</li>
+      </ul>
+    </section>
+
+    <!-- Example: Secure Password -->
+    <section id="example">
+      <h2 class="text-2xl font-bold mb-2">Example: Strong Password</h2>
+      <p>A strong password should include:</p>
+      <pre><code>My$tr0ngP@ssw0rd2025!</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="cybersecurity-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

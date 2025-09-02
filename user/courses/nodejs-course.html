@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node.js Introduction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="mysql-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="nodejs-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Introduction -->
+    <section id="intro">
+      <h1 class="text-3xl font-bold mb-2">Node.js Introduction</h1>
+      <p>In this tutorial, you'll learn:</p>
+      <ul class="list-disc ml-6">
+        <li>How to install and run Node.js</li>
+        <li>Core concepts like modules and the event loop</li>
+        <li>How to build web servers and APIs</li>
+        <li>Working with databases and files</li>
+        <li>Deploying Node.js applications</li>
+      </ul>
+
+      <p>Node.js is a free, open-source JavaScript runtime that runs on Windows, Mac, Linux, and more.</p>
+      <p>It allows executing JavaScript code outside a browser, enabling server-side development.</p>
+    </section>
+
+    <!-- Hello Node Example -->
+    <section id="hello-node">
+      <h2 class="text-2xl font-bold mb-2">Example: Print a Message</h2>
+      <pre><code>console.log('Hello from Node.js!');</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Asynchronous Programming -->
+    <section id="async-programming">
+      <h2 class="text-2xl font-bold mb-2">Asynchronous Programming</h2>
+      <p>Node.js uses asynchronous (non-blocking) programming, allowing multiple tasks simultaneously.</p>
+      <pre><code>// Load filesystem module
+const fs = require('fs');
+
+// Read file asynchronously
+fs.readFile('myfile.txt', 'utf8', (err, data) => {
+  if (err) { console.error('Error reading file: ' + err); return; }
+  console.log('File content: ' + data);
+});
+
+console.log('Reading file... (this runs first!)');</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Simple Web Server -->
+    <section id="web-server">
+      <h2 class="text-2xl font-bold mb-2">Example: Simple Web Server</h2>
+      <pre><code>const http = require('http');
+
+http.createServer((req, res) => {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World!');
+}).listen(8080);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Node.js File -->
+    <section id="nodejs-file">
+      <h2 class="text-2xl font-bold mb-2">Node.js Files</h2>
+      <p>Node.js files have <code>.js</code> extension. They run on the server using the <code>node</code> command:</p>
+      <pre><code>node app.js</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Versions & LTS -->
+    <section id="versions-lts">
+      <h2 class="text-2xl font-bold mb-2">Node.js Versions & LTS</h2>
+      <p>Node.js releases a major version every 6 months. Use the LTS (Long Term Support) version for production projects for stability.</p>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="mysql-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="nodejs-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

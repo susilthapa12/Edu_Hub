@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pandas Introduction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="numpy-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="pandas-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Introduction -->
+    <section id="intro">
+      <h1 class="text-3xl font-bold mb-2">Pandas Introduction</h1>
+      <p>Pandas is a Python library used for working with data sets. It was created by <strong>Wes McKinney in 2008</strong>.</p>
+      <p>The name "Pandas" comes from "Panel Data" and "Python Data Analysis".</p>
+    </section>
+
+    <!-- Why Use Pandas -->
+    <section id="why" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Why Use Pandas?</h2>
+      <ul class="list-disc ml-6">
+        <li>Analyze large datasets and find patterns</li>
+        <li>Clean messy data</li>
+        <li>Extract relevant data for data science</li>
+        <li>Compute statistical values like mean, max, min, correlations</li>
+      </ul>
+    </section>
+
+    <!-- Basic Pandas Objects -->
+    <section id="objects" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Pandas Basic Objects</h2>
+      <p>Pandas has two main data structures: <strong>Series</strong> and <strong>DataFrame</strong>.</p>
+
+      <pre><code>import pandas as pd
+
+# Series: One-dimensional
+s = pd.Series([10, 20, 30])
+print(s)
+
+# DataFrame: Two-dimensional
+data = {'Name': ['Alice', 'Bob'], 'Age': [25, 30]}
+df = pd.DataFrame(data)
+print(df)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Data Cleaning -->
+    <section id="cleaning" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Data Cleaning</h2>
+      <p>Pandas can handle missing or invalid data efficiently.</p>
+
+      <pre><code>import pandas as pd
+import numpy as np
+
+data = {'Name': ['Alice', 'Bob', None], 'Age': [25, None, 30]}
+df = pd.DataFrame(data)
+
+# Drop rows with missing values
+df_clean = df.dropna()
+print(df_clean)
+
+# Fill missing values
+df_filled = df.fillna({'Name': 'Unknown', 'Age': 0})
+print(df_filled)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Basic Operations -->
+    <section id="operations" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Basic Operations</h2>
+      <pre><code>import pandas as pd
+
+data = {'A': [10, 20], 'B': [30, 40]}
+df = pd.DataFrame(data)
+
+# Select a column
+print(df['A'])
+
+# Add a new column
+df['C'] = df['A'] + df['B']
+print(df)
+
+# Filter rows
+print(df[df['C'] > 40])</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Where is Pandas Codebase -->
+    <section id="github" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Pandas Codebase</h2>
+      <p>The Pandas source code is available on <a href="https://github.com/pandas-dev/pandas" target="_blank" class="text-blue-600">GitHub</a>.</p>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="numpy-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="pandas-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -6,7 +6,10 @@
 <title>EduHub - Empowering Education</title>
 <meta name="description" content="EduHub - Simplifying school management with modern tools for teachers, students, and institutions.">
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<!-- FIX: Use a stable Font Awesome CDN instead of personal kit -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
 <style>
   html { scroll-behavior: smooth; }
   .tooltip { position: relative; display: inline-block; }
@@ -155,6 +158,7 @@
       <h4 class="font-semibold mb-4">About EduHub</h4>
       <ul>
         <li><a href="policies.html" class="hover:underline">Our Policies</a></li>
+        <li><a href="code.html" class="hover:underline">Complier</a></li>
       </ul>
     </div>
 
@@ -171,10 +175,30 @@
     <div>
       <h4 class="font-semibold mb-4">Follow Us</h4>
       <div class="flex space-x-4">
-        <div class="tooltip"><a href="#"><i class="fab fa-github text-xl hover:text-yellow-400 transform hover:scale-125 transition"></i></a><span class="tooltiptext">GitHub</span></div>
-        <div class="tooltip"><a href="#"><i class="fab fa-linkedin text-xl hover:text-yellow-400 transform hover:scale-125 transition"></i></a><span class="tooltiptext">LinkedIn</span></div>
-        <div class="tooltip"><a href="#"><i class="fab fa-facebook text-xl hover:text-yellow-400 transform hover:scale-125 transition"></i></a><span class="tooltiptext">Facebook</span></div>
-        <div class="tooltip"><a href="#"><i class="fab fa-twitter text-xl hover:text-yellow-400 transform hover:scale-125 transition"></i></a><span class="tooltiptext">Twitter</span></div>
+        <div class="tooltip">
+          <a href="https://github.com/your-username" target="_blank" rel="noopener">
+            <i class="fab fa-github text-xl hover:text-yellow-400 transform hover:scale-125 transition"></i>
+          </a>
+          <span class="tooltiptext">GitHub</span>
+        </div>
+        <div class="tooltip">
+          <a href="https://www.linkedin.com/in/your-username" target="_blank" rel="noopener">
+            <i class="fab fa-linkedin text-xl hover:text-yellow-400 transform hover:scale-125 transition"></i>
+          </a>
+          <span class="tooltiptext">LinkedIn</span>
+        </div>
+        <div class="tooltip">
+          <a href="https://www.facebook.com/your-username" target="_blank" rel="noopener">
+            <i class="fab fa-facebook text-xl hover:text-yellow-400 transform hover:scale-125 transition"></i>
+          </a>
+          <span class="tooltiptext">Facebook</span>
+        </div>
+        <div class="tooltip">
+          <a href="https://twitter.com/your-username" target="_blank" rel="noopener">
+            <i class="fab fa-twitter text-xl hover:text-yellow-400 transform hover:scale-125 transition"></i>
+          </a>
+          <span class="tooltiptext">Twitter</span>
+        </div>
       </div>
     </div>
   </div>

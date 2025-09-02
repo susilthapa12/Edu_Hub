@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Styles Examples</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Header -->
+  <header class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold">HTML Tutorial</h1>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto p-6 bg-white shadow rounded my-6">
+
+    <!-- Navigation Buttons (Top) -->
+    <div class="flex justify-between mb-6">
+      <a href="html-b.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        ◀ Previous
+      </a>
+      <a href="html-d.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        Next ▶
+      </a>
+    </div>
+
+    <!-- Content -->
+    <h2 class="text-2xl font-bold mb-4">HTML Styles</h2>
+    <p class="mb-4">
+      The HTML <code>style</code> attribute is used to add styles to an element, such as color, font, size, and more.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Example</h3>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <p class="font-semibold mb-2">Red Text</p>
+      <p style="color:red;">I am Red</p>
+      <p class="font-semibold mb-2">Blue Text</p>
+      <p style="color:blue;">I am Blue</p>
+      <p class="font-semibold mb-2">Big Text</p>
+      <p style="font-size:200%;">I am Big</p>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">The HTML Style Attribute</h3>
+    <p class="mb-4">
+      Setting the style of an HTML element can be done with the <code>style</code> attribute.  
+      Syntax: <code>&lt;tagname style="property:value;"&gt;</code>  
+      The property is a CSS property, and the value is a CSS value.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Background Color</h3>
+    <p class="mb-4">
+      The CSS <code>background-color</code> property defines the background color for an HTML element.
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <p class="font-semibold mb-2">Example: Page Background</p>
+      <pre><code>&lt;body style="background-color:powderblue;"&gt;
+  &lt;h1&gt;This is a heading&lt;/h1&gt;
+  &lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;/body&gt;
+</code></pre>
+    </div>
+
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <p class="font-semibold mb-2">Example: Element Backgrounds</p>
+      <pre><code>&lt;h1 style="background-color:powderblue;"&gt;This is a heading&lt;/h1&gt;
+&lt;p style="background-color:tomato;"&gt;This is a paragraph.&lt;/p&gt;
+</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Text Color</h3>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>&lt;h1 style="color:blue;"&gt;This is a heading&lt;/h1&gt;
+&lt;p style="color:red;"&gt;This is a paragraph.&lt;/p&gt;
+</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Fonts</h3>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>&lt;h1 style="font-family:verdana;"&gt;This is a heading&lt;/h1&gt;
+&lt;p style="font-family:courier;"&gt;This is a paragraph.&lt;/p&gt;
+</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Text Size</h3>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>&lt;h1 style="font-size:300%;"&gt;This is a heading&lt;/h1&gt;
+&lt;p style="font-size:160%;"&gt;This is a paragraph.&lt;/p&gt;
+</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Text Alignment</h3>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>&lt;h1 style="text-align:center;"&gt;Centered Heading&lt;/h1&gt;
+&lt;p style="text-align:center;"&gt;Centered paragraph.&lt;/p&gt;
+</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Chapter Summary</h3>
+    <ul class="list-disc list-inside mb-4">
+      <li>Use the <code>style</code> attribute for styling HTML elements</li>
+      <li>Use <code>background-color</code> for background color</li>
+      <li>Use <code>color</code> for text colors</li>
+      <li>Use <code>font-family</code> for text fonts</li>
+      <li>Use <code>font-size</code> for text sizes</li>
+      <li>Use <code>text-align</code> for text alignment</li>
+    </ul>
+
+    <!-- Navigation Buttons (Bottom) -->
+    <div class="flex justify-between mt-6">
+      <a href="html-b.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        ◀ Previous
+      </a>
+      <a href="html-d.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        Next ▶
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-600 text-white p-4 mt-6">
+    <div class="container mx-auto text-center">
+      &copy; © 2025 Susil. All rights reserved.
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -13,8 +13,8 @@
       theme: {
         extend: {
           colors: {
-            primary: '#960ca8',
-            secondary: '#87109c',
+            primary: '#1e40af',    /* Blue */
+            secondary: '#2563eb',  /* Lighter Blue */
             accent: '#22c55e',
             amberCustom: '#f59e0b',
           },
@@ -41,7 +41,7 @@
     /* Base body style */
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #960ca8ff, #87109cff);
+      background: linear-gradient(to right, #1e40afff, #2563ebff);
       color: #fff;
       min-height: 100vh;
       margin: 0;
@@ -182,8 +182,6 @@
           { id: 14, title: 'Django', description: 'Build secure web apps with Python’s powerful framework.', progress: 20, link: 'django-course.html' },
           { id: 15, title: 'Git', description: 'Version control your projects and collaborate confidently.', progress: 70, link: 'git-course.html' },
           { id: 16, title: 'Cybersecurity', description: 'Defend applications against attacks and vulnerabilities.', progress: 15, link: 'cybersecurity-course.html' },
-          { id: 17, title: 'MongoDB', description: 'Handle NoSQL data with flexibility and scalability.', progress: 15, link: 'mongodb-course.html' },
-          { id: 18, title: 'PostgreSQL', description: 'Work with powerful open-source relational databases.', progress: 15, link: 'postgresql-course.html' },
         ],
         filteredCourses() {
           const term = this.search.trim().toLowerCase();

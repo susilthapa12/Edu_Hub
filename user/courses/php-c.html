@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHP Variables & Data Types</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Segoe UI', sans-serif; }
+pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+<a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+</div>
+</header>
+
+<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+
+<nav class="flex justify-between my-6">
+<a href="php-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="php-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+<!-- Section: PHP Variables -->
+<section id="variables">
+<h1 class="text-3xl font-bold mb-2">PHP Variables</h1>
+<p>Variables in PHP are used to store data. A variable starts with a dollar sign <code>$</code>.</p>
+<pre><code>&lt;?php
+$name = "Alice"; // string
+$age = 25;       // integer
+$height = 5.7;   // float
+$isStudent = true; // boolean
+
+echo $name;
+echo $age;
+echo $height;
+echo $isStudent;
+?&gt;
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+<p class="mt-2">Variable names are case-sensitive: <code>$name</code> and <code>$Name</code> are different variables.</p>
+</section>
+
+<!-- Section: Data Types -->
+<section id="data-types">
+<h2 class="text-2xl font-bold mt-6 mb-2">PHP Data Types</h2>
+<p>Common data types in PHP include:</p>
+<ul class="list-disc list-inside mb-4">
+  <li><strong>String:</strong> sequence of characters, e.g., <code>"Hello"</code></li>
+  <li><strong>Integer:</strong> whole numbers, e.g., <code>42</code></li>
+  <li><strong>Float / Double:</strong> decimal numbers, e.g., <code>3.14</code></li>
+  <li><strong>Boolean:</strong> <code>true</code> or <code>false</code></li>
+  <li><strong>Array:</strong> collection of values</li>
+  <li><strong>Object:</strong> instance of a class</li>
+  <li><strong>NULL:</strong> variable with no value</li>
+</ul>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">Example: Data Types</h2>
+<pre><code>&lt;?php
+$firstName = "Bob";       // string
+$age = 30;                // integer
+$gpa = 3.8;               // float
+$isEnrolled = false;      // boolean
+$fruits = array("apple", "banana", "cherry"); // array
+$person = null;           // null
+
+echo $firstName;
+echo $age;
+echo $gpa;
+echo $isEnrolled;
+print_r($fruits); // prints array
+var_dump($person); // prints NULL
+?&gt;
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+</section>
+
+<!-- Section: Variable Rules -->
+<section id="variable-rules">
+<h2 class="text-2xl font-bold mt-6 mb-2">Variable Rules</h2>
+<ul class="list-disc list-inside mb-4">
+  <li>Start with <code>$</code></li>
+  <li>Followed by a letter or underscore</li>
+  <li>Can contain letters, numbers, and underscores</li>
+  <li>Cannot start with a number</li>
+  <li>Case-sensitive</li>
+</ul>
+</section>
+
+<nav class="flex justify-between my-6">
+<a href="php-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="php-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+</main>
+
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+<p>© 2025 Susil. All rights reserved.</p>
+</footer>
+
+<script>
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.style.backgroundColor = '#16a34a';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.style.backgroundColor = '#2563eb';
+    }, 1500);
+  });
+}
+</script>
+
+</body>
+</html>

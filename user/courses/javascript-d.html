@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Operators</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    iframe { border: 1px solid #ddd; width: 100%; min-height: 200px; }
+    pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+    code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #2563eb; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="javascript-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="javascript-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Intro -->
+    <section id="intro">
+      <h1 class="text-3xl font-bold mb-2">JavaScript Operators</h1>
+      <p>Operators are symbols used to perform operations on values and variables. Let’s go through the most common types of operators in JavaScript.</p>
+    </section>
+
+    <!-- Arithmetic Operators -->
+    <section id="arithmetic">
+      <h2 class="text-2xl font-bold mb-2">Arithmetic Operators</h2>
+      <p>Used for basic math:</p>
+      <ul class="list-disc list-inside space-y-1">
+        <li><code>+</code> Addition</li>
+        <li><code>-</code> Subtraction</li>
+        <li><code>*</code> Multiplication</li>
+        <li><code>/</code> Division</li>
+        <li><code>%</code> Modulus (remainder)</li>
+        <li><code>**</code> Exponentiation (power)</li>
+      </ul>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;p id="demo"&gt;&lt;/p&gt;
+  &lt;script&gt;
+    let x = 10;
+    let y = 3;
+    let result = x + y; // 13
+    document.getElementById("demo").innerHTML = "10 + 3 = " + result;
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <button onclick="runCode('example1')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
+      <iframe id="example1"></iframe>
+    </section>
+
+    <!-- Assignment Operators -->
+    <section id="assignment">
+      <h2 class="text-2xl font-bold mb-2">Assignment Operators</h2>
+      <p>Used to assign values to variables:</p>
+      <pre><code>let x = 5;
+x += 2; // same as x = x + 2
+x *= 3; // same as x = x * 3
+document.write(x); // 21</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Comparison Operators -->
+    <section id="comparison">
+      <h2 class="text-2xl font-bold mb-2">Comparison Operators</h2>
+      <p>Used to compare values. Returns <code>true</code> or <code>false</code>:</p>
+      <ul class="list-disc list-inside space-y-1">
+        <li><code>==</code> Equal to (ignores type)</li>
+        <li><code>===</code> Strict equal (checks value and type)</li>
+        <li><code>!=</code> Not equal</li>
+        <li><code>!==</code> Strict not equal</li>
+        <li><code>&gt;</code> Greater than</li>
+        <li><code>&lt;</code> Less than</li>
+        <li><code>&gt;=</code> Greater than or equal</li>
+        <li><code>&lt;=</code> Less than or equal</li>
+      </ul>
+      <pre><code>let a = 5;
+let b = "5";
+document.write(a == b);   // true
+document.write("&lt;br&gt;");
+document.write(a === b);  // false</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Logical Operators -->
+    <section id="logical">
+      <h2 class="text-2xl font-bold mb-2">Logical Operators</h2>
+      <p>Used to combine conditions:</p>
+      <ul class="list-disc list-inside space-y-1">
+        <li><code>&amp;&amp;</code> AND (true if both are true)</li>
+        <li><code>||</code> OR (true if at least one is true)</li>
+        <li><code>!</code> NOT (reverses the result)</li>
+      </ul>
+      <pre><code>let age = 20;
+document.write(age &gt;= 18 &amp;&amp; age &lt;= 30); // true</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- String Operators -->
+    <section id="string">
+      <h2 class="text-2xl font-bold mb-2">String Operators</h2>
+      <p>The <code>+</code> operator can also join (concatenate) strings:</p>
+      <pre><code>let firstName = "John";
+let lastName = "Doe";
+document.write(firstName + " " + lastName);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="javascript-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="javascript-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    function runCode(id) {
+      const iframe = document.getElementById(id);
+      const code = iframe.previousElementSibling.previousElementSibling.innerText;
+      iframe.srcdoc = code;
+      iframe.onload = () => {
+        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 40 + 'px';
+      };
+    }
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#2563eb';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Selectors</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Header -->
+  <header class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold">CSS Tutorial</h1>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto p-6 bg-white shadow rounded my-6">
+
+    <!-- Navigation Buttons (Top) -->
+    <div class="flex justify-between mb-6">
+      <a href="css-course.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        ◀ Previous
+      </a>
+      <a href="css-c.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        Next ▶
+      </a>
+    </div>
+
+    <!-- Content -->
+    <h2 class="text-2xl font-bold mb-4 text-blue-600">CSS Selectors</h2>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">What are CSS Selectors?</h3>
+    <p class="mb-4">
+      CSS selectors are patterns used to select the HTML elements you want to style.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Example: Element Selector</h3>
+    <p class="mb-4">This selector targets all &lt;p&gt; elements on the page:</p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>p {
+  color: red;
+  font-size: 18px;
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Example: Class Selector</h3>
+    <p class="mb-4">
+      This selector targets all elements with class <code>highlight</code>:
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>.highlight {
+  background-color: yellow;
+  font-weight: bold;
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Example: ID Selector</h3>
+    <p class="mb-4">
+      This selector targets the element with ID <code>main-title</code>:
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>#main-title {
+  color: blue;
+  text-align: center;
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Example: Multiple Selectors</h3>
+    <p class="mb-4">
+      You can style multiple elements at once by separating them with commas:
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>h1, h2, h3 {
+  font-family: Arial, sans-serif;
+  color: green;
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Chapter Summary</h3>
+    <ul class="list-disc list-inside mb-4">
+      <li>CSS selectors are used to select HTML elements</li>
+      <li>Element selectors target HTML tags</li>
+      <li>Class selectors target elements with a specific class</li>
+      <li>ID selectors target elements with a specific ID</li>
+      <li>Multiple selectors can be styled together using commas</li>
+    </ul>
+
+    <!-- Navigation Buttons (Bottom) -->
+    <div class="flex justify-between mt-6">
+      <a href="css-course.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        ◀ Previous
+      </a>
+      <a href="css-c.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        Next ▶
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-600 text-white p-4 mt-6">
+    <div class="container mx-auto text-center">
+      &copy; © 2025 Susil. All rights reserved.
+    </div>
+  </footer>
+
+</body>
+</html>

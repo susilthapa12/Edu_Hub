@@ -1,53 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Exam Management</title>
-<style>
-  body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f0f2f5; }
-  h1 { text-align: center; color: #333; }
-  .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-  input, textarea, button { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
-  button { background: #007BFF; color: #fff; border: none; cursor: pointer; }
-  button:hover { background: #0056b3; }
-  ul { list-style: none; padding: 0; }
-  li { background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-  li div { flex: 1; }
-  .delete { background: red; padding: 5px 10px; border-radius: 5px; color: #fff; cursor: pointer; }
-  @media (max-width: 600px) { li { flex-direction: column; align-items: flex-start; } }
-</style>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100 font-sans min-h-screen flex flex-col">
 
-<h1>Admin Exam Management</h1>
-<div class="container">
-    <input type="text" id="examTitle" placeholder="Exam Title">
-    <textarea id="examDesc" placeholder="Exam Description"></textarea>
-    <input type="date" id="examDate">
-    <input type="file" id="examFile">
-    <button onclick="addExam()">Add Exam</button>
+<!-- Header -->
+<header class="bg-blue-700 text-white sticky top-0 z-50 shadow-md">
+  <div class="max-w-7xl mx-auto px-4 py-4">
+    <h1 class="text-2xl font-bold text-center">Admin Exam Management</h1>
+  </div>
+</header>
 
-    <h2>Current Exams</h2>
-    <ul id="examList"></ul>
-</div>
+<!-- Main Content -->
+<main class="flex-1 max-w-4xl mx-auto mt-6 px-4 space-y-6">
 
+  <!-- Add Exam Section -->
+  <section class="bg-white p-6 rounded shadow-md space-y-4">
+    <h2 class="text-xl font-bold text-blue-700">Add New Exam</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <input type="text" id="examTitle" placeholder="Exam Title" class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 w-full">
+      <input type="date" id="examDate" class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 w-full">
+    </div>
+    <textarea id="examDesc" placeholder="Exam Description" class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"></textarea>
+    <input type="file" id="examFile" class="w-full">
+    <button onclick="addExam()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Add Exam</button>
+  </section>
+
+  <!-- Current Exams Section -->
+  <section class="bg-white p-6 rounded shadow-md">
+    <h2 class="text-xl font-bold text-blue-700 mb-4">Current Exams</h2>
+    <ul id="examList" class="space-y-4"></ul>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-blue-700 text-white py-4 text-center mt-auto">
+  <p>© 2025 Susil. All rights reserved.</p>
+</footer>
+
+<!-- Scripts -->
 <script>
 const examListEl = document.getElementById('examList');
 let exams = JSON.parse(localStorage.getItem('exams')) || [];
 
 function displayExams() {
     examListEl.innerHTML = '';
+    if(exams.length === 0){
+        examListEl.innerHTML = '<p class="text-gray-500 text-center">No exams available</p>';
+        return;
+    }
     exams.forEach((exam, index) => {
         const li = document.createElement('li');
+        li.className = "bg-gray-50 p-4 rounded shadow flex flex-col md:flex-row justify-between items-start md:items-center space-y-2 md:space-y-0";
         li.innerHTML = `
             <div>
-                <strong>${exam.title}</strong> (${exam.date})<br>
-                ${exam.desc}<br>
-                File: ${exam.fileName || 'No file uploaded'}
+                <p class="font-semibold text-blue-700 text-lg">${exam.title}</p>
+                <p class="text-gray-700">${exam.desc}</p>
+                <p class="text-gray-600"><strong>Date:</strong> ${exam.date}</p>
+                <p class="text-gray-500 italic"><strong>File:</strong> ${exam.fileName || 'No file uploaded'}</p>
             </div>
-            <div>
-                <button class="delete" onclick="deleteExam(${index})">Delete</button>
+            <div class="flex space-x-2 mt-2 md:mt-0">
+                <button onclick="deleteExam(${index})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Delete</button>
             </div>
         `;
         examListEl.appendChild(li);
@@ -61,16 +79,15 @@ function addExam() {
     const fileInput = document.getElementById('examFile');
     const fileName = fileInput.files[0] ? fileInput.files[0].name : '';
 
-    if (!title || !desc || !date) { alert('Please fill all fields'); return; }
+    if(!title || !desc || !date){ 
+        alert('Please fill all fields'); 
+        return; 
+    }
 
     exams.push({ title, desc, date, fileName });
     localStorage.setItem('exams', JSON.stringify(exams));
+    clearInputs();
     displayExams();
-
-    document.getElementById('examTitle').value = '';
-    document.getElementById('examDesc').value = '';
-    document.getElementById('examDate').value = '';
-    document.getElementById('examFile').value = '';
 }
 
 function deleteExam(index) {
@@ -79,7 +96,15 @@ function deleteExam(index) {
     displayExams();
 }
 
+function clearInputs() {
+    document.getElementById('examTitle').value = '';
+    document.getElementById('examDesc').value = '';
+    document.getElementById('examDate').value = '';
+    document.getElementById('examFile').value = '';
+}
+
 displayExams();
 </script>
+
 </body>
 </html>

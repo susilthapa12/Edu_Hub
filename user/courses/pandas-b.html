@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pandas Advanced - Part 2</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="pandas-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="pandas-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Merging DataFrames -->
+    <section id="merging" class="mt-6">
+      <h1 class="text-3xl font-bold mb-2">Merging and Joining DataFrames</h1>
+      <p>Pandas can merge and join multiple datasets efficiently using <code>merge</code> and <code>join</code>.</p>
+      <pre><code>import pandas as pd
+
+# Sample DataFrames
+df1 = pd.DataFrame({'ID':[1,2,3], 'Name':['Alice','Bob','Charlie']})
+df2 = pd.DataFrame({'ID':[2,3,4], 'Salary':[50000,60000,70000]})
+
+# Inner merge (intersection)
+merged_inner = pd.merge(df1, df2, on='ID', how='inner')
+
+# Left merge
+merged_left = pd.merge(df1, df2, on='ID', how='left')
+
+print(merged_inner)
+print(merged_left)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Concatenating DataFrames -->
+    <section id="concat" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Concatenating DataFrames</h2>
+      <pre><code># Concatenate vertically
+df3 = pd.DataFrame({'ID':[5,6], 'Name':['David','Eva']})
+concatenated = pd.concat([df1, df3], ignore_index=True)
+print(concatenated)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Pivot Tables -->
+    <section id="pivot" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Pivot Tables</h2>
+      <p>Pivot tables allow us to summarize data efficiently.</p>
+      <pre><code># Sample DataFrame
+data = {'Department':['HR','IT','IT','HR'],
+        'Employee':['Alice','Bob','Charlie','David'],
+        'Salary':[50000,60000,70000,55000]}
+
+df = pd.DataFrame(data)
+
+# Create pivot table
+pivot = df.pivot_table(index='Department', values='Salary', aggfunc='mean')
+print(pivot)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Filtering & Querying -->
+    <section id="querying" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Advanced Filtering & Querying</h2>
+      <pre><code># Filter rows using query
+high_salary = df.query('Salary > 55000')
+print(high_salary)
+
+# Filter with multiple conditions
+it_employees = df[(df['Department'] == 'IT') & (df['Salary'] > 60000)]
+print(it_employees)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Advanced Visualization -->
+    <section id="visualization" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Advanced Visualization</h2>
+      <p>Pandas can create advanced visualizations with <code>Matplotlib</code> or <code>Seaborn</code>.</p>
+      <pre><code>import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Bar plot of average salary by department
+df.groupby('Department')['Salary'].mean().plot(kind='bar', color='skyblue')
+plt.title('Average Salary by Department')
+plt.ylabel('Salary')
+plt.show()
+
+# Seaborn count plot
+sns.countplot(x='Department', data=df)
+plt.show()</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="pandas-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="pandas-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced CSS - Flexbox & Grid</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Header -->
+  <header class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold">CSS Tutorial</h1>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto p-6 bg-white shadow rounded my-6">
+
+    <!-- Navigation Buttons (Top) -->
+    <div class="flex justify-between mb-6">
+      <a href="css-c.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        ◀ Previous
+      </a>
+      <a href="css-e.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        Next ▶
+      </a>
+    </div>
+
+    <!-- Content -->
+    <h2 class="text-2xl font-bold mb-4 text-blue-600">Advanced CSS: Flexbox, Grid & Responsive Design</h2>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">CSS Flexbox</h3>
+    <p class="mb-4">
+      Flexbox is a layout model that allows you to arrange elements in rows or columns with flexible sizing and alignment.
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>.container {
+  display: flex;
+  flex-direction: row; /* row or column */
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item {
+  flex: 1; /* flexible size */
+  margin: 5px;
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">CSS Grid</h3>
+    <p class="mb-4">
+      Grid is a two-dimensional layout system, allowing you to create rows and columns.
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.grid-item {
+  background-color: lightblue;
+  padding: 20px;
+  text-align: center;
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Responsive Design</h3>
+    <p class="mb-4">
+      Responsive design makes web pages look good on all devices by using flexible layouts and media queries.
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>@media screen and (max-width: 600px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Chapter Summary</h3>
+    <ul class="list-disc list-inside mb-4">
+      <li>Flexbox is for one-dimensional layouts (row or column)</li>
+      <li>Grid is for two-dimensional layouts (rows and columns)</li>
+      <li>Use <code>flex</code> and <code>grid</code> properties to control sizing and alignment</li>
+      <li>Media queries make layouts responsive on different devices</li>
+      <li>Combining Flexbox, Grid, and media queries allows advanced, adaptive designs</li>
+    </ul>
+
+    <!-- Navigation Buttons (Bottom) -->
+    <div class="flex justify-between mt-6">
+      <a href="css-c.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        ◀ Previous
+      </a>
+      <a href="css-e.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        Next ▶
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-600 text-white p-4 mt-6">
+    <div class="container mx-auto text-center">
+      &copy; 2025 Susil. All rights reserved.
+    </div>
+  </footer>
+
+</body>
+</html>

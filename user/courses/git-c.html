@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git Advanced Commands</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="git-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="index.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Finish ▶
+      </a>
+    </nav>
+
+    <!-- Git Stash -->
+    <section id="stash">
+      <h1 class="text-3xl font-bold mb-2">Git Stash</h1>
+      <p>Stash temporarily saves your changes without committing them:</p>
+      <pre><code># Stash current changes
+git stash
+
+# List stashed changes
+git stash list
+
+# Apply last stashed changes
+git stash apply</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Git Rebase -->
+    <section id="rebase">
+      <h2 class="text-2xl font-bold mb-2">Git Rebase</h2>
+      <p>Rebase lets you move or combine a sequence of commits to a new base commit:</p>
+      <pre><code># Rebase feature branch onto main
+git checkout feature-branch
+git rebase main
+
+# Resolve conflicts if necessary
+git rebase --continue</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Git Reset -->
+    <section id="reset">
+      <h2 class="text-2xl font-bold mb-2">Git Reset</h2>
+      <p>Reset can undo commits or staged changes:</p>
+      <pre><code># Unstage a file
+git reset HEAD filename.txt
+
+# Reset last commit but keep changes
+git reset --soft HEAD~1
+
+# Reset last commit and discard changes
+git reset --hard HEAD~1</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Best Practices -->
+    <section id="best-practices">
+      <h2 class="text-2xl font-bold mb-2">Git Best Practices</h2>
+      <ul class="list-disc ml-6">
+        <li>Commit small, logical changes often.</li>
+        <li>Use meaningful commit messages.</li>
+        <li>Use branches for features, bug fixes, and experiments.</li>
+        <li>Pull latest changes from remote before pushing.</li>
+        <li>Regularly merge or rebase branches to keep history clean.</li>
+        <li>Backup important branches using remote repositories.</li>
+      </ul>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="git-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="index.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Finish ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

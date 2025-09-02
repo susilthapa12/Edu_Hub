@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C Programming Installation & Setup</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Segoe UI', sans-serif; }
+pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+<a href="c-a.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+</div>
+</header>
+
+<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+
+<nav class="flex justify-between my-6">
+<a href="c-a-syntax.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="c-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+<!-- Section: Installation -->
+<section id="c-installation">
+<h1 class="text-3xl font-bold mb-2">C Programming Installation & Setup</h1>
+<p>To run C programs, you need a compiler. Here’s how to install C on different platforms:</p>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">1. Windows (Using MinGW)</h2>
+<ol class="list-decimal list-inside mb-4">
+  <li>Download MinGW from <a href="https://www.mingw-w64.org/" target="_blank" class="text-blue-600">https://www.mingw-w64.org/</a>.</li>
+  <li>Install MinGW and select <strong>gcc</strong> during setup.</li>
+  <li>Add MinGW <code>bin</code> folder to your system <strong>PATH</strong> environment variable.</li>
+  <li>Verify installation by opening Command Prompt and typing:</li>
+</ol>
+<pre><code>gcc --version</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">2. Linux (Using GCC)</h2>
+<p>Most Linux distributions have GCC installed. To install or update:</p>
+<pre><code>sudo apt update        # Debian/Ubuntu
+sudo apt install build-essential
+
+gcc --version</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">3. MacOS (Using Xcode Command Line Tools)</h2>
+<p>Install GCC via Xcode:</p>
+<pre><code>xcode-select --install
+
+gcc --version</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">4. Writing and Compiling a Program</h2>
+<p>Create a C file <code>hello.c</code>:</p>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Hello, World!\n");
+    return 0;
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<p>Compile and run:</p>
+<pre><code>gcc hello.c -o hello   # Compile
+./hello                 # Run (Linux/Mac)
+hello.exe               # Run (Windows)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+</section>
+
+<nav class="flex justify-between my-6">
+<a href="c-a-syntax.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="c-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+</main>
+
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+<p>© 2025 Susil. All rights reserved.</p>
+</footer>
+
+<script>
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.style.backgroundColor = '#16a34a';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.style.backgroundColor = '#2563eb';
+    }, 1500);
+  });
+}
+</script>
+
+</body>
+</html>

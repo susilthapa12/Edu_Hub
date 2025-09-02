@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Functions</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Segoe UI', sans-serif; }
+pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+<a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+</div>
+</header>
+
+<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+
+<nav class="flex justify-between my-6">
+<a href="python-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="python-g.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+<!-- Section: Basic Function -->
+<section id="function-basics">
+<h1 class="text-3xl font-bold mb-2">Defining and Calling Functions</h1>
+<p>A <strong>function</strong> is a block of reusable code that performs a specific task.</p>
+<pre><code># Defining a simple function
+def greet():
+    print("Hello, world!")
+
+# Calling the function
+greet()
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+</section>
+
+<!-- Section: Function Parameters -->
+<section id="function-parameters">
+<h2 class="text-2xl font-bold mb-2">Functions with Parameters</h2>
+<p>Functions can accept input values called <strong>parameters</strong>.</p>
+<pre><code># Function with parameters
+def greet(name):
+    print("Hello,", name)
+
+greet("Alice")
+greet("Bob")
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+</section>
+
+<!-- Section: Return Values -->
+<section id="return-values">
+<h2 class="text-2xl font-bold mb-2">Returning Values</h2>
+<p>Functions can send data back using the <code>return</code> statement.</p>
+<pre><code># Function that returns a value
+def add(a, b):
+    return a + b
+
+result = add(5, 3)
+print("Sum:", result)
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+</section>
+
+<!-- Section: Default Arguments -->
+<section id="default-arguments">
+<h2 class="text-2xl font-bold mb-2">Default Arguments</h2>
+<p>You can provide default values for parameters.</p>
+<pre><code># Function with default parameter
+def greet(name="Guest"):
+    print("Hello,", name)
+
+greet()         # Hello, Guest
+greet("Susil")  # Hello, Susil
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+</section>
+
+<!-- Section: Keyword and Arbitrary Arguments -->
+<section id="args-kwargs">
+<h2 class="text-2xl font-bold mb-2">Keyword Arguments, *args, and **kwargs</h2>
+<p>Python functions support keyword arguments, arbitrary arguments (<code>*args</code>), and arbitrary keyword arguments (<code>**kwargs</code>).</p>
+<pre><code># Keyword arguments
+def introduce(name, age):
+    print("Name:", name, "| Age:", age)
+
+introduce(age=25, name="Alice")
+
+# *args: variable number of positional arguments
+def sum_all(*numbers):
+    return sum(numbers)
+
+print(sum_all(1, 2, 3, 4))
+
+# **kwargs: variable number of keyword arguments
+def print_info(**info):
+    for key, value in info.items():
+        print(key, ":", value)
+
+print_info(name="Bob", city="London", job="Engineer")
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+</section>
+
+<nav class="flex justify-between my-6">
+<a href="python-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="python-g.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+</main>
+
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+<p>© 2025 Susil. All rights reserved.</p>
+</footer>
+
+<script>
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.style.backgroundColor = '#16a34a';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.style.backgroundColor = '#2563eb';
+    }, 1500);
+  });
+}
+</script>
+
+</body>
+</html>

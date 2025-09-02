@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Django Introduction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="django-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Introduction -->
+    <section id="introduction">
+      <h1 class="text-3xl font-bold mb-2">Django Introduction</h1>
+      <p>Django is a Python framework that makes it easier to create web sites using Python. It emphasizes reusability of components (DRY) and comes with ready-to-use features like login system, database connection, and CRUD operations.</p>
+    </section>
+
+    <!-- How Django Works -->
+    <section id="how-django-works">
+      <h2 class="text-2xl font-bold mb-2">How Does Django Work?</h2>
+      <p>Django follows the <strong>MVT design pattern (Model View Template)</strong>:</p>
+      <ul class="list-disc ml-6">
+        <li><strong>Model</strong> - The data you want to present (usually from a database).</li>
+        <li><strong>View</strong> - A request handler that returns the relevant template and content.</li>
+        <li><strong>Template</strong> - A text file containing the layout of the web page with logic on how to display the data.</li>
+      </ul>
+    </section>
+
+    <!-- Example Model -->
+    <section id="model-example">
+      <h2 class="text-2xl font-bold mb-2">Example: Model</h2>
+      <pre><code>from django.db import models
+
+class Article(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    published = models.DateTimeField(auto_now_add=True)
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Example View -->
+    <section id="view-example">
+      <h2 class="text-2xl font-bold mb-2">Example: View</h2>
+      <pre><code>from django.shortcuts import render
+from .models import Article
+
+def home(request):
+    articles = Article.objects.all()
+    return render(request, 'home.html', {'articles': articles})
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Example Template -->
+    <section id="template-example">
+      <h2 class="text-2xl font-bold mb-2">Example: Template</h2>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;h1&gt;Articles&lt;/h1&gt;
+  &lt;ul&gt;
+    {% for article in articles %}
+      &lt;li&gt;{{ article.title }} - {{ article.published }}&lt;/li&gt;
+    {% endfor %}
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="django-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

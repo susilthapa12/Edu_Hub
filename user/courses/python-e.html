@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Loops: for, while, break, continue</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Segoe UI', sans-serif; }
+pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+<a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+</div>
+</header>
+
+<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+
+<nav class="flex justify-between my-6">
+<a href="python-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="python-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+<!-- Section: for loop -->
+<section id="for-loop">
+<h1 class="text-3xl font-bold mb-2">Python <code>for</code> Loop</h1>
+<p>The <strong>for loop</strong> is used to iterate over a sequence (like a list, tuple, string, or range).</p>
+<pre><code># Loop through a list
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)
+
+# Loop with range
+for i in range(5):
+    print("Number:", i)
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+</section>
+
+<!-- Section: while loop -->
+<section id="while-loop">
+<h2 class="text-2xl font-bold mb-2">Python <code>while</code> Loop</h2>
+<p>The <strong>while loop</strong> runs as long as a condition is true.</p>
+<pre><code># While loop example
+count = 0
+while count < 5:
+    print("Count is:", count)
+    count += 1
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+</section>
+
+<!-- Section: break and continue -->
+<section id="break-continue">
+<h2 class="text-2xl font-bold mb-2"><code>break</code> and <code>continue</code></h2>
+<p>
+The <strong>break</strong> statement stops the loop immediately.<br>
+The <strong>continue</strong> statement skips the current iteration and moves to the next.
+</p>
+<pre><code># Using break
+for i in range(10):
+    if i == 5:
+        break
+    print(i)
+
+# Using continue
+for i in range(10):
+    if i % 2 == 0:
+        continue
+    print(i)
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+</section>
+
+<!-- Section: nested loops -->
+<section id="nested-loops">
+<h2 class="text-2xl font-bold mb-2">Nested Loops</h2>
+<p>A <strong>nested loop</strong> is a loop inside another loop.</p>
+<pre><code># Nested for loops
+for i in range(3):
+    for j in range(2):
+        print("i =", i, ", j =", j)
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+</section>
+
+<nav class="flex justify-between my-6">
+<a href="python-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="python-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+</main>
+
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+<p>© 2025 Susil. All rights reserved.</p>
+</footer>
+
+<script>
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.style.backgroundColor = '#16a34a';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.style.backgroundColor = '#2563eb';
+    }, 1500);
+  });
+}
+</script>
+
+</body>
+</html>

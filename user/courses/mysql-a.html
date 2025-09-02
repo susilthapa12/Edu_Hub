@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MySQL Basics: Databases & Tables</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="mysql-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="mysql-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Creating a Database -->
+    <section id="create-database">
+      <h1 class="text-3xl font-bold mb-2">Creating a Database</h1>
+      <p>Use <code>CREATE DATABASE</code> to create a new database:</p>
+
+      <pre><code>-- Create a database named 'MySchool'
+CREATE DATABASE MySchool;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      <p>To use the database:</p>
+
+      <pre><code>USE MySchool;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Creating a Table -->
+    <section id="create-table" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Creating a Table</h2>
+      <p>Use <code>CREATE TABLE</code> to define a new table with columns:</p>
+
+      <pre><code>CREATE TABLE Students (
+    StudentID INT AUTO_INCREMENT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Age INT,
+    Grade VARCHAR(10)
+);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Inserting Data -->
+    <section id="insert-data" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Inserting Data</h2>
+      <p>Use <code>INSERT INTO</code> to add records:</p>
+
+      <pre><code>INSERT INTO Students (FirstName, LastName, Age, Grade)
+VALUES ('John', 'Doe', 15, '10th');
+
+INSERT INTO Students (FirstName, LastName, Age, Grade)
+VALUES ('Jane', 'Smith', 16, '11th');</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Querying Data -->
+    <section id="select-data" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Querying Data</h2>
+      <p>Use <code>SELECT</code> to view records:</p>
+
+      <pre><code>-- Select all columns
+SELECT * FROM Students;
+
+-- Select specific columns
+SELECT FirstName, LastName FROM Students;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Updating Data -->
+    <section id="update-data" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Updating Data</h2>
+      <p>Use <code>UPDATE</code> to modify records:</p>
+
+      <pre><code>UPDATE Students
+SET Grade = '11th'
+WHERE StudentID = 1;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Deleting Data -->
+    <section id="delete-data" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Deleting Data</h2>
+      <p>Use <code>DELETE</code> to remove records:</p>
+
+      <pre><code>DELETE FROM Students
+WHERE StudentID = 2;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="mysql-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="mysql-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

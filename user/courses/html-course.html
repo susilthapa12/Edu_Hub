@@ -1,56 +1,46 @@
 <!DOCTYPE html>
-<html lang="en" x-data="{ dark: false, search: '' }" :class="dark ? 'dark' : ''" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HTML Tutorial Advanced</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <style>
     body { font-family: 'Segoe UI', sans-serif; }
     iframe { border: 1px solid #ddd; width: 100%; min-height: 200px; }
-    pre { position: relative; }
+    pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+    code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
     .copy-btn {
       position: absolute; top: 8px; right: 8px;
       background: #2563eb; color: white; padding: 2px 6px; 
       font-size: 0.75rem; border-radius: 4px; cursor: pointer;
     }
-    .active-link { background-color: rgba(37, 99, 235, 0.1); font-weight: bold; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
   </style>
 </head>
-<body class="flex bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
 
-  <!-- Sidebar -->
-  <nav class="w-64 bg-white dark:bg-gray-800 shadow-md p-4 h-screen overflow-y-auto sticky top-0">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold">HTML Tutorial</h2>
-      <button @click="dark = !dark" class="px-2 py-1 rounded bg-gray-200 dark:bg-gray-700">
-        🌗
-      </button>
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
     </div>
-    <input x-model="search" type="text" placeholder="Search..." class="w-full mb-3 p-2 text-sm border rounded dark:bg-gray-700 dark:border-gray-600">
-    <ul class="space-y-1 text-sm">
-      <template x-for="link in [
-        {id:'intro',title:'HTML Introduction'},
-        {id:'basic',title:'HTML Basic'},
-        {id:'elements',title:'HTML Elements'},
-        {id:'attributes',title:'HTML Attributes'},
-        {id:'headings',title:'HTML Headings'},
-        {id:'paragraphs',title:'HTML Paragraphs'}
-      ].filter(l => l.title.toLowerCase().includes(search.toLowerCase()))">
-        <li>
-          <a :href="'#'+link.id" 
-             class="block p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
-             :class="window.location.hash.includes(link.id) ? 'active-link' : ''"
-             x-text="link.title">
-          </a>
-        </li>
-      </template>
-    </ul>
-  </nav>
+  </header>
 
-  <!-- Main content -->
-  <main class="flex-1 p-6 overflow-y-auto space-y-12">
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <div class="flex justify-between my-6">
+      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="html-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </div>
+
     <!-- Intro -->
     <section id="intro">
       <h1 class="text-3xl font-bold mb-2">HTML Introduction</h1>
@@ -61,7 +51,7 @@
     <section id="basic">
       <h2 class="text-2xl font-bold mb-2">HTML Basic Example</h2>
       <p class="mb-2">Every HTML document starts with a <code>&lt;!DOCTYPE html&gt;</code> declaration and contains <code>html</code>, <code>head</code>, and <code>body</code> elements.</p>
-      <pre class="bg-gray-100 dark:bg-gray-800 p-3 rounded overflow-x-auto"><code>&lt;!DOCTYPE html&gt;
+      <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
   &lt;title&gt;My First Page&lt;/title&gt;
@@ -71,7 +61,7 @@
   &lt;p&gt;This is my first webpage.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-      <button onclick="runCode('example1')" class="mt-2 bg-green-600 text-white px-3 py-1 rounded">Try It Yourself</button>
+      <button onclick="runCode('example1')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
       <iframe id="example1"></iframe>
     </section>
 
@@ -79,11 +69,11 @@
     <section id="elements">
       <h2 class="text-2xl font-bold mb-2">HTML Elements</h2>
       <p>HTML elements are building blocks of webpages. Examples include headings, paragraphs, links, and images.</p>
-      <pre class="bg-gray-100 dark:bg-gray-800 p-3 rounded overflow-x-auto"><code>&lt;h1&gt;Main Heading&lt;/h1&gt;
+      <pre><code>&lt;h1&gt;Main Heading&lt;/h1&gt;
 &lt;p&gt;A paragraph of text.&lt;/p&gt;
 &lt;a href="https://example.com"&gt;Visit Example&lt;/a&gt;
 &lt;img src="photo.jpg" alt="Sample Photo"&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-      <button onclick="runCode('example2')" class="mt-2 bg-green-600 text-white px-3 py-1 rounded">Try It Yourself</button>
+      <button onclick="runCode('example2')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
       <iframe id="example2"></iframe>
     </section>
 
@@ -91,21 +81,27 @@
     <section id="attributes">
       <h2 class="text-2xl font-bold mb-2">HTML Attributes</h2>
       <p>Attributes provide additional information about elements, usually in the form of <code>name="value"</code>.</p>
-      <pre class="bg-gray-100 dark:bg-gray-800 p-3 rounded overflow-x-auto"><code>&lt;a href="https://google.com" target="_blank"&gt;Open Google&lt;/a&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-      <button onclick="runCode('example3')" class="mt-2 bg-green-600 text-white px-3 py-1 rounded">Try It Yourself</button>
+      <pre><code>&lt;a href="https://google.com" target="_blank"&gt;Open Google&lt;/a&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <button onclick="runCode('example3')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
       <iframe id="example3"></iframe>
     </section>
 
-    <!-- Navigation -->
-    <div class="flex justify-between mt-10">
-      <a href="courses.html" class="bg-blue-500 text-white px-4 py-2 rounded">◀ Previous</a>
-      <a href="next.html" class="bg-blue-500 text-white px-4 py-2 rounded">Next ▶</a>
+    <!-- Navigation Bottom -->
+    <div class="flex justify-between my-6">
+      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="html-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
     </div>
 
-    <footer class="text-center text-gray-500 dark:text-gray-400">
-      <p>© 2025 HTML Tutorial - Advanced Edition</p>
-    </footer>
   </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
 
   <script>
     function runCode(id) {
@@ -125,5 +121,6 @@
       });
     }
   </script>
+
 </body>
 </html>

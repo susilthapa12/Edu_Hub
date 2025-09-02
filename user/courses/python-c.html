@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Strings, Input & Comments</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Segoe UI', sans-serif; }
+pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+<a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+</div>
+</header>
+
+<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+
+<nav class="flex justify-between my-6">
+<a href="python-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="python-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+<section id="strings">
+<h1 class="text-3xl font-bold mb-2">Python Strings</h1>
+<p>Strings are sequences of characters enclosed in quotes. Single (' ') or double (" ") quotes can be used.</p>
+<pre><code># Examples
+name = "Alice"
+greeting = 'Hello Python!'
+print(name)
+print(greeting)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h3 class="text-xl font-semibold mb-1">String Operations</h3>
+<pre><code># Concatenation
+first = "Hello"
+last = "World"
+full = first + " " + last
+print(full)  # Hello World
+
+# Repetition
+laugh = "Ha" * 3
+print(laugh)  # HaHaHa</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+</section>
+
+<section id="input">
+<h2 class="text-2xl font-bold mb-2">Python Input</h2>
+<p>Input lets the user type data. All input is treated as a string unless converted.</p>
+<pre><code# String input
+name = input("Enter your name: ")
+print("Hello, " + name + "!")
+
+# Numeric input
+age = int(input("Enter your age: "))
+print("You are", age, "years old.")</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+<p>Try these examples in a local Python environment or <a href="https://www.programiz.com/python-programming/online-compiler" target="_blank" class="text-blue-600 hover:underline">online Python compiler</a>.</p>
+</section>
+
+<section id="comments">
+<h2 class="text-2xl font-bold mb-2">Python Comments</h2>
+<p>Comments help explain your code. Python ignores them during execution.</p>
+<pre><code># Single-line comment
+print("Hello World")  # This prints Hello World
+
+'''
+Multi-line comment:
+You can use triple quotes to explain multiple lines.
+'''</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+</section>
+
+<nav class="flex justify-between my-6">
+<a href="python-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="python-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+</main>
+
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+<p>© 2025 Susil. All rights reserved.</p>
+</footer>
+
+<script>
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.style.backgroundColor = '#16a34a';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.style.backgroundColor = '#2563eb';
+    }, 1500);
+  });
+}
+</script>
+
+</body>
+</html>

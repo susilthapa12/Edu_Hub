@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Basics - JSX and Components</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="react-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="react-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- JSX Section -->
+    <section id="jsx-intro">
+      <h1 class="text-3xl font-bold mb-2">Introduction to JSX</h1>
+      <p>JSX is a syntax extension for JavaScript used with React to describe what the UI should look like.</p>
+      <p>It looks similar to HTML but comes with the full power of JavaScript.</p>
+      <pre><code>{`const element = <h1>Hello, React!</h1>;`}</code></pre>
+    </section>
+
+    <!-- Components Section -->
+    <section id="components">
+      <h2 class="text-2xl font-bold mb-2">React Components</h2>
+      <p>Components are reusable building blocks in React. They can be either:</p>
+      <ul class="list-disc ml-6 space-y-2">
+        <li>Function Components</li>
+        <li>Class Components</li>
+      </ul>
+      <p>Example of a simple function component:</p>
+      <pre><code>{`function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}`}</code></pre>
+    </section>
+
+    <!-- State & Props Section -->
+    <section id="state-props">
+      <h2 class="text-2xl font-bold mb-2">Props and State</h2>
+      <p>Props are inputs to components, while state is internal data that a component manages itself.</p>
+      <pre><code>function Counter() {
+  const [count, setCount] = React.useState(0);
+  return &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Clicked {count} times&lt;/button&gt;;
+}</code></pre>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="react-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="react-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

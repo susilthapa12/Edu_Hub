@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Events & Conditional Rendering</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="react-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="react-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- React Events Section -->
+    <section id="events">
+      <h1 class="text-3xl font-bold mb-2">React Events</h1>
+      <p>React handles events similarly to HTML, but with JSX syntax. Use camelCase for event names.</p>
+      <pre><code>{`function ClickButton() {
+  function handleClick() {
+    alert('Button clicked!');
+  }
+
+  return <button onClick={handleClick}>Click Me</button>;
+}`}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <p>React automatically passes the event object as an argument to event handlers:</p>
+      <pre><code>{`function InputChange() {
+  function handleChange(event) {
+    console.log(event.target.value);
+  }
+
+  return <input onChange={handleChange} />;
+}`}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Conditional Rendering Section -->
+    <section id="conditional-rendering">
+      <h2 class="text-2xl font-bold mb-2">Conditional Rendering</h2>
+      <p>You can render elements conditionally using JavaScript expressions inside JSX.</p>
+      <pre><code>{`function Greeting(props) {
+  const isLoggedIn = props.isLoggedIn;
+  return (
+    <div>
+      {isLoggedIn ? <h1>Welcome back!</h1> : <h1>Please sign in.</h1>}
+    </div>
+  );
+}`}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <p>Or use short-circuit evaluation for simpler conditions:</p>
+      <pre><code>{`function Mailbox(props) {
+  const unreadMessages = props.unreadMessages;
+  return (
+    <div>
+      {unreadMessages.length > 0 && <h2>You have {unreadMessages.length} unread messages.</h2>}
+    </div>
+  );
+}`}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Summary Section -->
+    <section id="summary">
+      <h2 class="text-2xl font-bold mb-2">Summary</h2>
+      <ul class="list-disc ml-6 space-y-2">
+        <li>React events use camelCase and JSX syntax.</li>
+        <li>Event handlers can access event objects directly.</li>
+        <li>Conditional rendering allows dynamic content display using ternary operators or short-circuit evaluation.</li>
+      </ul>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="react-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="react-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

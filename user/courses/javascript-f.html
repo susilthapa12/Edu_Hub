@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Loops</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    iframe { border: 1px solid #ddd; width: 100%; min-height: 200px; }
+    pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+    code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #2563eb; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="javascript-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="javascript-g.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Intro -->
+    <section id="intro">
+      <h1 class="text-3xl font-bold mb-2">JavaScript Loops</h1>
+      <p>
+        Loops let you run the same block of code multiple times.  
+        Instead of writing code again and again, you use a loop to repeat it automatically.
+      </p>
+    </section>
+
+    <!-- for Loop -->
+    <section id="for">
+      <h2 class="text-2xl font-bold mb-2">The for Loop</h2>
+      <p>
+        The <code>for</code> loop is used when you know how many times you want to run the code.
+      </p>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;p id="demo"&gt;&lt;/p&gt;
+  &lt;script&gt;
+    let text = "";
+    for (let i = 1; i &lt;= 5; i++) {
+      text += "Number " + i + "&lt;br&gt;";
+    }
+    document.getElementById("demo").innerHTML = text;
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <button onclick="runCode('example1')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
+      <iframe id="example1"></iframe>
+    </section>
+
+    <!-- while Loop -->
+    <section id="while">
+      <h2 class="text-2xl font-bold mb-2">The while Loop</h2>
+      <p>
+        The <code>while</code> loop runs as long as the condition is true.
+      </p>
+      <pre><code>let i = 1;
+while (i &lt;= 5) {
+  document.write("Number " + i + "&lt;br&gt;");
+  i++;
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- do...while Loop -->
+    <section id="do-while">
+      <h2 class="text-2xl font-bold mb-2">The do...while Loop</h2>
+      <p>
+        The <code>do...while</code> loop runs the code at least once,  
+        even if the condition is false.
+      </p>
+      <pre><code>let j = 6;
+do {
+  document.write("Number is " + j + "&lt;br&gt;");
+  j++;
+} while (j &lt;= 5);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- for...of Loop -->
+    <section id="for-of">
+      <h2 class="text-2xl font-bold mb-2">The for...of Loop</h2>
+      <p>
+        The <code>for...of</code> loop is used to loop through arrays, strings, or lists.
+      </p>
+      <pre><code>let colors = ["Red", "Green", "Blue"];
+for (let c of colors) {
+  document.write(c + "&lt;br&gt;");
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- for...in Loop -->
+    <section id="for-in">
+      <h2 class="text-2xl font-bold mb-2">The for...in Loop</h2>
+      <p>
+        The <code>for...in</code> loop is used to loop through object properties.
+      </p>
+      <pre><code>let person = {name: "John", age: 25, city: "New York"};
+for (let key in person) {
+  document.write(key + ": " + person[key] + "&lt;br&gt;");
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="javascript-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="javascript-g.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    function runCode(id) {
+      const iframe = document.getElementById(id);
+      const code = iframe.previousElementSibling.previousElementSibling.innerText;
+      iframe.srcdoc = code;
+      iframe.onload = () => {
+        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 40 + 'px';
+      };
+    }
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#2563eb';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

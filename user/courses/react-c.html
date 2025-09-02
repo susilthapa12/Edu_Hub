@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React JSX, Props & State</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="react-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="react-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- JSX Section -->
+    <section id="jsx">
+      <h1 class="text-3xl font-bold mb-2">Understanding JSX</h1>
+      <p>JSX is a syntax extension for JavaScript. It looks similar to HTML and allows you to write UI components easily.</p>
+      <pre><code>{`const element = <h1>Hello, React!</h1>;`}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <p>JSX expressions can include JavaScript inside curly braces:</p>
+      <pre><code>{`const name = 'Mohan';
+const greeting = <h1>Hello, {name}!</h1>;`}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Props Section -->
+    <section id="props">
+      <h2 class="text-2xl font-bold mb-2">Props in React</h2>
+      <p>Props are inputs to components, allowing data to be passed from parent to child.</p>
+      <pre><code>{`function Welcome(props) {
+  return <h1>Hello, {props.name}!</h1>;
+}
+
+<Welcome name="Mohan" />`}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- State Section -->
+    <section id="state">
+      <h2 class="text-2xl font-bold mb-2">State in React</h2>
+      <p>State is internal data managed by a component. Changing state triggers a re-render.</p>
+      <pre><code>function Counter() {
+  const [count, setCount] = React.useState(0);
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Clicked {'{'}count{'}'} times&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Click me&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Summary Section -->
+    <section id="summary">
+      <h2 class="text-2xl font-bold mb-2">Summary</h2>
+      <ul class="list-disc ml-6 space-y-2">
+        <li>JSX allows mixing HTML-like syntax with JavaScript.</li>
+        <li>Props allow passing data to components.</li>
+        <li>State allows components to manage internal data and respond to user interactions.</li>
+      </ul>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="react-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="react-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

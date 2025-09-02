@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHP Control Structures</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Segoe UI', sans-serif; }
+pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+<a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+</div>
+</header>
+
+<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+
+<nav class="flex justify-between my-6">
+<a href="php-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="php-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+<!-- Section: PHP Control Structures -->
+<section id="control-structures">
+<h1 class="text-3xl font-bold mb-2">PHP Control Structures</h1>
+<p>Control structures let you control the flow of your code: conditions and loops.</p>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">1. if, else, elseif</h2>
+<pre><code>&lt;?php
+$age = 20;
+
+if ($age &gt;= 18) {
+    echo "You are an adult.";
+} elseif ($age &gt;= 13) {
+    echo "You are a teenager.";
+} else {
+    echo "You are a child.";
+}
+?&gt;
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">2. switch Statement</h2>
+<pre><code>&lt;?php
+$day = "Tuesday";
+
+switch($day) {
+    case "Monday":
+        echo "Today is Monday";
+        break;
+    case "Tuesday":
+        echo "Today is Tuesday";
+        break;
+    default:
+        echo "Another day";
+}
+?&gt;
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">3. for Loop</h2>
+<pre><code>&lt;?php
+for ($i = 1; $i &lt;= 5; $i++) {
+    echo "Number: $i &lt;br&gt;";
+}
+?&gt;
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">4. while Loop</h2>
+<pre><code>&lt;?php
+$i = 1;
+while ($i &lt;= 5) {
+    echo "Number: $i &lt;br&gt;";
+    $i++;
+}
+?&gt;
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">5. do-while Loop</h2>
+<pre><code>&lt;?php
+$i = 1;
+do {
+    echo "Number: $i &lt;br&gt;";
+    $i++;
+} while ($i &lt;= 5);
+?&gt;
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">6. foreach Loop</h2>
+<pre><code>&lt;?php
+$fruits = array("Apple", "Banana", "Cherry");
+
+foreach ($fruits as $fruit) {
+    echo $fruit . "&lt;br&gt;";
+}
+?&gt;
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+</section>
+
+<nav class="flex justify-between my-6">
+<a href="php-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="php-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+</main>
+
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+<p>© 2025 Susil. All rights reserved.</p>
+</footer>
+
+<script>
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.style.backgroundColor = '#16a34a';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.style.backgroundColor = '#2563eb';
+    }, 1500);
+  });
+}
+</script>
+
+</body>
+</html>

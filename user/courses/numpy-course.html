@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NumPy Introduction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="python-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="numpy-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- NumPy Introduction -->
+    <section id="intro">
+      <h1 class="text-3xl font-bold mb-2">What is NumPy?</h1>
+      <p>NumPy is a Python library used for working with arrays. It also has functions for linear algebra, Fourier transforms, and matrices.</p>
+      <p>Created in 2005 by <strong>Travis Oliphant</strong>, NumPy is an open-source project.</p>
+      <p>NumPy stands for <strong>Numerical Python</strong>.</p>
+    </section>
+
+    <!-- Why Use NumPy -->
+    <section id="why-use" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Why Use NumPy?</h2>
+      <p>Python lists are slow for numerical computations. NumPy provides the <code>ndarray</code> object, which is up to 50x faster than lists.</p>
+      <p>NumPy arrays support many built-in operations for fast and efficient computation, making them ideal for data science:</p>
+      <ul class="list-disc ml-6">
+        <li>Arrays are stored contiguously in memory (locality of reference).</li>
+        <li>Optimized for modern CPU architectures.</li>
+        <li>Efficient mathematical operations on large datasets.</li>
+      </ul>
+    </section>
+
+    <!-- NumPy and Programming Languages -->
+    <section id="language" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Which Language is NumPy Written In?</h2>
+      <p>NumPy is primarily a Python library. However, computationally intensive parts are written in <strong>C or C++</strong> for performance.</p>
+      <p>Its source code is available on <a href="https://github.com/numpy/numpy" target="_blank" class="text-blue-600 hover:underline">GitHub</a>.</p>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="python-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="numpy-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

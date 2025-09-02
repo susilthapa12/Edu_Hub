@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Variables and Data Types</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+    code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #2563eb; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="python-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="python-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Section: Variables -->
+    <section id="variables">
+      <h1 class="text-3xl font-bold mb-2">Python Variables</h1>
+      <p>
+        A <strong>variable</strong> is a name used to store data in memory. You can store numbers, text, or other types of data.
+      </p>
+      <p><strong>Key points:</strong></p>
+      <ul class="list-disc ml-6">
+        <li>You do not need to declare the data type explicitly.</li>
+        <li>Variable names should be meaningful and start with a letter or underscore.</li>
+        <li>Python is case-sensitive: <code>name</code> and <code>Name</code> are different variables.</li>
+      </ul>
+      <pre><code># Storing different types of data in variables
+x = 10          # integer
+name = "Alice"  # string
+pi = 3.14       # float
+is_active = True  # boolean
+
+print(x, name, pi, is_active)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Section: Data Types -->
+    <section id="data-types">
+      <h2 class="text-2xl font-bold mb-2">Python Data Types</h2>
+      <p>Python has several built-in data types. Some common ones are:</p>
+      <ul class="list-disc ml-6">
+        <li><strong>int</strong>: Whole numbers (e.g., 5, -20)</li>
+        <li><strong>float</strong>: Decimal numbers (e.g., 3.14, -0.5)</li>
+        <li><strong>str</strong>: Text (e.g., "Hello Python")</li>
+        <li><strong>bool</strong>: True or False values</li>
+      </ul>
+      <pre><code># Examples of data types
+age = 25           # int
+height = 5.9       # float
+city = "London"    # string
+is_student = False # boolean
+
+print(age, height, city, is_student)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Section: Check Data Type -->
+    <section id="type-function">
+      <h2 class="text-2xl font-bold mb-2">Check Data Type</h2>
+      <p>You can check the type of a variable using the <code>type()</code> function:</p>
+      <pre><code>x = 42
+y = "Python"
+
+print(type(x))  # Output: &lt;class 'int'&gt;
+print(type(y))  # Output: &lt;class 'str'&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Section: Basic Operations -->
+    <section id="basic-operations">
+      <h2 class="text-2xl font-bold mb-2">Basic Operations</h2>
+      <p>Python can perform arithmetic, comparison, and logical operations easily.</p>
+
+      <h3 class="text-xl font-semibold mb-1">Arithmetic Operations</h3>
+      <pre><code>a = 10
+b = 3
+
+print(a + b)  # Addition: 13
+print(a - b)  # Subtraction: 7
+print(a * b)  # Multiplication: 30
+print(a / b)  # Division: 3.3333
+print(a % b)  # Modulus: 1 (remainder)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      <h3 class="text-xl font-semibold mb-1">Comparison Operations</h3>
+      <pre><code>a = 10
+b = 3
+
+print(a == b)  # Equal? False
+print(a &gt; b) # Greater than? True
+print(a &lt; b) # Less than? False</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="python-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="python-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#2563eb';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

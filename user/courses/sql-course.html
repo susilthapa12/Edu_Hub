@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Introduction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="sql-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Introduction -->
+    <section id="intro">
+      <h1 class="text-3xl font-bold mb-2">Introduction to SQL</h1>
+      <p>SQL stands for <strong>Structured Query Language</strong> and is the standard language for accessing and manipulating databases.</p>
+      <p>SQL became a standard of the American National Standards Institute (ANSI) in 1986, and of the International Organization for Standardization (ISO) in 1987.</p>
+    </section>
+
+    <!-- What is SQL -->
+    <section id="what-is-sql" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">What Can SQL Do?</h2>
+      <ul class="list-disc ml-6 space-y-1">
+        <li>Execute queries against a database</li>
+        <li>Retrieve data from a database</li>
+        <li>Insert records in a database</li>
+        <li>Update records in a database</li>
+        <li>Delete records from a database</li>
+        <li>Create new databases</li>
+        <li>Create new tables in a database</li>
+        <li>Create stored procedures and views</li>
+        <li>Set permissions on tables, procedures, and views</li>
+      </ul>
+      <p>Note: Different SQL versions exist, but all support the major commands (SELECT, UPDATE, DELETE, INSERT, WHERE).</p>
+    </section>
+
+    <!-- Using SQL in Your Website -->
+    <section id="using-sql" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Using SQL in Your Website</h2>
+      <ul class="list-disc ml-6 space-y-1">
+        <li>An RDBMS database program (e.g., MS Access, SQL Server, MySQL)</li>
+        <li>A server-side scripting language like PHP or ASP</li>
+        <li>SQL to query and manipulate data</li>
+        <li>HTML/CSS to style your pages</li>
+      </ul>
+    </section>
+
+    <!-- RDBMS -->
+    <section id="rdbms" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Relational Database Management System (RDBMS)</h2>
+      <p>RDBMS is the foundation of SQL and modern database systems such as MS SQL Server, IBM DB2, Oracle, MySQL, and Microsoft Access.</p>
+      <p>Data is stored in <strong>tables</strong> consisting of rows and columns.</p>
+
+      <pre><code>SELECT * FROM Customers;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      <p>Each <strong>row</strong> is a record, and each <strong>column</strong> is a field storing specific data.</p>
+      <p>Example table fields: CustomerID, CustomerName, ContactName, Address, City, PostalCode, Country.</p>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="sql-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

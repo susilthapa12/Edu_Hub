@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced CSS - Animations & Pseudo-Classes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Header -->
+  <header class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold">CSS Tutorial</h1>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto p-6 bg-white shadow rounded my-6">
+
+    <!-- Navigation Buttons (Top) -->
+    <div class="flex justify-between mb-6">
+      <a href="css-d.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        ◀ Previous
+      </a>
+      <a href="index.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        Next ▶
+      </a>
+    </div>
+
+    <!-- Content -->
+    <h2 class="text-2xl font-bold mb-4 text-blue-600">Advanced CSS: Animations, Transitions & Pseudo-Classes</h2>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">CSS Transitions</h3>
+    <p class="mb-4">
+      Transitions allow changes to property values to occur smoothly over a specified duration.
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>button {
+  background-color: blue;
+  color: white;
+  transition: background-color 0.5s ease;
+}
+
+button:hover {
+  background-color: green;
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">CSS Animations</h3>
+    <p class="mb-4">
+      Animations let you create more complex motion effects by defining keyframes.
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>@keyframes slide {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(100px); }
+  100% { transform: translateX(0); }
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  animation: slide 2s infinite;
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Pseudo-Classes</h3>
+    <p class="mb-4">
+      Pseudo-classes define the special state of an element. For example, <code>:hover</code>, <code>:focus</code>, <code>:nth-child()</code>:
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>p:first-child {
+  color: blue;
+}
+
+a:hover {
+  text-decoration: underline;
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Pseudo-Elements</h3>
+    <p class="mb-4">
+      Pseudo-elements allow you to style specific parts of an element. For example, <code>::before</code> and <code>::after</code>:
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>h1::after {
+  content: " ★";
+  color: gold;
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Chapter Summary</h3>
+    <ul class="list-disc list-inside mb-4">
+      <li>Use <code>transition</code> for smooth property changes</li>
+      <li>Use <code>@keyframes</code> and <code>animation</code> for advanced motions</li>
+      <li>Pseudo-classes represent element states like <code>:hover</code> or <code>:first-child</code></li>
+      <li>Pseudo-elements target part of elements, e.g., <code>::before</code> or <code>::after</code></li>
+      <li>Combining transitions, animations, and pseudo-selectors allows rich UI effects</li>
+    </ul>
+
+    <!-- Navigation Buttons (Bottom) -->
+    <div class="flex justify-between mt-6">
+      <a href="css-d.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        ◀ Previous
+      </a>
+      <a href="index.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        Next ▶
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-600 text-white p-4 mt-6">
+    <div class="container mx-auto text-center">
+      &copy; 2025 Susil. All rights reserved.
+    </div>
+  </footer>
+
+</body>
+</html>

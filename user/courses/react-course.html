@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Introduction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="react-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Intro -->
+    <section id="intro">
+      <h1 class="text-3xl font-bold mb-2">What is React?</h1>
+      <p>React is a front-end JavaScript library used to build interactive user interfaces.</p>
+      <p>React was developed by Facebook Software Engineer <strong>Jordan Walke</strong>.</p>
+      <p>It is also known as <strong>React.js</strong> or <strong>ReactJS</strong> and is used to create reusable UI components.</p>
+    </section>
+
+    <!-- How React Works -->
+    <section id="how-react-works">
+      <h2 class="text-2xl font-bold mb-2">How does React Work?</h2>
+      <p>React uses a <strong>Virtual DOM</strong> in memory to manage updates efficiently.</p>
+      <ul class="list-disc ml-6 space-y-2">
+        <li>React finds out what changes have been made.</li>
+        <li>Only the affected parts of the UI are updated.</li>
+        <li>This improves performance and ensures predictable UI updates.</li>
+      </ul>
+    </section>
+
+    <!-- Prerequisites -->
+    <section id="prerequisites">
+      <h2 class="text-2xl font-bold mb-2">What You Should Already Know</h2>
+      <ul class="list-disc ml-6 space-y-2">
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+      </ul>
+    </section>
+
+    <!-- React History -->
+    <section id="history">
+      <h2 class="text-2xl font-bold mb-2">React History</h2>
+      <p>The latest version of React.JS is <strong>19.0.0</strong> (December 2024).</p>
+      <p>Initial public release was <strong>0.3.0</strong> in July 2013. First used internally in Facebook's Newsfeed (2011).</p>
+      <p>Created by Facebook Software Engineer <strong>Jordan Walke</strong>.</p>
+    </section>
+
+    <!-- Why Learn React -->
+    <section id="why-learn">
+      <h2 class="text-2xl font-bold mb-2">Why Learn React?</h2>
+      <ul class="list-disc ml-6 space-y-2">
+        <li>Reusable UI components</li>
+        <li>Fast rendering with Virtual DOM</li>
+        <li>Strong community support</li>
+        <li>Integration with modern tools like Redux and Next.js</li>
+      </ul>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="react-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

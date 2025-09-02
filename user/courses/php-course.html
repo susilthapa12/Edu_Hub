@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction to PHP</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Segoe UI', sans-serif; }
+pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+<a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+</div>
+</header>
+
+<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+
+<nav class="flex justify-between my-6">
+<a href="python-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="php-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+<!-- Section: PHP Introduction -->
+<section id="php-intro">
+<h1 class="text-3xl font-bold mb-2">PHP Introduction</h1>
+<p class="mb-4">PHP code is executed on the server, and the result is returned to the browser as plain HTML.</p>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">What You Should Already Know</h2>
+<p class="mb-2">Before learning PHP, you should have basic knowledge of:</p>
+<ul class="list-disc list-inside mb-4">
+  <li>HTML</li>
+  <li>CSS</li>
+  <li>JavaScript</li>
+</ul>
+<p>If you need to learn these first, check the tutorials on our <a href="index.html" class="text-blue-600 hover:underline">Home page</a>.</p>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">What is PHP?</h2>
+<ul class="list-disc list-inside mb-4">
+  <li>PHP stands for <strong>"PHP: Hypertext Preprocessor"</strong></li>
+  <li>It is an open-source scripting language</li>
+  <li>PHP code is executed on the server</li>
+  <li>Free to download and use</li>
+</ul>
+<p class="mb-4">PHP is powerful and popular: it runs WordPress, powers large social networks, and is simple enough for beginners!</p>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">What is a PHP File?</h2>
+<ul class="list-disc list-inside mb-4">
+  <li>Can contain text, HTML, CSS, JavaScript, and PHP code</li>
+  <li>PHP code is executed on the server and returned as plain HTML</li>
+  <li>File extension is <code>.php</code></li>
+</ul>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">What Can PHP Do?</h2>
+<ul class="list-disc list-inside mb-4">
+  <li>Generate dynamic page content</li>
+  <li>Create, open, read, write, delete, and close files on the server</li>
+  <li>Collect form data and send/receive cookies</li>
+  <li>Add, delete, modify data in your database</li>
+  <li>Control user access and encrypt data</li>
+  <li>Output not only HTML but also images, PDF, XML, or any text</li>
+</ul>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">Why PHP?</h2>
+<ul class="list-disc list-inside mb-4">
+  <li>Runs on Windows, Linux, Unix, Mac OS X, etc.</li>
+  <li>Compatible with most servers (Apache, IIS, etc.)</li>
+  <li>Supports a wide range of databases</li>
+  <li>Free and efficient to run</li>
+  <li>Easy to learn</li>
+</ul>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">What's New in PHP 7?</h2>
+<ul class="list-disc list-inside mb-4">
+  <li>Much faster than PHP 5.6</li>
+  <li>Improved error handling</li>
+  <li>Stricter type declarations for function arguments</li>
+  <li>New operators like the spaceship operator (<code>&lt;=&gt;</code>)</li>
+</ul>
+</section>
+
+<!-- Section: Basic PHP Example -->
+<section id="php-example">
+<h2 class="text-2xl font-bold mt-6 mb-2">Basic PHP Example</h2>
+<p class="mb-2">PHP code is written inside <code>&lt;?php ... ?&gt;</code> tags.</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h1&gt;My first PHP page&lt;/h1&gt;
+
+&lt;?php
+echo "Hello World!";
+?&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+</section>
+
+<nav class="flex justify-between my-6">
+<a href="python-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="php-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+</main>
+
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+<p>© 2025 Susil. All rights reserved.</p>
+</footer>
+
+<script>
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.style.backgroundColor = '#16a34a';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.style.backgroundColor = '#2563eb';
+    }, 1500);
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cybersecurity: Threats & Vulnerabilities</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="cybersecurity-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="cybersecurity-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Cybersecurity Threats -->
+    <section id="threats">
+      <h1 class="text-3xl font-bold mb-4">Cybersecurity Threats & Vulnerabilities</h1>
+      <p>
+        Cyber threats are malicious acts that aim to damage data, steal information, or disrupt digital life. Understanding threats is key to building defenses.
+      </p>
+      <h2 class="text-2xl font-bold mt-4 mb-2">Types of Threats:</h2>
+      <ul class="list-disc ml-6 space-y-1">
+        <li><strong>Malware:</strong> Viruses, worms, trojans, ransomware.</li>
+        <li><strong>Phishing:</strong> Fraudulent attempts to steal sensitive information.</li>
+        <li><strong>Denial-of-Service:</strong> Overloading systems to make them unavailable.</li>
+        <li><strong>SQL Injection:</strong> Exploiting web application databases.</li>
+        <li><strong>Zero-Day Exploits:</strong> Attacks on unknown vulnerabilities.</li>
+        <li><strong>Man-in-the-Middle:</strong> Intercepting communication between parties.</li>
+      </ul>
+      <p class="mt-4">
+        Each threat type requires specific countermeasures, which we will explore in the next sections.
+      </p>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="cybersecurity-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="cybersecurity-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Django Models & ORM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="django-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="django-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Django Models -->
+    <section id="models">
+      <h1 class="text-3xl font-bold mb-2">Django Models</h1>
+      <p>Models define the structure of your database in Django using Python classes.</p>
+      
+      <h3 class="text-xl font-semibold mb-1 mt-4">Model Example</h3>
+      <pre><code>from django.db import models
+
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)
+    published_date = models.DateField()
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __str__(self):
+        return self.title
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- ORM Queries -->
+    <section id="orm">
+      <h2 class="text-2xl font-bold mb-2">Django ORM Queries</h2>
+      <p>Django ORM allows you to interact with your database using Python instead of SQL.</p>
+
+      <h3 class="text-xl font-semibold mb-1 mt-4">Basic Queries</h3>
+      <pre><code># Get all books
+books = Book.objects.all()
+
+# Filter books by author
+books_by_author = Book.objects.filter(author='John Doe')
+
+# Get a single book
+book = Book.objects.get(id=1)
+
+# Exclude certain records
+books_not_by_author = Book.objects.exclude(author='Jane Doe')
+
+# Order books by published date
+books_ordered = Book.objects.order_by('published_date')
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      <h3 class="text-xl font-semibold mb-1 mt-4">Create, Update, Delete</h3>
+      <pre><code># Create a new book
+new_book = Book.objects.create(
+    title='Python 101',
+    author='Alice',
+    published_date='2025-01-01',
+    price=29.99
+)
+
+# Update a book
+book_to_update = Book.objects.get(id=1)
+book_to_update.price = 24.99
+book_to_update.save()
+
+# Delete a book
+book_to_delete = Book.objects.get(id=2)
+book_to_delete.delete()
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Advanced Django Features -->
+    <section id="advanced">
+      <h2 class="text-2xl font-bold mb-2">Advanced Django Features</h2>
+
+      <h3 class="text-xl font-semibold mb-1 mt-4">Relationships</h3>
+      <p>Models can relate to each other using ForeignKey, ManyToManyField, and OneToOneField.</p>
+      <pre><code>class Author(models.Model):
+    name = models.CharField(max_length=100)
+
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      <h3 class="text-xl font-semibold mb-1 mt-4">Model Meta Options</h3>
+      <pre><code>class Book(models.Model):
+    title = models.CharField(max_length=200)
+
+    class Meta:
+        ordering = ['title']  # Default ordering
+        verbose_name = 'Book'
+        verbose_name_plural = 'Books'
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      <h3 class="text-xl font-semibold mb-1 mt-4">Custom Model Methods</h3>
+      <pre><code>class Book(models.Model):
+    title = models.CharField(max_length=200)
+
+    def is_long_title(self):
+        return len(self.title) > 50
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="django-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="django-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

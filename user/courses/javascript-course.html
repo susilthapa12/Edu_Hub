@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Tutorial Introduction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    iframe { border: 1px solid #ddd; width: 100%; min-height: 200px; }
+    pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+    code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #2563eb; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="html-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="javascript-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Intro -->
+    <section id="intro">
+      <h1 class="text-3xl font-bold mb-2">JavaScript Introduction</h1>
+      <p>JavaScript is the programming language of the web. It can update and change both HTML and CSS. It can calculate, manipulate and validate data.</p>
+    </section>
+
+    <!-- Why Study -->
+    <section id="why-js">
+      <h2 class="text-2xl font-bold mb-2">Why Study JavaScript?</h2>
+      <p>JavaScript is one of the 3 languages all web developers must learn:</p>
+      <ul class="list-decimal list-inside space-y-1 mt-2">
+        <li><strong>HTML</strong> to define the content of web pages</li>
+        <li><strong>CSS</strong> to specify the layout of web pages</li>
+        <li><strong>JavaScript</strong> to program the behavior of web pages</li>
+      </ul>
+    </section>
+
+    <!-- Change Content -->
+    <section id="change-content">
+      <h2 class="text-2xl font-bold mb-2">JavaScript Can Change HTML Content</h2>
+      <p>One of many JavaScript HTML methods is <code>getElementById()</code>. The example below finds an HTML element and changes its content:</p>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;p id="demo"&gt;Original text&lt;/p&gt;
+  &lt;script&gt;
+    document.getElementById("demo").innerHTML = "Hello JavaScript";
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <button onclick="runCode('example1')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
+      <iframe id="example1"></iframe>
+    </section>
+
+    <!-- Double vs Single Quotes -->
+    <section id="quotes">
+      <h2 class="text-2xl font-bold mb-2">JavaScript accepts both double and single quotes</h2>
+      <pre><code>document.getElementById("demo").innerHTML = "Hello JavaScript";
+document.getElementById('demo').innerHTML = 'Hello JavaScript';</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Change Attributes -->
+    <section id="attributes">
+      <h2 class="text-2xl font-bold mb-2">JavaScript Can Change HTML Attribute Values</h2>
+      <p>In this example JavaScript changes the value of the <code>src</code> attribute of an image:</p>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;img id="myImage" src="pic_off.gif" style="width:100px"&gt;
+  &lt;button onclick="document.getElementById('myImage').src='pic_on.gif'"&gt;Turn on the light&lt;/button&gt;
+  &lt;button onclick="document.getElementById('myImage').src='pic_off.gif'"&gt;Turn off the light&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <button onclick="runCode('example2')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
+      <iframe id="example2"></iframe>
+    </section>
+
+    <!-- Change Styles -->
+    <section id="styles">
+      <h2 class="text-2xl font-bold mb-2">JavaScript Can Change HTML Styles</h2>
+      <pre><code>document.getElementById("demo").style.fontSize = "35px";</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Hide Elements -->
+    <section id="hide">
+      <h2 class="text-2xl font-bold mb-2">JavaScript Can Hide HTML Elements</h2>
+      <pre><code>document.getElementById("demo").style.display = "none";</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Show Elements -->
+    <section id="show">
+      <h2 class="text-2xl font-bold mb-2">JavaScript Can Show HTML Elements</h2>
+      <pre><code>document.getElementById("demo").style.display = "block";</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="html-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="javascript-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    function runCode(id) {
+      const iframe = document.getElementById(id);
+      const code = iframe.previousElementSibling.previousElementSibling.innerText;
+      iframe.srcdoc = code;
+      iframe.onload = () => {
+        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 40 + 'px';
+      };
+    }
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#2563eb';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

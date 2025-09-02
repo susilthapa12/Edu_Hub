@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TinyLang – Simple HTML Compiler</title>
+  <style>
+    :root { --bg:#0f172a; --panel:#111827; --ink:#e5e7eb; --muted:#9ca3af; }
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.4 system-ui,Segoe UI,Roboto,Arial}
+    header{padding:16px 20px;border-bottom:1px solid #1f2937;background:#0b1222;display:flex;gap:12px;align-items:center}
+    header h1{font-size:16px;margin:0;font-weight:600}
+    main{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
+    .card{background:var(--panel);border:1px solid #1f2937;border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+    .card header{background:#0f172a;border:none}
+    textarea, pre, code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+    textarea{flex:1;resize:vertical;min-height:260px;padding:12px;background:#0b1220;color:var(--ink);border:none;outline:none}
+    pre{margin:0;padding:12px;white-space:pre-wrap;word-wrap:break-word}
+    .toolbar{display:flex;gap:8px;padding:10px;border-top:1px solid #1f2937;background:#0f172a}
+    button{background:#2563eb;border:0;color:white;border-radius:10px;padding:8px 12px;cursor:pointer}
+    button.secondary{background:#374151}
+    button:disabled{opacity:.6;cursor:not-allowed}
+    .row{display:flex;gap:8px;align-items:center}
+    select, input[type="file"]{background:#0b1220;color:var(--ink);border:1px solid #1f2937;border-radius:10px;padding:6px 8px}
+    .hint{color:var(--muted);font-size:12px;padding:0 12px 12px}
+    @media (max-width: 900px){ main{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>💡 TinyLang — runs fully in your browser</h1>
+    <div class="row">
+      <select id="examples"></select>
+      <button id="loadExample" class="secondary" title="Load example into editor">Load example</button>
+    </div>
+  </header>
+  <main>
+    <section class="card">
+      <header><strong style="opacity:.9">Source (.tiny)</strong></header>
+      <textarea id="src" spellcheck="false"></textarea>
+      <div class="hint">Language: <code>let</code>, arithmetic, <code>if/else</code>, <code>while</code>, <code>fn</code>, <code>return</code>, <code>print</code>.<br>End statements with <code>;</code>.</div>
+      <div class="toolbar">
+        <button id="run">▶ Run</button>
+        <button id="toJs" class="secondary"></> Show JS</button>
+        <button id="downloadJs" class="secondary">⬇ Save JS</button>
+        <input type="file" id="openFile" accept=".tiny,.txt" />
+      </div>
+    </section>
+
+    <section class="card">
+      <header><strong style="opacity:.9">Output</strong></header>
+      <pre id="out"></pre>
+      <header><strong style="opacity:.9">Generated JavaScript</strong></header>
+      <pre id="js"></pre>
+    </section>
+  </main>
+
+  <script>
+  // ====== TinyLang Compiler (browser) ======
+  class Token { constructor(type, lexeme, literal, line, col){ this.type=type; this.lexeme=lexeme; this.literal=literal; this.line=line; this.col=col; } }
+  const KEYWORDS = new Set(['let','if','else','while','fn','return','true','false','print']);
+  class Lexer {
+    constructor(source){ this.source=source; this.start=0; this.current=0; this.line=1; this.col=1; this.tokens=[]; }
+    isAtEnd(){ return this.current>=this.source.length; }
+    advance(){ const ch=this.source[this.current++]; if(ch==='\n'){this.line++; this.col=1;} else {this.col++;} return ch; }
+    peek(){ return this.isAtEnd()?'\0':this.source[this.current]; }
+    peekNext(){ return (this.current+1>=this.source.length)?'\0':this.source[this.current+1]; }
+    match(x){ if(this.isAtEnd())return false; if(this.source[this.current]!==x) return false; this.current++; this.col++; return true; }
+    addToken(type,literal=null){ const text=this.source.slice(this.start,this.current); this.tokens.push(new Token(type,text,literal,this.line,this.col)); }
+    isDigit(c){ return c>='0' && c<='9'; }
+    isAlpha(c){ return /[A-Za-z_]/.test(c); }
+    isAlphaNumeric(c){ return /[A-Za-z0-9_]/.test(c); }
+    error(msg){ throw new Error(`[Lexer @ ${this.line}:${this.col}] ${msg}`); }
+    scanToken(){ let c=this.advance();
+      switch(c){
+        case ' ': case '\\r': case '\\t': break;
+        case '\n': break;
+        case '/':
+          if(this.match('/')){ while(this.peek()!='\n' && !this.isAtEnd()) this.advance(); }
+          else if(this.match('*')){ while(!(this.peek()==='*' && this.peekNext()==='/') && !this.isAtEnd()) this.advance(); if(!this.isAtEnd()){ this.advance(); this.advance(); } }
+          else { this.addToken('SYMBOL'); }
+          break;
+        case '(': case ')': case '{': case '}': case ',': case ';': case '+': case '-': case '*': case '%': this.addToken('SYMBOL'); break;
+        case '!': this.addToken(this.match('=')?'SYMBOL':'SYMBOL'); break;
+        case '=': this.addToken(this.match('=')?'SYMBOL':'SYMBOL'); break;
+        case '<': this.addToken(this.match('=')?'SYMBOL':'SYMBOL'); break;
+        case '>': this.addToken(this.match('=')?'SYMBOL':'SYMBOL'); break;
+        case '&': if(this.match('&')) this.addToken('SYMBOL'); else this.error('Unexpected & (use &&)'); break;
+        case '|': if(this.match('|')) this.addToken('SYMBOL'); else this.error('Unexpected | (use ||)'); break;
+        case '"': case "'": { const quote=c; let value=''; while(this.peek()!==quote && !this.isAtEnd()){ if(this.peek()==='\n'){this.line++; this.col=1;} if(this.peek()==='\\'){ this.advance(); const esc=this.advance(); const map={n:'\n', r:'\r', t:'\t', '\\':'\\', '"':'"', "'":"'"}; value+= map[esc] ?? esc; } else { value+=this.advance(); } } if(this.isAtEnd()) this.error('Unterminated string'); this.advance(); this.addToken('STRING', value); break; }
+        default:
+          if(this.isDigit(c)){ while(this.isDigit(this.peek())) this.advance(); if(this.peek()==='.' && this.isDigit(this.peekNext())){ this.advance(); while(this.isDigit(this.peek())) this.advance(); } const num=Number(this.source.slice(this.start,this.current)); this.addToken('NUMBER', num); }
+          else if(this.isAlpha(c)){ while(this.isAlphaNumeric(this.peek())) this.advance(); const text=this.source.slice(this.start,this.current); if(KEYWORDS.has(text)) this.addToken('KEYWORD'); else this.addToken('IDENT'); }
+          else { this.error(`Unexpected character '${c}'`); }
+      }
+    }
+    lex(){ while(!this.isAtEnd()){ this.start=this.current; this.scanToken(); } this.tokens.push(new Token('EOF','',null,this.line,this.col)); return this.tokens; }
+  }
+
+  class Parser {
+    constructor(tokens){ this.tokens=tokens; this.current=0; }
+    peek(){ return this.tokens[this.current]; }
+    isAtEnd(){ return this.peek().type==='EOF'; }
+    previous(){ return this.tokens[this.current-1]; }
+    advance(){ if(!this.isAtEnd()) this.current++; return this.previous(); }
+    check(type,lexeme=null){ if(this.isAtEnd()) return false; const t=this.peek(); if(t.type!==type) return false; if(lexeme!==null && t.lexeme!==lexeme) return false; return true; }
+    match(...preds){ for(const p of preds){ if(typeof p==='string'){ if(this.check('SYMBOL',p) || this.check('KEYWORD',p)){ this.advance(); return true; } } else if(Array.isArray(p)){ const [type,lex]=p; if(this.check(type,lex)){ this.advance(); return true; } } } return false; }
+    consume(type,lex,msg){ if(this.check(type,lex)) return this.advance(); this.errorAtCurrent(msg+` (expected ${type} '${lex}')`); }
+    errorAtCurrent(msg){ const t=this.peek(); throw new Error(`[Parser near '${t.lexeme}' @ token ${this.current}] ${msg}`); }
+
+    parseProgram(){ const body=[]; while(!this.isAtEnd()){ body.push(this.declaration()); } return {type:'Program', body}; }
+    declaration(){ if(this.match(['KEYWORD','fn'])) return this.functionDecl(); if(this.match(['KEYWORD','let'])) return this.varDecl(); return this.statement(); }
+    functionDecl(){ const name=this.consume('IDENT',null,'Function name required'); this.consume('SYMBOL','(','Expected ( after function name'); const params=[]; if(!this.check('SYMBOL',')')){ do{ const id=this.consume('IDENT',null,'Parameter name required'); params.push({type:'Identifier', name:id.lexeme}); } while(this.match(',')); } this.consume('SYMBOL',')','Expected ) after parameters'); const body=this.block(); return {type:'FunctionDeclaration', name:{type:'Identifier', name:name.lexeme}, params, body}; }
+    varDecl(){ const name=this.consume('IDENT',null,'Variable name required'); this.consume('SYMBOL','=', 'Expected = after variable name'); const init=this.expression(); this.consume('SYMBOL',';','Missing ; after variable'); return {type:'VariableDeclaration', id:{type:'Identifier', name:name.lexeme}, init}; }
+    statement(){ if(this.match(['KEYWORD','if'])) return this.ifStatement(); if(this.match(['KEYWORD','while'])) return this.whileStatement(); if(this.match(['KEYWORD','return'])) return this.returnStatement(); if(this.match(['KEYWORD','print'])){ const argument=this.expression(); this.consume('SYMBOL',';','Missing ; after print'); return {type:'PrintStatement', argument}; } if(this.match(['SYMBOL','{'])){ this.current--; return this.block(); } return this.exprStatement(); }
+    block(){ this.consume('SYMBOL','{','Expected {'); const body=[]; while(!this.check('SYMBOL','}') && !this.isAtEnd()){ body.push(this.declaration()); } this.consume('SYMBOL','}','Expected } after block'); return {type:'BlockStatement', body}; }
+    ifStatement(){ this.consume('SYMBOL','(','Expected ( after if'); const test=this.expression(); this.consume('SYMBOL',')','Expected ) after condition'); const consequent=this.statement(); let alternate=null; if(this.match(['KEYWORD','else'])) alternate=this.statement(); return {type:'IfStatement', test, consequent, alternate}; }
+    whileStatement(){ this.consume('SYMBOL','(','Expected ( after while'); const test=this.expression(); this.consume('SYMBOL',')','Expected ) after condition'); const body=this.statement(); return {type:'WhileStatement', test, body}; }
+    returnStatement(){ let argument=null; if(!this.check('SYMBOL',';')) argument=this.expression(); this.consume('SYMBOL',';','Missing ; after return'); return {type:'ReturnStatement', argument}; }
+    exprStatement(){ const expr=this.expression(); this.consume('SYMBOL',';','Missing ; after expression'); if(expr.type==='BinaryExpression' && expr.operator==='=' && expr.left.type==='Identifier'){ return {type:'AssignmentExpression', left:expr.left, right:expr.right}; } return {type:'ExpressionStatement', expression:expr}; }
+    expression(){ return this.logicalOr(); }
+    logicalOr(){ let e=this.logicalAnd(); while(this.match(['SYMBOL','||'])){ const op=this.previous().lexeme; const r=this.logicalAnd(); e={type:'LogicalExpression', operator:op, left:e, right:r}; } return e; }
+    logicalAnd(){ let e=this.equality(); while(this.match(['SYMBOL','&&'])){ const op=this.previous().lexeme; const r=this.equality(); e={type:'LogicalExpression', operator:op, left:e, right:r}; } return e; }
+    equality(){ let e=this.comparison(); while(this.match(['SYMBOL','=='], ['SYMBOL','!='])){ const op=this.previous().lexeme; const r=this.comparison(); e={type:'BinaryExpression', operator:op, left:e, right:r}; } return e; }
+    comparison(){ let e=this.term(); while(this.match(['SYMBOL','<'],['SYMBOL','<='],['SYMBOL','>'],['SYMBOL','>='])){ const op=this.previous().lexeme; const r=this.term(); e={type:'BinaryExpression', operator:op, left:e, right:r}; } return e; }
+    term(){ let e=this.factor(); while(this.match(['SYMBOL','+'],['SYMBOL','-'])){ const op=this.previous().lexeme; const r=this.factor(); e={type:'BinaryExpression', operator:op, left:e, right:r}; } return e; }
+    factor(){ let e=this.unary(); while(this.match(['SYMBOL','*'],['SYMBOL','/'],['SYMBOL','%'])){ const op=this.previous().lexeme; const r=this.unary(); e={type:'BinaryExpression', operator:op, left:e, right:r}; } return e; }
+    unary(){ if(this.match(['SYMBOL','!'],['SYMBOL','-'])){ const op=this.previous().lexeme; const r=this.unary(); return {type:'UnaryExpression', operator:op, argument:r}; } return this.call(); }
+    call(){ let e=this.primary(); while(this.match(['SYMBOL','('])){ const args=[]; if(!this.check('SYMBOL',')')){ do{ args.push(this.expression()); } while(this.match(['SYMBOL',','])); } this.consume('SYMBOL',')','Expected ) after args'); e={type:'CallExpression', callee:e, arguments:args}; } return e; }
+    primary(){ if(this.match(['KEYWORD','true'])) return {type:'Literal', value:true}; if(this.match(['KEYWORD','false'])) return {type:'Literal', value:false}; if(this.check('NUMBER')){ const t=this.advance(); return {type:'Literal', value:t.literal}; } if(this.check('STRING')){ const t=this.advance(); return {type:'Literal', value:t.literal}; } if(this.check('IDENT')){ const t=this.advance(); return {type:'Identifier', name:t.lexeme}; } if(this.match(['SYMBOL','('])){ const e=this.expression(); this.consume('SYMBOL',')','Expected )'); return e; } if(this.check('SYMBOL','=')){ const t=this.advance(); return {type:'BinaryExpression', operator:t.lexeme, left:{type:'Identifier', name:'__INVALID__'}, right:this.expression()}; } this.errorAtCurrent('Expected expression'); }
+  }
+
+  class CodeGen {
+    constructor(ast){ this.ast=ast; this.indent=0; }
+    i(){ return '  '.repeat(this.indent); }
+    emit(line=''){ return this.i()+line+'\n'; }
+    generate(){ let out=''; out+='(function(){\n'; this.indent++; out+=this.emit('const __rt = { print: (...xs) => window.__tinyOut && window.__tinyOut(...xs) };'); out+=this.gen(this.ast); this.indent--; out+= '})();\n'; return out; }
+    gen(n){ if(!n) return ''; switch(n.type){
+      case 'Program': return n.body.map(x=>this.gen(x)).join('');
+      case 'BlockStatement': { this.indent++; let b=''; for(const s of n.body) b+=this.gen(s); this.indent--; return this.emit('{')+b+this.emit('}'); }
+      case 'VariableDeclaration': return this.emit(`let ${n.id.name} = ${this.x(n.init)};`);
+      case 'AssignmentExpression': return this.emit(`${n.left.name} = ${this.x(n.right)};`);
+      case 'ExpressionStatement': return this.emit(`${this.x(n.expression)};`);
+      case 'PrintStatement': return this.emit(`__rt.print(${this.x(n.argument)});`);
+      case 'IfStatement': { let s=this.emit(`if (${this.x(n.test)})`); s+=this.gen(wrapBlock(n.consequent)); if(n.alternate){ s+=this.emit('else')+this.gen(wrapBlock(n.alternate)); } return s; }
+      case 'WhileStatement': { let s=this.emit(`while (${this.x(n.test)})`); s+=this.gen(wrapBlock(n.body)); return s; }
+      case 'FunctionDeclaration': { const params=n.params.map(p=>p.name).join(', '); let s=this.emit(`function ${n.name.name}(${params}) `)+this.emit('{'); this.indent++; for(const st of n.body.body) s+=this.gen(st); this.indent--; s+=this.emit('}'); return s; }
+      case 'ReturnStatement': return this.emit(`return ${n.argument?this.x(n.argument):''};`);
+      default: throw new Error('Unknown node '+n.type);
+    } }
+    x(n){ switch(n.type){
+      case 'Literal': return JSON.stringify(n.value);
+      case 'Identifier': return n.name;
+      case 'UnaryExpression': return `(${n.operator}${this.x(n.argument)})`;
+      case 'BinaryExpression': return `(${this.x(n.left)} ${n.operator} ${this.x(n.right)})`;
+      case 'LogicalExpression': return `(${this.x(n.left)} ${n.operator} ${this.x(n.right)})`;
+      case 'CallExpression': return `${this.x(n.callee)}(${n.arguments.map(a=>this.x(a)).join(', ')})`;
+      default: throw new Error('Unknown expr '+n.type);
+    } }
+  }
+  function wrapBlock(n){ return n.type==='BlockStatement'? n : {type:'BlockStatement', body:[n]}; }
+
+  function compileTiny(source){ const tokens=new Lexer(source).lex(); const ast=new Parser(tokens).parseProgram(); return new CodeGen(ast).generate(); }
+  function runTiny(source){ const js=compileTiny(source); const fn=new Function(js); return fn(); }
+
+  // ====== UI glue ======
+  const srcEl = document.getElementById('src');
+  const outEl = document.getElementById('out');
+  const jsEl  = document.getElementById('js');
+  const runBtn = document.getElementById('run');
+  const showBtn = document.getElementById('toJs');
+  const saveBtn = document.getElementById('downloadJs');
+  const openFile = document.getElementById('openFile');
+  const examples = document.getElementById('examples');
+  const loadExample = document.getElementById('loadExample');
+
+  window.__tinyOut = (...xs)=>{ outEl.textContent += xs.join(' ') + "\n"; };
+
+  const SAMPLE = {
+    "Hello": `print "Namaste, TinyLang!";`,
+    "Math & If": `let x = 5;\nif (x * 2 >= 10) { print "ok"; } else { print "no"; }`,
+    "While loop": `let n = 3;\nwhile (n > 0) { print n; n = n - 1; }`,
+    "Functions": `fn add(a,b){ return a + b; }\nprint add(2,3);`,
+    "Full demo": `// Comments work: // and /* ... */\nlet x = 3;\nfn add(a,b){ return a + b; }\nprint add(x, 4);\nif (x > 2) { print "big"; } else { print "small"; }\nwhile (x > 0) { print x; x = x - 1; }`
+  };
+
+  Object.keys(SAMPLE).forEach(k=>{ const o=document.createElement('option'); o.value=k; o.textContent=k; examples.appendChild(o); });
+  examples.value = 'Full demo';
+
+  function load(k){ srcEl.value = SAMPLE[k] || ''; }
+  load(examples.value);
+
+  loadExample.onclick = ()=> load(examples.value);
+
+  runBtn.onclick = ()=>{
+    outEl.textContent=''; jsEl.textContent='';
+    try{ runTiny(srcEl.value); }
+    catch(e){ outEl.textContent = 'Error: '+ e.message; console.error(e); }
+  };
+
+  showBtn.onclick = ()=>{
+    outEl.textContent='';
+    try{ const js = compileTiny(srcEl.value); jsEl.textContent = js; }
+    catch(e){ outEl.textContent = 'Error: '+ e.message; console.error(e); }
+  };
+
+  saveBtn.onclick = ()=>{
+    try{ const js = compileTiny(srcEl.value); const blob = new Blob([js], {type:'text/javascript'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='program.js'; a.click(); URL.revokeObjectURL(a.href); }
+    catch(e){ outEl.textContent = 'Error: '+ e.message; console.error(e); }
+  };
+
+  openFile.onchange = (e)=>{
+    const file=e.target.files[0]; if(!file) return; const reader=new FileReader(); reader.onload = ()=>{ srcEl.value = reader.result; }; reader.readAsText(file);
+  };
+  </script>
+</body>
+</html>

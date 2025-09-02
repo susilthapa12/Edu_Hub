@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pandas Advanced - Part 3</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="pandas-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="pandas-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Time Series -->
+    <section id="time-series">
+      <h1 class="text-3xl font-bold mb-2">Time Series in Pandas</h1>
+      <p>Pandas provides powerful tools to work with date and time data.</p>
+      <pre><code>import pandas as pd
+
+# Create date range
+dates = pd.date_range('2025-01-01', periods=6, freq='D')
+data = pd.DataFrame({'Sales':[250,300,400,500,450,600]}, index=dates)
+
+# Accessing by date
+print(data['2025-01-03'])
+
+# Resampling by week
+weekly_sales = data.resample('W').sum()
+print(weekly_sales)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Multi-index -->
+    <section id="multi-index" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Multi-Indexing</h2>
+      <p>Multi-indexing allows hierarchical indexing for complex datasets.</p>
+      <pre><code>arrays = [['Store1','Store1','Store2','Store2'], ['2025-01','2025-02','2025-01','2025-02']]
+index = pd.MultiIndex.from_arrays(arrays, names=('Store','Month'))
+
+data = pd.DataFrame({'Sales':[200,250,300,350]}, index=index)
+print(data)
+
+# Access data for Store1
+print(data.loc['Store1'])</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Exporting Data -->
+    <section id="exporting" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Exporting Data</h2>
+      <p>Pandas allows exporting data to CSV, Excel, and JSON formats.</p>
+      <pre><code># Export to CSV
+data.to_csv('sales.csv')
+
+# Export to Excel
+data.to_excel('sales.xlsx')
+
+# Export to JSON
+data.to_json('sales.json')</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Filtering & Aggregation -->
+    <section id="aggregations" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">Grouping & Aggregations</h2>
+      <pre><code># Sample data
+df = pd.DataFrame({
+    'Store':['S1','S1','S2','S2'],
+    'Month':['Jan','Feb','Jan','Feb'],
+    'Sales':[200,250,300,350]
+})
+
+# Group by Store and sum
+grouped = df.groupby('Store')['Sales'].sum()
+print(grouped)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="pandas-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="pandas-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

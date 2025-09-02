@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHP Installation & Setup</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Segoe UI', sans-serif; }
+pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+<a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+</div>
+</header>
+
+<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+
+<nav class="flex justify-between my-6">
+<a href="php-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="php-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+<!-- Section: PHP Installation -->
+<section id="php-installation">
+<h1 class="text-3xl font-bold mb-2">PHP Installation & Setup</h1>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">1. Requirements</h2>
+<ul class="list-disc list-inside mb-4">
+  <li>Web Server (Apache, Nginx, IIS, etc.)</li>
+  <li>PHP runtime (PHP 7.x or higher recommended)</li>
+  <li>Database (MySQL, MariaDB, PostgreSQL) if you plan to store data</li>
+</ul>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">2. Installation on Windows</h2>
+<p class="mb-2">The easiest way is to install a pre-packaged environment like XAMPP or WampServer:</p>
+<ul class="list-disc list-inside mb-4">
+  <li>Download <a href="https://www.apachefriends.org/index.html" class="text-blue-600 hover:underline">XAMPP</a> or <a href="https://www.wampserver.com/" class="text-blue-600 hover:underline">WampServer</a></li>
+  <li>Run the installer and follow the instructions</li>
+  <li>Start Apache and MySQL from the control panel</li>
+  <li>Place PHP files in the <code>htdocs</code> folder (for XAMPP)</li>
+</ul>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">3. Installation on Linux (Ubuntu/Debian)</h2>
+<p class="mb-2">Use the terminal to install Apache and PHP:</p>
+<pre><code>sudo apt update
+sudo apt install apache2
+sudo apt install php libapache2-mod-php
+sudo systemctl restart apache2
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+<p>PHP files are usually placed in <code>/var/www/html/</code>.</p>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">4. Installation on macOS</h2>
+<p class="mb-2">macOS comes with PHP pre-installed. To check version:</p>
+<pre><code>php -v
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+<p class="mb-2">For more control, you can install PHP via <a href="https://brew.sh/" class="text-blue-600 hover:underline">Homebrew</a>:</p>
+<pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install php
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">5. Verify PHP Installation</h2>
+<p class="mb-2">Create a file named <code>info.php</code> in your server directory with the following content:</p>
+<pre><code>&lt;?php
+phpinfo();
+?&gt;
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+<p>Open <code>http://localhost/info.php</code> in your browser. You should see the PHP configuration page.</p>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">6. Editor Recommendation</h2>
+<ul class="list-disc list-inside mb-4">
+  <li>Visual Studio Code (VS Code) – lightweight, free, and supports PHP extensions</li>
+  <li>PHPStorm – full-featured, professional IDE (paid)</li>
+</ul>
+
+</section>
+
+<nav class="flex justify-between my-6">
+<a href="php-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="php-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+</main>
+
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+<p>© 2025 Susil. All rights reserved.</p>
+</footer>
+
+<script>
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.style.backgroundColor = '#16a34a';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.style.backgroundColor = '#2563eb';
+    }, 1500);
+  });
+}
+</script>
+
+</body>
+</html>

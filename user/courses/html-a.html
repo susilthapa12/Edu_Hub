@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduHub - HTML Introduction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow max-w-6xl mx-auto px-4 py-8 space-y-8">
+
+    <!-- Page Navigation (top) -->
+    <div class="flex justify-between my-6">
+      <a href="html-course.html" class="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800 transition">
+        &larr; Previous
+      </a>
+      <a href="html-b.html" class="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800 transition">
+        Next &rarr;
+      </a>
+    </div>
+
+    <h1 class="text-4xl font-bold text-center mb-8">HTML Introduction</h1>
+
+    <section class="bg-white p-6 rounded-2xl shadow space-y-4">
+      <p>HTML is the standard markup language for creating Web pages.</p>
+    </section>
+
+    <section class="bg-white p-6 rounded-2xl shadow space-y-4">
+      <h2 class="text-2xl font-semibold text-blue-700 mb-2">What is HTML?</h2>
+      <ul class="list-disc pl-5 text-gray-700 space-y-1">
+        <li>HTML stands for Hyper Text Markup Language</li>
+        <li>HTML is the standard markup language for creating Web pages</li>
+        <li>HTML describes the structure of a Web page</li>
+        <li>HTML consists of a series of elements</li>
+        <li>HTML elements tell the browser how to display the content</li>
+        <li>HTML elements label pieces of content such as "this is a heading", "this is a paragraph", "this is a link", etc.</li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 rounded-2xl shadow space-y-4">
+      <h2 class="text-2xl font-semibold text-blue-700 mb-2">A Simple HTML Document</h2>
+      <p>Example:</p>
+      <pre class="bg-gray-100 p-4 rounded text-sm overflow-x-auto"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Page Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;h1&gt;My First Heading&lt;/h1&gt;
+  &lt;p&gt;My first paragraph.&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+      <h3 class="text-xl font-semibold text-blue-700">Example Explained:</h3>
+      <ul class="list-disc pl-5 text-gray-700 space-y-1">
+        <li>The <code>&lt;!DOCTYPE html&gt;</code> declaration defines that this document is an HTML5 document</li>
+        <li>The <code>&lt;html&gt;</code> element is the root element of an HTML page</li>
+        <li>The <code>&lt;head&gt;</code> element contains meta information about the HTML page</li>
+        <li>The <code>&lt;title&gt;</code> element specifies a title for the HTML page (shown in the browser tab)</li>
+        <li>The <code>&lt;body&gt;</code> element defines the document's body and contains all visible content</li>
+        <li>The <code>&lt;h1&gt;</code> element defines a large heading</li>
+        <li>The <code>&lt;p&gt;</code> element defines a paragraph</li>
+      </ul>
+    </section>
+
+    <section class="bg-white p-6 rounded-2xl shadow space-y-4">
+      <h2 class="text-2xl font-semibold text-blue-700 mb-2">What is an HTML Element?</h2>
+      <p>An HTML element is defined by a start tag, some content, and an end tag:</p>
+      <pre class="bg-gray-100 p-4 rounded text-sm overflow-x-auto"><code>&lt;tagname&gt; Content goes here... &lt;/tagname&gt;</code></pre>
+      <p>The HTML element is everything from the start tag to the end tag:</p>
+      <pre class="bg-gray-100 p-4 rounded text-sm overflow-x-auto"><code>&lt;h1&gt;My First Heading&lt;/h1&gt;
+&lt;p&gt;My first paragraph.&lt;/p&gt;</code></pre>
+      <p>Start tag | Element content | End tag</p>
+      <pre class="bg-gray-100 p-4 rounded text-sm overflow-x-auto"><code>&lt;h1&gt;	My First Heading	&lt;/h1&gt;
+&lt;p&gt;	My first paragraph.	&lt;/p&gt;
+&lt;br&gt;	none	none</code></pre>
+    </section>
+
+    <!-- Page Navigation (bottom) -->
+    <div class="flex justify-between my-6">
+      <a href="html-course.html" class="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800 transition">
+        &larr; Previous
+      </a>
+      <a href="next-topic.html" class="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800 transition">
+        Next &rarr;
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-8 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      © <span id="year"></span> Susil. All rights reserved.
+    </div>
+  </footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

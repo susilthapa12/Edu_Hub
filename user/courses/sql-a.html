@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Basics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="sql-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="sql-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- SQL Overview -->
+    <section id="overview">
+      <h1 class="text-3xl font-bold mb-2">SQL Basics</h1>
+      <p>SQL (Structured Query Language) is used to manage and manipulate relational databases.</p>
+      <p>Before continuing, you should understand the concepts of tables, rows, and columns in databases.</p>
+    </section>
+
+    <!-- SQL SELECT -->
+    <section id="select" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">SELECT Statement</h2>
+      <p>The <code>SELECT</code> statement is used to retrieve data from a database table.</p>
+
+      <pre><code>SELECT CustomerName, City, Country
+FROM Customers;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      <p>This query retrieves the <code>CustomerName</code>, <code>City</code>, and <code>Country</code> columns from the <code>Customers</code> table.</p>
+    </section>
+
+    <!-- SQL WHERE -->
+    <section id="where" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">WHERE Clause</h2>
+      <p>The <code>WHERE</code> clause filters records based on conditions.</p>
+
+      <pre><code>SELECT * FROM Customers
+WHERE Country='Germany';</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      <p>This query returns only customers from Germany.</p>
+    </section>
+
+    <!-- SQL ORDER BY -->
+    <section id="order-by" class="mt-6">
+      <h2 class="text-2xl font-bold mb-2">ORDER BY Clause</h2>
+      <p>Use <code>ORDER BY</code> to sort query results.</p>
+
+      <pre><code>SELECT * FROM Customers
+ORDER BY CustomerName ASC;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      <p>This query retrieves all customers sorted alphabetically by <code>CustomerName</code>.</p>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="sql-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="sql-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C Programming Operators</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Segoe UI', sans-serif; }
+pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
+code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+<a href="c-c.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+</div>
+</header>
+
+<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+
+<nav class="flex justify-between my-6">
+<a href="c-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="c-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+<!-- Section: C Operators -->
+<section id="c-operators">
+<h1 class="text-3xl font-bold mb-2">C Programming Operators</h1>
+<p>Operators are symbols that perform operations on variables and values.</p>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">1. Arithmetic Operators</h2>
+<p>Used for mathematical operations:</p>
+<ul class="list-disc list-inside mb-4">
+  <li><code>+</code> Addition</li>
+  <li><code>-</code> Subtraction</li>
+  <li><code>*</code> Multiplication</li>
+  <li><code>/</code> Division</li>
+  <li><code>%</code> Modulus (remainder)</li>
+</ul>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 10, b = 3;
+    printf("a + b = %d\n", a + b);
+    printf("a - b = %d\n", a - b);
+    printf("a * b = %d\n", a * b);
+    printf("a / b = %d\n", a / b);
+    printf("a % b = %d\n", a % b);
+    return 0;
+}
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">2. Assignment Operators</h2>
+<ul class="list-disc list-inside mb-4">
+  <li><code>=</code> Assign value</li>
+  <li><code>+=</code> Add and assign</li>
+  <li><code>-=</code> Subtract and assign</li>
+  <li><code>*=</code> Multiply and assign</li>
+  <li><code>/=</code> Divide and assign</li>
+  <li><code>%=</code> Modulus and assign</li>
+</ul>
+<pre><code>int x = 5;
+x += 3; // x = 8
+x *= 2; // x = 16
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">3. Relational Operators</h2>
+<ul class="list-disc list-inside mb-4">
+  <li><code>==</code> Equal to</li>
+  <li><code>!=</code> Not equal to</li>
+  <li><code>&lt;</code> Less than</li>
+  <li><code>&lt;=</code> Less than or equal to</li>
+  <li><code>&gt;</code> Greater than</li>
+  <li><code>&gt;=</code> Greater than or equal to</li>
+</ul>
+<pre><code>int a = 5, b = 3;
+printf("%d\n", a == b); // 0 (false)
+printf("%d\n", a != b); // 1 (true)
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">4. Logical Operators</h2>
+<ul class="list-disc list-inside mb-4">
+  <li><code>&&</code> AND</li>
+  <li><code>||</code> OR</li>
+  <li><code>!</code> NOT</li>
+</ul>
+<pre><code>int a = 5, b = 3;
+if(a &gt; 0 && b &gt; 0) {
+    printf("Both positive\n");
+}
+if(a &lt; 0 || b &lt; 0) {
+    printf("At least one negative\n");
+} else {
+    printf("None negative\n");
+}
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">5. Increment & Decrement Operators</h2>
+<ul class="list-disc list-inside mb-4">
+  <li><code>++</code> Increment by 1</li>
+  <li><code>--</code> Decrement by 1</li>
+</ul>
+<pre><code>int a = 5;
+a++; // a = 6
+a--; // a = 5
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<h2 class="text-2xl font-bold mt-6 mb-2">6. Conditional (Ternary) Operator</h2>
+<pre><code>int a = 5, b = 3;
+int max = (a &gt; b) ? a : b; // max = 5
+</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+</section>
+
+<nav class="flex justify-between my-6">
+<a href="c-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+<a href="c-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+</nav>
+
+</main>
+
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+<p>© 2025 Susil. All rights reserved.</p>
+</footer>
+
+<script>
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.style.backgroundColor = '#16a34a';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.style.backgroundColor = '#2563eb';
+    }, 1500);
+  });
+}
+</script>
+
+</body>
+</html>

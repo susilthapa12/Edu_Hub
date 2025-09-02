@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Lists & Keys</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
+    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: #3b82f6; color: white; padding: 2px 6px; 
+      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="react-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="react-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+    <!-- Lists Section -->
+    <section id="lists">
+      <h1 class="text-3xl font-bold mb-2">Rendering Lists in React</h1>
+      <p>React can render arrays of data using the <code>map()</code> method.</p>
+      <pre><code>{`const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((number) =>
+  <li key={number}>{number}</li>
+);
+
+function NumberList() {
+  return <ul>{listItems}</ul>;
+}`}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <p>Notice the <strong>key</strong> prop added to each list item. Keys help React identify which items changed, are added, or removed.</p>
+    </section>
+
+    <!-- Keys Section -->
+    <section id="keys">
+      <h2 class="text-2xl font-bold mb-2">Keys in React</h2>
+      <p>Keys must be unique among siblings. They are essential for performance and to maintain component identity.</p>
+      <pre><code>{`const todos = [
+  {id: 1, text: 'Learn React'},
+  {id: 2, text: 'Build a project'},
+];
+
+function TodoList() {
+  return (
+    <ul>
+      {todos.map(todo => (
+        <li key={todo.id}>{todo.text}</li>
+      ))}
+    </ul>
+  );
+}`}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Dynamic Lists Section -->
+    <section id="dynamic-lists">
+      <h2 class="text-2xl font-bold mb-2">Dynamic Lists with State</h2>
+      <p>You can render dynamic lists using state and event handlers:</p>
+      <pre><code>{`function ShoppingList() {
+  const [items, setItems] = React.useState(['Apples', 'Bananas', 'Oranges']);
+
+  return (
+    <ul>
+      {items.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))}
+    </ul>
+  );
+}`}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Summary Section -->
+    <section id="summary">
+      <h2 class="text-2xl font-bold mb-2">Summary</h2>
+      <ul class="list-disc ml-6 space-y-2">
+        <li>Use <code>map()</code> to render arrays in React.</li>
+        <li>Always provide a unique <strong>key</strong> prop to each list item.</li>
+        <li>Keys help React efficiently update and maintain components.</li>
+        <li>Lists can be dynamic when combined with state and event handling.</li>
+      </ul>
+    </section>
+
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6" aria-label="Course navigation">
+      <a href="react-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        ◀ Previous
+      </a>
+      <a href="react-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
+        Next ▶
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

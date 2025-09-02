@@ -1,166 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Dashboard | Routine</title>
+<script src="https://cdn.tailwindcss.com"></script>
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        display: flex;
-        min-height: 100vh;
-        background-color: #f4f4f4;
-    }
-    /* Sidebar */
-    .sidebar {
-        width: 220px;
-        background-color: #333;
-        color: white;
-        flex-shrink: 0;
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-    }
-    .sidebar h2 { text-align: center; margin-bottom: 20px; }
-    .sidebar a {
-        color: white;
-        text-decoration: none;
-        margin: 10px 0;
-        display: block;
-        padding: 8px;
-        border-radius: 4px;
-    }
-    .sidebar a:hover { background-color: #444; }
-
-    /* Main content */
-    .main { flex-grow: 1; padding: 20px; }
-    h1, h2 { margin-bottom: 10px; }
-    section { background-color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    table, th, td { border: 1px solid #ccc; }
-    th, td { padding: 8px; text-align: left; }
-    tr:hover { background-color: #f1f1f1; }
-    input, button { padding: 6px; margin: 5px 0; border-radius: 4px; border: 1px solid #ccc; }
-    button { cursor: pointer; }
-    .delete { background-color: red; color: white; border: none; padding: 5px 10px; border-radius: 4px; }
-    .edit { background-color: orange; color: white; border: none; padding: 5px 10px; border-radius: 4px; }
-    footer { text-align: center; padding: 10px; background-color: #333; color: white; margin-top: 20px; }
-
-    @media(max-width: 768px) {
-        body { flex-direction: column; }
-        .sidebar { width: 100%; flex-direction: row; overflow-x: auto; }
-        .sidebar a { flex: 1; text-align: center; margin: 0 5px; }
-    }
+/* Scrollbar for sidebar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-thumb { background-color: #2563eb; border-radius: 4px; }
 </style>
 </head>
-<body>
+<body class="flex flex-col min-h-screen bg-gray-100 font-sans">
 
-<div class="sidebar">
-    <h2>Admin</h2>
-    <a href="#home">Home</a>
-    <a href="#routine">Routine</a>
-</div>
+<!-- Header -->
+<header class="bg-blue-700 text-white sticky top-0 z-50 shadow-md">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+  </div>
+</header>
 
-<div class="main">
-    <section id="home">
-        <h1>Welcome, Admin!</h1>
-        <p>Manage daily routines for students below.</p>
+<div class="flex flex-1">
+
+  <!-- Sidebar -->
+  <aside class="bg-blue-800 text-white w-56 flex-shrink-0 p-4 flex flex-col space-y-4 sticky top-16 h-screen overflow-y-auto">
+    <h2 class="text-xl font-semibold text-center mb-4">Menu</h2>
+    <a href="#home" class="px-3 py-2 rounded hover:bg-blue-700 transition">Home</a>
+    <a href="#routine" class="px-3 py-2 rounded hover:bg-blue-700 transition">Routine</a>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-8 max-w-6xl mx-auto">
+
+    <!-- Home Section -->
+    <section id="home" class="bg-white p-6 rounded shadow-md">
+      <h2 class="text-2xl font-bold mb-2">Welcome, Admin!</h2>
+      <p>Manage daily routines for students easily using this dashboard.</p>
     </section>
 
-    <section id="routine">
-        <h2>Manage Routines</h2>
-        <input type="text" id="routineTime" placeholder="Time (08:00 - 09:00)">
-        <input type="text" id="routineCourse" placeholder="Course Name">
-        <input type="text" id="routineInstructor" placeholder="Instructor">
-        <input type="text" id="routineLocation" placeholder="Location">
-        <button onclick="addRoutine()">Add Routine</button>
+    <!-- Routine Section -->
+    <section id="routine" class="bg-white p-6 rounded shadow-md">
+      <h2 class="text-2xl font-bold mb-4">Manage Routines</h2>
 
-        <table id="routineTable">
-            <thead>
-                <tr>
-                    <th>Time</th>
-                    <th>Course</th>
-                    <th>Instructor</th>
-                    <th>Location</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Routine rows go here -->
-            </tbody>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+        <input type="text" id="routineTime" placeholder="Time (08:00 - 09:00)" class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500">
+        <input type="text" id="routineCourse" placeholder="Course Name" class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500">
+        <input type="text" id="routineInstructor" placeholder="Instructor" class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500">
+        <input type="text" id="routineLocation" placeholder="Location" class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500">
+      </div>
+      <button onclick="addRoutine()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Add Routine</button>
+
+      <div class="overflow-x-auto mt-4">
+        <table id="routineTable" class="min-w-full border border-gray-300">
+          <thead class="bg-blue-100">
+            <tr>
+              <th class="py-2 px-3 border-b text-left">Time</th>
+              <th class="py-2 px-3 border-b text-left">Course</th>
+              <th class="py-2 px-3 border-b text-left">Instructor</th>
+              <th class="py-2 px-3 border-b text-left">Location</th>
+              <th class="py-2 px-3 border-b text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <!-- Routine rows go here -->
+          </tbody>
         </table>
+      </div>
     </section>
 
-    <footer>&copy; 2025 Admin Dashboard</footer>
+  </main>
 </div>
 
+<!-- Footer -->
+<footer class="bg-blue-700 text-white py-4 text-center mt-auto">
+  <p>© 2025 Susil. All rights reserved.</p>
+</footer>
+
+<!-- Scripts -->
 <script>
 let routines = JSON.parse(localStorage.getItem('routines')) || [];
 let editIndex = -1;
 
 function displayRoutines() {
-    const tbody = document.querySelector('#routineTable tbody');
-    tbody.innerHTML = '';
-    routines.forEach((r, i) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${r.time}</td>
-            <td>${r.course}</td>
-            <td>${r.instructor}</td>
-            <td>${r.location}</td>
-            <td>
-                <button class="edit" onclick="editRoutine(${i})">Edit</button>
-                <button class="delete" onclick="deleteRoutine(${i})">Delete</button>
-            </td>
-        `;
-        tbody.appendChild(tr);
-    });
+  const tbody = document.querySelector('#routineTable tbody');
+  tbody.innerHTML = '';
+  routines.forEach((r, i) => {
+    const tr = document.createElement('tr');
+    tr.classList.add("hover:bg-blue-50");
+    tr.innerHTML = `
+      <td class="py-2 px-3">${r.time}</td>
+      <td class="py-2 px-3">${r.course}</td>
+      <td class="py-2 px-3">${r.instructor}</td>
+      <td class="py-2 px-3">${r.location}</td>
+      <td class="py-2 px-3 space-x-2">
+        <button class="bg-orange-500 text-white px-2 py-1 rounded hover:bg-orange-600" onclick="editRoutine(${i})">Edit</button>
+        <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" onclick="deleteRoutine(${i})">Delete</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
 }
 
 function addRoutine() {
-    const time = document.getElementById('routineTime').value.trim();
-    const course = document.getElementById('routineCourse').value.trim();
-    const instructor = document.getElementById('routineInstructor').value.trim();
-    const location = document.getElementById('routineLocation').value.trim();
+  const time = document.getElementById('routineTime').value.trim();
+  const course = document.getElementById('routineCourse').value.trim();
+  const instructor = document.getElementById('routineInstructor').value.trim();
+  const location = document.getElementById('routineLocation').value.trim();
 
-    if (!time || !course || !instructor || !location) { alert('Fill all fields'); return; }
+  if(!time || !course || !instructor || !location) {
+    alert('Please fill all fields');
+    return;
+  }
 
-    if(editIndex >= 0) {
-        routines[editIndex] = { time, course, instructor, location };
-        editIndex = -1;
-    } else {
-        routines.push({ time, course, instructor, location });
-    }
+  if(editIndex >= 0) {
+    routines[editIndex] = { time, course, instructor, location };
+    editIndex = -1;
+  } else {
+    routines.push({ time, course, instructor, location });
+  }
 
-    localStorage.setItem('routines', JSON.stringify(routines));
-    clearInputs();
-    displayRoutines();
+  localStorage.setItem('routines', JSON.stringify(routines));
+  clearInputs();
+  displayRoutines();
 }
 
 function deleteRoutine(index) {
-    routines.splice(index, 1);
-    localStorage.setItem('routines', JSON.stringify(routines));
-    displayRoutines();
+  routines.splice(index, 1);
+  localStorage.setItem('routines', JSON.stringify(routines));
+  displayRoutines();
 }
 
 function editRoutine(index) {
-    const r = routines[index];
-    document.getElementById('routineTime').value = r.time;
-    document.getElementById('routineCourse').value = r.course;
-    document.getElementById('routineInstructor').value = r.instructor;
-    document.getElementById('routineLocation').value = r.location;
-    editIndex = index;
+  const r = routines[index];
+  document.getElementById('routineTime').value = r.time;
+  document.getElementById('routineCourse').value = r.course;
+  document.getElementById('routineInstructor').value = r.instructor;
+  document.getElementById('routineLocation').value = r.location;
+  editIndex = index;
 }
 
 function clearInputs() {
-    document.getElementById('routineTime').value = '';
-    document.getElementById('routineCourse').value = '';
-    document.getElementById('routineInstructor').value = '';
-    document.getElementById('routineLocation').value = '';
+  document.getElementById('routineTime').value = '';
+  document.getElementById('routineCourse').value = '';
+  document.getElementById('routineInstructor').value = '';
+  document.getElementById('routineLocation').value = '';
 }
 
 displayRoutines();
 </script>
+
 </body>
 </html>

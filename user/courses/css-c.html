@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced CSS - Box Model & Layout</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Header -->
+  <header class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold">CSS Tutorial</h1>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto p-6 bg-white shadow rounded my-6">
+
+    <!-- Navigation Buttons (Top) -->
+    <div class="flex justify-between mb-6">
+      <a href="css-b.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        ◀ Previous
+      </a>
+      <a href="css-d.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        Next ▶
+      </a>
+    </div>
+
+    <!-- Content -->
+    <h2 class="text-2xl font-bold mb-4 text-blue-600">Advanced CSS: Box Model & Layout</h2>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">The CSS Box Model</h3>
+    <p class="mb-4">
+      Every HTML element is a rectangular box. The CSS box model consists of: <strong>content, padding, border, and margin</strong>.
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>div {
+  width: 300px;
+  padding: 20px;
+  border: 5px solid black;
+  margin: 10px;
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Padding</h3>
+    <p class="mb-4">
+      Padding is the space between the content and the border. You can define different paddings for each side:
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>div {
+  padding-top: 10px;
+  padding-right: 15px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Margin</h3>
+    <p class="mb-4">
+      Margin is the space outside the border, between the element and other elements:
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>div {
+  margin: 20px;
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Borders</h3>
+    <p class="mb-4">
+      Borders surround the padding and content. You can style borders with color, width, and style:
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>div {
+  border-width: 3px;
+  border-style: solid;
+  border-color: red;
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Display Property</h3>
+    <p class="mb-4">
+      The <code>display</code> property defines how an element is displayed:
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>div {
+  display: block;   /* Block element */
+}
+
+span {
+  display: inline;  /* Inline element */
+}
+
+ul {
+  display: flex;    /* Flex container */
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Positioning</h3>
+    <p class="mb-4">
+      CSS positioning controls how elements are positioned on the page:
+    </p>
+    <div class="bg-gray-100 p-4 rounded mb-4">
+      <pre><code>div {
+  position: relative; /* relative to normal position */
+}
+
+div.fixed {
+  position: fixed;    /* fixed relative to viewport */
+}
+
+div.absolute {
+  position: absolute; /* relative to nearest positioned ancestor */
+}</code></pre>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Chapter Summary</h3>
+    <ul class="list-disc list-inside mb-4">
+      <li>CSS Box Model: content, padding, border, margin</li>
+      <li>Padding defines inner spacing</li>
+      <li>Margin defines outer spacing</li>
+      <li>Borders surround content and padding</li>
+      <li>Display property controls element type and layout</li>
+      <li>Position property allows relative, absolute, and fixed placement</li>
+    </ul>
+
+    <!-- Navigation Buttons (Bottom) -->
+    <div class="flex justify-between mt-6">
+      <a href="css-b.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        ◀ Previous
+      </a>
+      <a href="css-d.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
+        Next ▶
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-600 text-white p-4 mt-6">
+    <div class="container mx-auto text-center">
+      &copy; © 2025 Susil. All rights reserved.
+    </div>
+    </div>
+  </footer>
+
+</body>
+</html>
