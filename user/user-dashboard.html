@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>User Dashboard • Learning Hub</title>
 
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -18,11 +19,13 @@
     }
   </script>
 
+  <!-- AlpineJS -->
   <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
+  <!-- Custom Styles -->
   <style>
     :root { --glass: rgba(255,255,255,0.05); }
-    .glass { background: var(--glass); border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(6px); }
+    .glass { background: var(--glass); border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(8px); }
     [x-cloak] { display: none !important; }
   </style>
 </head>
@@ -32,7 +35,7 @@
   <header class="max-w-7xl mx-auto px-4 py-6 sticky top-4 z-40 bg-black/30 backdrop-blur rounded-lg flex items-center justify-between gap-4">
     <div class="flex items-center gap-3">
       <button class="md:hidden p-2 rounded-lg glass" @click="mobile.open = true" aria-label="Open navigation">☰</button>
-      <div class="p-2 rounded-lg bg-accent/90">📚</div>
+      <div class="p-2 rounded-lg bg-accent/90 shadow-md">📚</div>
       <div>
         <h1 class="text-lg font-semibold">Learning Hub</h1>
         <p class="text-sm opacity-80">Welcome back, <span x-text="userName">User</span></p>
@@ -40,16 +43,21 @@
     </div>
 
     <div class="flex items-center gap-3">
-      <button @click="profileOpen = !profileOpen" class="rounded-full p-1">
-        <img :src="avatarUrl" alt="avatar" class="w-10 h-10 rounded-full border-2 border-white/20" />
-      </button>
+      <!-- Avatar + Dropdown -->
+      <div class="relative">
+        <button @click="profileOpen = !profileOpen" class="rounded-full p-1 border border-white/20">
+          <img :src="avatarUrl" alt="avatar" class="w-10 h-10 rounded-full" />
+        </button>
 
-      <div x-show="profileOpen" x-cloak @click.away="profileOpen = false" x-transition class="absolute right-0 mt-2 w-48 bg-black/60 rounded-lg shadow-lg p-2 glass z-50">
-        <a href="./profile.html" class="block px-3 py-2 rounded hover:bg-white/5">👤 Profile</a>
-        <a href="./settings.html" class="block px-3 py-2 rounded hover:bg-white/5">⚙️ Settings</a>
-        <button type="button" @click="logout()" class="w-full text-left px-3 py-2">🔒 Logout</button>
+        <div x-show="profileOpen" x-cloak @click.away="profileOpen = false" x-transition
+             class="absolute right-0 mt-2 w-52 bg-black/70 rounded-lg shadow-xl p-2 glass z-50">
+          <a href="./profile.html" class="block px-3 py-2 rounded hover:bg-white/5">👤 Profile</a>
+          <a href="./settings.html" class="block px-3 py-2 rounded hover:bg-white/5">⚙️ Settings</a>
+          <button type="button" @click="logout()" class="w-full text-left px-3 py-2 hover:bg-white/5">🔒 Logout</button>
+        </div>
       </div>
 
+      <!-- Dark Mode -->
       <button @click="toggleTheme" class="p-2 rounded-lg glass">
         <template x-if="!dark">🌞</template>
         <template x-if="dark">🌜</template>
@@ -59,25 +67,44 @@
 
   <!-- Sidebar & Content -->
   <div class="max-w-7xl mx-auto px-4 pb-10 grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
-    <aside class="lg:col-span-3 relative z-30 pointer-events-auto">
+    <!-- Sidebar -->
+    <aside class="lg:col-span-3 relative z-30">
       <nav class="space-y-3">
-        <a href="courses/courses.html" class="flex items-center gap-3 p-4 rounded-xl bg-purple-800/70 hover:bg-purple-700 transition glass">📖 <span>Courses</span></a>
-        <a href="./exams.html" class="flex items-center gap-3 p-4 rounded-xl bg-purple-800/70 hover:bg-purple-700 transition glass">🧪 <span>Exams</span></a>
-        <a href="./routine.html" class="flex items-center gap-3 p-4 rounded-xl bg-purple-800/70 hover:bg-purple-700 transition glass">🦁 <span>Routine</span></a>
+        <a href="./courses.html" class="flex items-center gap-3 p-4 rounded-xl bg-purple-800/70 hover:bg-purple-700 transition glass shadow-md">📖 <span>Courses</span></a>
+        <a href="./exams.html" class="flex items-center gap-3 p-4 rounded-xl bg-purple-800/70 hover:bg-purple-700 transition glass shadow-md">🧪 <span>Exams</span></a>
+        <a href="./routine.html" class="flex items-center gap-3 p-4 rounded-xl bg-purple-800/70 hover:bg-purple-700 transition glass shadow-md">🦁 <span>Routine</span></a>
       </nav>
 
-      <div class="mt-6 p-4 glass rounded-xl">
+      <!-- Quick Actions -->
+      <div class="mt-6 p-5 glass rounded-xl shadow-lg">
         <h4 class="text-xs uppercase opacity-80 tracking-wide">Quick Actions</h4>
-        <div class="mt-3 flex flex-col gap-3">
-          <button @click="continueLearning" class="block w-full text-center py-2 rounded-lg bg-accent hover:bg-accent/90 font-semibold text-white">Continue Learning</button>
-          <button @click="viewUpcomingExams" class="block w-full text-center py-2 rounded-lg bg-accent hover:bg-accent/90 font-semibold text-white">Upcoming Exams</button>
+        <div class="mt-4 flex flex-col gap-3">
+          <button @click="continueLearning" class="w-full py-3 rounded-lg bg-accent hover:bg-accent/90 font-semibold text-white shadow-md transition">Continue Learning</button>
+          <button @click="viewUpcomingExams" class="w-full py-3 rounded-lg bg-accent hover:bg-accent/90 font-semibold text-white shadow-md transition">Upcoming Exams</button>
         </div>
       </div>
     </aside>
 
+    <!-- Main Dashboard -->
     <main class="lg:col-span-9 relative z-10">
-      <h2 class="text-2xl font-bold mb-4">User Dashboard</h2>
-      <p>Welcome to your personal learning hub, <span x-text="userName"></span>! Here you can view courses, exams, and routines.</p>
+      <h2 class="text-3xl font-bold mb-4">📊 Dashboard Overview</h2>
+      <p class="mb-6 text-white/80">Welcome to your personal learning hub, <span x-text="userName"></span>! Here’s a quick snapshot of your progress.</p>
+
+      <!-- Stats -->
+      <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div class="glass p-5 rounded-xl shadow-lg">
+          <h3 class="text-lg font-semibold mb-2">📖 Courses Enrolled</h3>
+          <p class="text-3xl font-bold">6</p>
+        </div>
+        <div class="glass p-5 rounded-xl shadow-lg">
+          <h3 class="text-lg font-semibold mb-2">✅ Completed Lessons</h3>
+          <p class="text-3xl font-bold">42</p>
+        </div>
+        <div class="glass p-5 rounded-xl shadow-lg">
+          <h3 class="text-lg font-semibold mb-2">🧪 Upcoming Exams</h3>
+          <p class="text-3xl font-bold">3</p>
+        </div>
+      </div>
     </main>
   </div>
 
@@ -90,7 +117,6 @@ function dashboard() {
     role: currentUser.role || 'user',
     avatarUrl: `https://ui-avatars.com/api/?name=${currentUser.username || 'Student'}&background=ff6f91&color=fff`,
     dark: localStorage.getItem('dark') === 'true' || window.matchMedia('(prefers-color-scheme: dark)').matches,
-    search: '',
     profileOpen: false,
     mobile: { open: false },
 
@@ -108,8 +134,12 @@ function dashboard() {
       document.documentElement.classList.toggle('dark', this.dark);
     },
 
-    continueLearning() { alert('Continuing your most recent course…'); },
-    viewUpcomingExams() { alert('Opening upcoming exams…'); },
+    continueLearning() {
+      window.location.href = "./courses.html";
+    },
+    viewUpcomingExams() {
+      window.location.href = "./exams.html";
+    },
 
     logout() {
       localStorage.removeItem('currentUser');
