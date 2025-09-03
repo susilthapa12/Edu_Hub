@@ -1,42 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Advanced CSS - Animations & Pseudo-Classes</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced CSS - Animations & Pseudo-Classes</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.min.css">
+<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"></script>
+<style>
+:root { --brand: #2563eb; }
+.copy-btn { position:absolute; top:.5rem; right:.5rem; font-size:.75rem; padding:.25rem .5rem; border-radius:.375rem; background:var(--brand); color:#fff; cursor:pointer; }
+.active-link { color: var(--brand); font-weight: 700; }
+.section-content { margin-left: 2rem; }
+@media (max-width: 768px) { .section-content { margin-left: 0; } }
+@media (min-width: 1024px){ .toc-sticky { position: sticky; top: 5.5rem; max-height: calc(100vh - 6rem); overflow:auto; } }
+</style>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-white text-gray-900 flex flex-col min-h-screen">
 
-  <!-- Header -->
-  <header class="bg-blue-600 text-white p-4">
-    <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-xl font-bold">CSS Tutorial</h1>
-    </div>
-  </header>
+<!-- Header -->
+<header class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow font-bold">
+  <div class="max-w-7xl mx-auto flex justify-between items-center gap-4">
+    <a href="index.html" class="text-2xl md:text-3xl font-extrabold">EduHub</a>
+    <span class="hidden sm:inline text-white/90">/ Advanced CSS: Animations & Pseudo-Classes</span>
+  </div>
+</header>
+
+<div class="max-w-7xl mx-auto w-full px-4 py-8 grid lg:grid-cols-[260px_1fr] gap-8 flex-1">
+
+  <!-- TOC Sidebar -->
+  <aside class="hidden lg:block">
+    <nav class="toc-sticky text-sm space-y-2 font-medium" aria-label="On this page">
+      <p class="uppercase tracking-wider text-gray-700 text-xs mb-2">On this page</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#transitions">CSS Transitions</a></li>
+        <li><a href="#animations">CSS Animations</a></li>
+        <li><a href="#pseudo-classes">Pseudo-Classes</a></li>
+        <li><a href="#pseudo-elements">Pseudo-Elements</a></li>
+        <li><a href="#summary">Summary</a></li>
+      </ul>
+    </nav>
+  </aside>
 
   <!-- Main Content -->
-  <main class="container mx-auto p-6 bg-white shadow rounded my-6">
+  <main id="main" class="space-y-12">
 
-    <!-- Navigation Buttons (Top) -->
-    <div class="flex justify-between mb-6">
-      <a href="css-d.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
-        ◀ Previous
-      </a>
-      <a href="index.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
-        Next ▶
-      </a>
-    </div>
+    <!-- Navigation Top -->
+    <nav class="flex justify-between mb-6">
+      <a href="css-d.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">◀ Previous</a>
+      <a href="index.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Next ▶</a>
+    </nav>
 
-    <!-- Content -->
-    <h2 class="text-2xl font-bold mb-4 text-blue-600">Advanced CSS: Animations, Transitions & Pseudo-Classes</h2>
-
-    <h3 class="text-xl font-semibold mt-6 mb-2">CSS Transitions</h3>
-    <p class="mb-4">
-      Transitions allow changes to property values to occur smoothly over a specified duration.
-    </p>
-    <div class="bg-gray-100 p-4 rounded mb-4">
-      <pre><code>button {
+    <!-- CSS Transitions -->
+    <section id="transitions" class="scroll-mt-24 directive-card">
+      <h2 class="text-3xl font-extrabold mb-2 text-blue-600">CSS Transitions</h2>
+      <p class="section-content font-medium text-gray-800 mb-4">
+        Transitions allow changes to property values to occur smoothly over a specified duration.
+      </p>
+      <div class="section-content mt-2 bg-gray-50 p-4 rounded relative shadow-sm">
+        <pre><button class="copy-btn">Copy</button><code class="language-css">button {
   background-color: blue;
   color: white;
   transition: background-color 0.5s ease;
@@ -45,14 +68,17 @@
 button:hover {
   background-color: green;
 }</code></pre>
-    </div>
+      </div>
+    </section>
 
-    <h3 class="text-xl font-semibold mt-6 mb-2">CSS Animations</h3>
-    <p class="mb-4">
-      Animations let you create more complex motion effects by defining keyframes.
-    </p>
-    <div class="bg-gray-100 p-4 rounded mb-4">
-      <pre><code>@keyframes slide {
+    <!-- CSS Animations -->
+    <section id="animations" class="scroll-mt-24 directive-card">
+      <h2 class="text-3xl font-extrabold mb-2 text-purple-600">CSS Animations</h2>
+      <p class="section-content font-medium text-gray-800 mb-4">
+        Animations let you create more complex motion effects by defining keyframes.
+      </p>
+      <div class="section-content mt-2 bg-gray-50 p-4 rounded relative shadow-sm">
+        <pre><button class="copy-btn">Copy</button><code class="language-css">@keyframes slide {
   0% { transform: translateX(0); }
   50% { transform: translateX(100px); }
   100% { transform: translateX(0); }
@@ -64,60 +90,99 @@ button:hover {
   background-color: red;
   animation: slide 2s infinite;
 }</code></pre>
-    </div>
+      </div>
+    </section>
 
-    <h3 class="text-xl font-semibold mt-6 mb-2">Pseudo-Classes</h3>
-    <p class="mb-4">
-      Pseudo-classes define the special state of an element. For example, <code>:hover</code>, <code>:focus</code>, <code>:nth-child()</code>:
-    </p>
-    <div class="bg-gray-100 p-4 rounded mb-4">
-      <pre><code>p:first-child {
+    <!-- Pseudo-Classes -->
+    <section id="pseudo-classes" class="scroll-mt-24 directive-card">
+      <h2 class="text-3xl font-extrabold mb-2 text-green-600">Pseudo-Classes</h2>
+      <p class="section-content font-medium text-gray-800 mb-4">
+        Pseudo-classes define the special state of an element. Examples: <code>:hover</code>, <code>:focus</code>, <code>:nth-child()</code>
+      </p>
+      <div class="section-content mt-2 bg-gray-50 p-4 rounded relative shadow-sm">
+        <pre><button class="copy-btn">Copy</button><code class="language-css">p:first-child {
   color: blue;
 }
 
 a:hover {
   text-decoration: underline;
 }</code></pre>
-    </div>
+      </div>
+    </section>
 
-    <h3 class="text-xl font-semibold mt-6 mb-2">Pseudo-Elements</h3>
-    <p class="mb-4">
-      Pseudo-elements allow you to style specific parts of an element. For example, <code>::before</code> and <code>::after</code>:
-    </p>
-    <div class="bg-gray-100 p-4 rounded mb-4">
-      <pre><code>h1::after {
+    <!-- Pseudo-Elements -->
+    <section id="pseudo-elements" class="scroll-mt-24 directive-card">
+      <h2 class="text-3xl font-extrabold mb-2 text-red-600">Pseudo-Elements</h2>
+      <p class="section-content font-medium text-gray-800 mb-4">
+        Pseudo-elements allow you to style specific parts of an element. Examples: <code>::before</code> and <code>::after</code>
+      </p>
+      <div class="section-content mt-2 bg-gray-50 p-4 rounded relative shadow-sm">
+        <pre><button class="copy-btn">Copy</button><code class="language-css">h1::after {
   content: " ★";
   color: gold;
 }</code></pre>
-    </div>
+      </div>
+    </section>
 
-    <h3 class="text-xl font-semibold mt-6 mb-2">Chapter Summary</h3>
-    <ul class="list-disc list-inside mb-4">
-      <li>Use <code>transition</code> for smooth property changes</li>
-      <li>Use <code>@keyframes</code> and <code>animation</code> for advanced motions</li>
-      <li>Pseudo-classes represent element states like <code>:hover</code> or <code>:first-child</code></li>
-      <li>Pseudo-elements target part of elements, e.g., <code>::before</code> or <code>::after</code></li>
-      <li>Combining transitions, animations, and pseudo-selectors allows rich UI effects</li>
-    </ul>
+    <!-- Summary -->
+    <section id="summary" class="scroll-mt-24 directive-card">
+      <h2 class="text-3xl font-extrabold mb-2 text-indigo-600">Chapter Summary</h2>
+      <ul class="section-content list-disc list-inside text-gray-800">
+        <li>Use <code>transition</code> for smooth property changes</li>
+        <li>Use <code>@keyframes</code> and <code>animation</code> for advanced motions</li>
+        <li>Pseudo-classes represent element states like <code>:hover</code> or <code>:first-child</code></li>
+        <li>Pseudo-elements target part of elements, e.g., <code>::before</code> or <code>::after</code></li>
+        <li>Combining transitions, animations, and pseudo-selectors allows rich UI effects</li>
+      </ul>
+    </section>
 
-    <!-- Navigation Buttons (Bottom) -->
-    <div class="flex justify-between mt-6">
-      <a href="css-d.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
-        ◀ Previous
-      </a>
-      <a href="index.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
-        Next ▶
-      </a>
-    </div>
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between mt-6">
+      <a href="css-d.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">◀ Previous</a>
+      <a href="index.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Next ▶</a>
+    </nav>
 
   </main>
+</div>
 
-  <!-- Footer -->
-  <footer class="bg-blue-600 text-white p-4 mt-6">
-    <div class="container mx-auto text-center">
-      &copy; 2025 Susil. All rights reserved.
-    </div>
-  </footer>
+<!-- Footer -->
+<footer class="bg-blue-600 text-white p-4 mt-6 text-center font-semibold">
+  &copy; 2025 Susil. All rights reserved.
+</footer>
+
+<!-- Back to top -->
+<button id="toTop" class="fixed bottom-5 right-5 hidden rounded-full p-3 shadow-lg bg-blue-600 text-white hover:bg-blue-700" aria-label="Back to top">↑</button>
+
+<script>
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.copy-btn');
+  if (!btn) return;
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    const original = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.style.backgroundColor = '#16a34a';
+    setTimeout(() => { btn.textContent = original; btn.style.backgroundColor = 'var(--brand)'; }, 1200);
+  });
+});
+
+const sections = ['transitions','animations','pseudo-classes','pseudo-elements','summary'].map(id => document.getElementById(id));
+const tocLinks = [...document.querySelectorAll('#toc a')];
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      tocLinks.forEach(a => a.classList.remove('active-link'));
+      const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+      active && active.classList.add('active-link');
+    }
+  });
+}, { rootMargin: '-30% 0px -65% 0px', threshold: [0,1] });
+sections.forEach(s => s && observer.observe(s));
+
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => { toTop.style.display = window.scrollY > 300 ? 'block' : 'none'; });
+toTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+</script>
 
 </body>
 </html>

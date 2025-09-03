@@ -1,50 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pandas Advanced</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
-    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
-    .copy-btn {
-      position: absolute; top: 8px; right: 8px;
-      background: #3b82f6; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pandas Advanced</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Prism.js for syntax highlighting -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+<style>
+body { font-family:'Segoe UI',sans-serif; background:#fdfdfd; }
+pre { background:#1e1e2f; padding:16px; border-radius:10px; overflow-x:auto; position:relative; font-family:'Fira Code', monospace; }
+.copy-btn { position:absolute; top:8px; right:8px; background:#3b82f6; color:white; padding:3px 8px; border-radius:6px; cursor:pointer; transition:all 0.3s ease; }
+.copy-btn:hover { background:#2563eb; }
+.collapsible { cursor:pointer; font-weight:600; color:#1d4ed8; margin-bottom:0.5rem; display:flex; align-items:center; gap:0.25rem; }
+.content-hidden { display:none; }
+#toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#2563eb; color:white; font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; }
+a { text-decoration:none; }
+a:hover { text-decoration:underline; }
+h1,h2,h3 { scroll-margin-top:5rem; }
+</style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<body class="flex flex-col min-h-screen">
 
-  <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-    </div>
-  </header>
+<header class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    <span class="hidden sm:block text-sm opacity-80">Pandas Advanced</span>
+  </div>
+</header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+<main class="flex-1 container mx-auto py-8 space-y-12">
 
-    <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="pandas-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="pandas-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+  <!-- Navigation Top -->
+  <nav class="flex justify-between my-6">
+    <a href="pandas-course.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+    <a href="pandas-b.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
+  </nav>
 
-    <!-- Importing Data -->
-    <section id="import" class="mt-6">
-      <h1 class="text-3xl font-bold mb-2">Importing Data</h1>
-      <p>Pandas can read data from CSV, Excel, JSON, SQL databases, and more.</p>
-      <pre><code>import pandas as pd
+  <!-- Importing Data -->
+  <section id="import">
+    <h1 class="text-3xl font-bold mb-2 text-purple-600">Importing Data</h1>
+    <p>Pandas can read data from CSV, Excel, JSON, SQL databases, and more.</p>
+    <button class="collapsible">▶ Show Example</button>
+    <div class="content-hidden">
+      <pre><code class="language-python">import pandas as pd
 
 # CSV
 df_csv = pd.read_csv('data.csv')
@@ -57,12 +60,15 @@ df_json = pd.read_json('data.json')
 
 # Display first 5 rows
 print(df_csv.head())</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+    </div>
+  </section>
 
-    <!-- Filtering & Sorting -->
-    <section id="filter-sort" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Filtering and Sorting</h2>
-      <pre><code># Filter rows
+  <!-- Filtering & Sorting -->
+  <section id="filter-sort">
+    <h2 class="text-2xl font-bold mb-2 text-green-600">Filtering & Sorting</h2>
+    <button class="collapsible">▶ Show Example</button>
+    <div class="content-hidden">
+      <pre><code class="language-python"># Filter rows
 filtered = df_csv[df_csv['Age'] > 25]
 
 # Sort by column
@@ -70,24 +76,30 @@ sorted_df = df_csv.sort_values(by='Salary', ascending=False)
 
 print(filtered)
 print(sorted_df)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+    </div>
+  </section>
 
-    <!-- Grouping & Aggregation -->
-    <section id="groupby" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Grouping and Aggregation</h2>
-      <pre><code># Group by department and calculate mean salary
+  <!-- Grouping & Aggregation -->
+  <section id="groupby">
+    <h2 class="text-2xl font-bold mb-2 text-blue-600">Grouping & Aggregation</h2>
+    <button class="collapsible">▶ Show Example</button>
+    <div class="content-hidden">
+      <pre><code class="language-python"># Group by department and calculate mean salary
 grouped = df_csv.groupby('Department')['Salary'].mean()
 print(grouped)
 
 # Multiple aggregations
 agg = df_csv.groupby('Department').agg({'Salary': ['mean','max'], 'Age':'min'})
 print(agg)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+    </div>
+  </section>
 
-    <!-- Data Cleaning & Missing Values -->
-    <section id="cleaning" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Data Cleaning</h2>
-      <pre><code># Fill missing values
+  <!-- Data Cleaning -->
+  <section id="cleaning">
+    <h2 class="text-2xl font-bold mb-2 text-orange-600">Data Cleaning</h2>
+    <button class="collapsible">▶ Show Example</button>
+    <div class="content-hidden">
+      <pre><code class="language-python"># Fill missing values
 df_csv['Salary'].fillna(df_csv['Salary'].mean(), inplace=True)
 
 # Drop rows with missing values
@@ -95,13 +107,16 @@ df_csv.dropna(inplace=True)
 
 # Remove duplicates
 df_csv.drop_duplicates(inplace=True)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+    </div>
+  </section>
 
-    <!-- Basic Plotting -->
-    <section id="plotting" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Basic Plotting</h2>
-      <p>Pandas integrates with Matplotlib for quick plotting:</p>
-      <pre><code>import matplotlib.pyplot as plt
+  <!-- Basic Plotting -->
+  <section id="plotting">
+    <h2 class="text-2xl font-bold mb-2 text-red-600">Basic Plotting</h2>
+    <p>Pandas integrates with Matplotlib for quick plotting:</p>
+    <button class="collapsible">▶ Show Example</button>
+    <div class="content-hidden">
+      <pre><code class="language-python">import matplotlib.pyplot as plt
 
 # Plot Age histogram
 df_csv['Age'].hist()
@@ -110,38 +125,48 @@ plt.show()
 # Plot Salary by Department
 df_csv.groupby('Department')['Salary'].mean().plot(kind='bar')
 plt.show()</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+    </div>
+  </section>
 
-    <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="pandas-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="pandas-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+  <!-- Navigation Bottom -->
+  <nav class="flex justify-between my-6">
+    <a href="pandas-course.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+    <a href="pandas-b.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
+  </nav>
 
-  </main>
+</main>
 
-  <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-    <p>© 2025 Susil. All rights reserved.</p>
-  </footer>
+<footer class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-6 mt-auto text-center">
+  <p>© 2025 Susil. All rights reserved.</p>
+</footer>
 
-  <script>
-    function copyCode(btn) {
-      const code = btn.parentElement.querySelector('code').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = 'Copied!';
-        btn.style.backgroundColor = '#16a34a';
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.style.backgroundColor = '#3b82f6';
-        }, 1500);
-      });
-    }
-  </script>
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+// Copy code
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';
+    btn.style.backgroundColor='#16a34a';
+    setTimeout(()=>{ btn.textContent='Copy'; btn.style.backgroundColor='#3b82f6'; },1500);
+  });
+}
+
+// Back to top
+const toTop=document.getElementById('toTop');
+window.addEventListener('scroll',()=>{ toTop.style.display=window.scrollY>300?'block':'none'; });
+toTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// Collapsible code blocks
+document.querySelectorAll(".collapsible").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const content=btn.nextElementSibling;
+    content.classList.toggle("content-hidden");
+    btn.textContent=content.classList.contains("content-hidden")?"▶ Show Example":"▼ Hide Example";
+  });
+});
+</script>
 
 </body>
 </html>

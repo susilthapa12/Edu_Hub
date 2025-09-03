@@ -5,75 +5,120 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MySQL Advanced: Queries & Relationships</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Prism.js for Syntax Highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+
   <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
-    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    body { font-family: 'Segoe UI', sans-serif; background:#fdfdfd; }
+    .container { padding-left:3rem; padding-right:3rem; }
+    @media (max-width:768px){ .container{ padding-left:1rem; padding-right:1rem; } }
+
+    pre {
+      background: #1e1e2f;
+      padding: 16px;
+      border-radius: 10px;
+      overflow-x: auto;
+      position: relative;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+    }
+    pre:hover { box-shadow: 0 6px 14px rgba(0,0,0,0.25); }
+
+    code { font-family: 'Fira Code', monospace; font-size: 0.95rem; }
     .copy-btn {
       position: absolute; top: 8px; right: 8px;
-      background: #3b82f6; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+      background: #3b82f6; color: white;
+      padding: 3px 8px; font-size: 0.75rem;
+      border-radius: 6px; cursor: pointer;
+      transition: all 0.3s ease;
     }
+    .copy-btn:hover { background: #2563eb; }
+
+    /* Sidebar */
+    .toc-sticky { position:sticky; top:5.5rem; padding:0.5rem; background:#f1f5f9; border-radius:0.5rem; }
+    .active-link { color:#2563eb; font-weight:700; }
+
+    /* Collapsible sections */
+    .collapsible { cursor:pointer; user-select:none; font-weight:600; color:#1d4ed8; margin-bottom:0.5rem; }
+    .content-hidden { display:none; }
+
+    /* Back to Top button */
+    #toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#2563eb; color:white;
+      font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; }
   </style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<body class="flex flex-col min-h-screen">
 
   <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+  <header class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white shadow-md sticky top-0 z-50">
+    <div class="container flex items-center justify-between py-4">
       <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+      <span class="hidden sm:block text-sm opacity-80">MySQL Course</span>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <div class="container grid lg:grid-cols-[220px_1fr] gap-8 py-8 flex-1">
+    
+    <!-- Sidebar TOC -->
+    <aside class="hidden lg:block">
+      <nav class="toc-sticky text-sm font-medium">
+        <p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+        <ul id="toc" class="space-y-1">
+          <li><a href="#constraints">Constraints</a></li>
+          <li><a href="#advanced-queries">Advanced Queries</a></li>
+          <li><a href="#relationships">Relationships</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-    <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="mysql-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="mysql-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+    <!-- Main Content -->
+    <main class="space-y-12">
 
-    <!-- Constraints -->
-    <section id="constraints">
-      <h1 class="text-3xl font-bold mb-2">MySQL Constraints</h1>
-      <p>Constraints enforce rules on data in a table. Common constraints include:</p>
-      <ul class="list-disc ml-6">
-        <li><strong>PRIMARY KEY</strong> – uniquely identifies each record</li>
-        <li><strong>FOREIGN KEY</strong> – ensures referential integrity</li>
-        <li><strong>UNIQUE</strong> – ensures all values in a column are unique</li>
-        <li><strong>NOT NULL</strong> – prevents null values</li>
-        <li><strong>CHECK</strong> – ensures values satisfy a condition</li>
-        <li><strong>DEFAULT</strong> – assigns a default value if none is provided</li>
-      </ul>
+      <!-- Navigation Top -->
+      <nav class="flex justify-between mb-6">
+        <a href="mysql-a.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+        <a href="mysql-c.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
+      </nav>
 
-      <pre><code>CREATE TABLE Classes (
+      <!-- Constraints -->
+      <section id="constraints">
+        <h1 class="text-3xl font-bold mb-2 text-purple-600">MySQL Constraints</h1>
+        <p class="mb-3">Constraints enforce rules on data in a table:</p>
+        <ul class="list-disc ml-6 space-y-1">
+          <li><strong>PRIMARY KEY</strong> – uniquely identifies each record</li>
+          <li><strong>FOREIGN KEY</strong> – ensures referential integrity</li>
+          <li><strong>UNIQUE</strong> – ensures all values are unique</li>
+          <li><strong>NOT NULL</strong> – prevents null values</li>
+          <li><strong>CHECK</strong> – ensures values satisfy a condition</li>
+          <li><strong>DEFAULT</strong> – assigns a default value if none is provided</li>
+        </ul>
+
+        <pre><code class="language-sql">CREATE TABLE Classes (
     ClassID INT PRIMARY KEY,
     ClassName VARCHAR(50) NOT NULL,
     Teacher VARCHAR(50)
 );</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 
-      <pre><code>CREATE TABLE Students (
+        <pre><code class="language-sql">CREATE TABLE Students (
     StudentID INT PRIMARY KEY,
     FirstName VARCHAR(50),
     LastName VARCHAR(50),
     ClassID INT,
     FOREIGN KEY (ClassID) REFERENCES Classes(ClassID)
 );</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      </section>
 
-    <!-- Advanced Queries -->
-    <section id="advanced-queries" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Advanced Queries</h2>
-      <p>MySQL supports powerful queries using <code>JOIN</code>, <code>GROUP BY</code>, <code>ORDER BY</code>, and aggregate functions:</p>
+      <!-- Advanced Queries -->
+      <section id="advanced-queries">
+        <h2 class="text-2xl font-bold mb-2 text-green-600">Advanced Queries</h2>
+        <p class="mb-3">Use <code>JOIN</code>, <code>GROUP BY</code>, <code>ORDER BY</code>, and aggregates:</p>
 
-      <pre><code>-- Select students with their class names
+        <button class="collapsible">▶ Show Examples</button>
+        <div class="content-hidden">
+          <pre><code class="language-sql">-- Select students with their class names
 SELECT Students.FirstName, Students.LastName, Classes.ClassName
 FROM Students
 JOIN Classes ON Students.ClassID = Classes.ClassID;
@@ -86,44 +131,43 @@ GROUP BY ClassID;
 -- Order students by last name
 SELECT * FROM Students
 ORDER BY LastName ASC;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+        </div>
+      </section>
 
-    <!-- Relationships -->
-    <section id="relationships" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Table Relationships</h2>
-      <p>MySQL uses relationships to connect tables:</p>
-      <ul class="list-disc ml-6">
-        <li><strong>One-to-One:</strong> Each record in Table A relates to one record in Table B</li>
-        <li><strong>One-to-Many:</strong> Each record in Table A relates to multiple records in Table B</li>
-        <li><strong>Many-to-Many:</strong> Use a junction table to connect multiple records from two tables</li>
-      </ul>
+      <!-- Relationships -->
+      <section id="relationships">
+        <h2 class="text-2xl font-bold mb-2 text-red-600">Table Relationships</h2>
+        <p class="mb-3">MySQL connects tables through relationships:</p>
+        <ul class="list-disc ml-6 space-y-1">
+          <li><strong>One-to-One</strong>: Each record in A relates to one in B</li>
+          <li><strong>One-to-Many</strong>: Each record in A relates to many in B</li>
+          <li><strong>Many-to-Many</strong>: Junction table connects multiple records</li>
+        </ul>
 
-      <pre><code>-- Junction table for Many-to-Many relationship
-CREATE TABLE StudentSubjects (
+        <pre><code class="language-sql">CREATE TABLE StudentSubjects (
     StudentID INT,
     SubjectID INT,
     PRIMARY KEY (StudentID, SubjectID),
     FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
     FOREIGN KEY (SubjectID) REFERENCES Subjects(SubjectID)
 );</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      </section>
 
-    <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="mysql-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="mysql-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+      <!-- Navigation Bottom -->
+      <nav class="flex justify-between my-6">
+        <a href="mysql-a.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+        <a href="mysql-c.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
+      </nav>
 
-  </main>
+    </main>
+  </div>
 
   <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+  <footer class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-6 mt-auto text-center">
     <p>© 2025 Susil. All rights reserved.</p>
   </footer>
+
+  <button id="toTop" aria-label="Back to top">↑</button>
 
   <script>
     function copyCode(btn) {
@@ -137,6 +181,34 @@ CREATE TABLE StudentSubjects (
         }, 1500);
       });
     }
+
+    // Back to Top
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', ()=>{ toTop.style.display = window.scrollY>300?'block':'none'; });
+    toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+    // TOC Highlight
+    const sections=[...document.querySelectorAll('section')];
+    const tocLinks=[...document.querySelectorAll('#toc a')];
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          tocLinks.forEach(a=>a.classList.remove('active-link'));
+          const active=document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+          active && active.classList.add('active-link');
+        }
+      });
+    },{ rootMargin:'-30% 0px -65% 0px', threshold:[0,1] });
+    sections.forEach(s=>observer.observe(s));
+
+    // Collapsible
+    document.querySelectorAll(".collapsible").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        const content=btn.nextElementSibling;
+        content.classList.toggle("content-hidden");
+        btn.textContent = content.classList.contains("content-hidden") ? "▶ Show Examples" : "▼ Hide Examples";
+      });
+    });
   </script>
 
 </body>

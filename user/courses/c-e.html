@@ -3,39 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>C Programming Loops</title>
+<title>C Programming Loops — EduHub</title>
+<meta name="description" content="Interactive guide to C Programming Loops with live code examples, copy buttons, and filtering.">
+
+<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
+
 <style>
-body { font-family: 'Segoe UI', sans-serif; }
-pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
-code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
-.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
+  :root { --brand: #2563eb; }
+  body { font-family: 'Segoe UI', sans-serif; }
+  pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 0.875rem; }
+  code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+  .copy-btn { position:absolute; top:.5rem; right:.5rem; font-size:.75rem; padding:.25rem .5rem; border-radius:.375rem; background:var(--brand); color:#fff; cursor:pointer; }
+  .active-link { color: var(--brand); font-weight: 700; }
+  .section-content { margin-left: 2rem; }
+  @media (max-width: 768px) { .section-content { margin-left: 0; } }
+  @media (min-width: 1024px){ .toc-sticky { position: sticky; top: 5.5rem; max-height: calc(100vh - 6rem); overflow:auto; } }
 </style>
 </head>
 <body class="bg-white text-gray-900 min-h-screen flex flex-col">
 
-<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-<a href="c-d.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-</div>
+<!-- Header -->
+<header class="bg-blue-700 text-white sticky top-0 z-50 shadow font-bold">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    <span class="text-white/90 hidden sm:inline">/ C Programming Loops</span>
+    <div class="ml-auto flex items-center gap-2">
+      <div class="relative">
+        <input id="filterInput" type="search" placeholder="Filter loops"
+          class="w-48 md:w-72 rounded-lg px-3 py-2 text-sm text-gray-900 placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-white/70" />
+        <kbd class="absolute right-2 top-1/2 -translate-y-1/2 kbd bg-white/70">/</kbd>
+      </div>
+    </div>
+  </div>
 </header>
 
-<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+<!-- Layout -->
+<div class="max-w-7xl mx-auto w-full px-4 py-8 grid lg:grid-cols-[260px_1fr] gap-8 flex-1">
 
-<nav class="flex justify-between my-6">
-<a href="c-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="c-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+  <!-- TOC Sidebar -->
+  <aside class="hidden lg:block">
+    <nav class="toc-sticky text-sm space-y-2 font-medium" aria-label="On this page">
+      <p class="uppercase tracking-wider text-gray-700 text-xs mb-2">On this page</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#c-loops" class="hover:underline">Overview</a></li>
+        <li><a href="#for-loop" class="hover:underline">For Loop</a></li>
+        <li><a href="#while-loop" class="hover:underline">While Loop</a></li>
+        <li><a href="#do-while-loop" class="hover:underline">Do-While Loop</a></li>
+        <li><a href="#nested-loops" class="hover:underline">Nested Loops</a></li>
+      </ul>
+      <hr class="my-4 border-gray-300" />
+      <div class="space-y-2">
+        <p class="uppercase tracking-wider text-gray-700 text-xs">Shortcuts</p>
+        <p><span class="kbd">/</span> Focus search</p>
+        <p><span class="kbd">g</span> Go to top</p>
+      </div>
+    </nav>
+  </aside>
 
-<!-- Section: C Loops -->
-<section id="c-loops">
-<h1 class="text-3xl font-bold mb-2">C Programming Loops</h1>
-<p>Loops allow executing a block of code multiple times. C supports <strong>for</strong>, <strong>while</strong>, and <strong>do-while</strong> loops.</p>
+  <!-- Main Content -->
+  <main id="main" class="space-y-12">
 
-<h2 class="text-2xl font-bold mt-6 mb-2">1. For Loop</h2>
-<pre><code>#include &lt;stdio.h&gt;
+    <!-- Navigation -->
+    <nav class="flex justify-between" aria-label="Course navigation">
+      <a href="c-d.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="c-f.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+    </nav>
+
+    <!-- Overview -->
+    <section id="c-loops" class="scroll-mt-24 directive-card">
+      <h1 class="text-3xl font-extrabold mb-2">C Programming Loops</h1>
+      <p class="section-content font-medium">Loops allow executing a block of code multiple times. C supports <strong>for</strong>, <strong>while</strong>, and <strong>do-while</strong> loops.</p>
+    </section>
+
+    <!-- For Loop -->
+    <section id="for-loop" class="scroll-mt-24 directive-card" data-tags="for loop iteration">
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-bold">1. For Loop</h2>
+        <a href="#for-loop" class="text-sm text-blue-700 hover:underline font-semibold">#</a>
+      </div>
+      <div class="section-content mt-2">
+        <pre><button class="copy-btn">Copy</button><code>#include &lt;stdio.h&gt;
 
 int main() {
     int i;
@@ -43,12 +91,19 @@ int main() {
         printf("%d\n", i);
     }
     return 0;
-}
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-<p>Explanation: Initializes <code>i = 1</code>, checks <code>i &lt;= 5</code>, executes the loop, then increments <code>i++</code>.</p>
+}</code></pre>
+        <p class="mt-2">Explanation: Initializes <code>i = 1</code>, checks <code>i &lt;= 5</code>, executes the loop, then increments <code>i++</code>.</p>
+      </div>
+    </section>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">2. While Loop</h2>
-<pre><code>#include &lt;stdio.h&gt;
+    <!-- While Loop -->
+    <section id="while-loop" class="scroll-mt-24 directive-card" data-tags="while loop iteration">
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-bold">2. While Loop</h2>
+        <a href="#while-loop" class="text-sm text-blue-700 hover:underline font-semibold">#</a>
+      </div>
+      <div class="section-content mt-2">
+        <pre><button class="copy-btn">Copy</button><code>#include &lt;stdio.h&gt;
 
 int main() {
     int i = 1;
@@ -57,12 +112,19 @@ int main() {
         i++;
     }
     return 0;
-}
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-<p>Explanation: Executes as long as the condition <code>i &lt;= 5</code> is true.</p>
+}</code></pre>
+        <p class="mt-2">Explanation: Executes as long as the condition <code>i &lt;= 5</code> is true.</p>
+      </div>
+    </section>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">3. Do-While Loop</h2>
-<pre><code>#include &lt;stdio.h&gt;
+    <!-- Do-While Loop -->
+    <section id="do-while-loop" class="scroll-mt-24 directive-card" data-tags="do while loop iteration">
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-bold">3. Do-While Loop</h2>
+        <a href="#do-while-loop" class="text-sm text-blue-700 hover:underline font-semibold">#</a>
+      </div>
+      <div class="section-content mt-2">
+        <pre><button class="copy-btn">Copy</button><code>#include &lt;stdio.h&gt;
 
 int main() {
     int i = 1;
@@ -71,12 +133,19 @@ int main() {
         i++;
     } while(i &lt;= 5);
     return 0;
-}
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-<p>Explanation: Executes the loop first, then checks the condition. Ensures the loop runs at least once.</p>
+}</code></pre>
+        <p class="mt-2">Explanation: Executes the loop first, then checks the condition. Ensures the loop runs at least once.</p>
+      </div>
+    </section>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">4. Nested Loops</h2>
-<pre><code>#include &lt;stdio.h&gt;
+    <!-- Nested Loops -->
+    <section id="nested-loops" class="scroll-mt-24 directive-card" data-tags="nested loops for">
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-bold">4. Nested Loops</h2>
+        <a href="#nested-loops" class="text-sm text-blue-700 hover:underline font-semibold">#</a>
+      </div>
+      <div class="section-content mt-2">
+        <pre><button class="copy-btn">Copy</button><code>#include &lt;stdio.h&gt;
 
 int main() {
     int i, j;
@@ -87,39 +156,85 @@ int main() {
         printf("\n");
     }
     return 0;
-}
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-<p>Output:</p>
-<pre><code>1 2 3
+}</code></pre>
+        <p class="mt-2">Output:</p>
+        <pre><button class="copy-btn">Copy</button><code>1 2 3
 1 2 3
-1 2 3
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+1 2 3</code></pre>
+      </div>
+    </section>
 
-</section>
+    <!-- Bottom Navigation -->
+    <nav class="flex justify-between my-6">
+      <a href="c-d.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="c-f.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+    </nav>
 
-<nav class="flex justify-between my-6">
-<a href="c-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="c-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+  </main>
+</div>
 
-</main>
-
-<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-<p>© 2025 Susil. All rights reserved.</p>
+<!-- Footer -->
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center font-semibold">
+  <p>© 2025 Susil. All rights reserved.</p>
 </footer>
 
+<!-- Back to top -->
+<button id="toTop" class="fixed bottom-5 right-5 hidden rounded-full p-3 shadow-lg bg-blue-600 text-white hover:bg-blue-700" aria-label="Back to top">↑</button>
+
+<!-- JS -->
 <script>
-function copyCode(btn) {
-  const code = btn.parentElement.querySelector('code').innerText;
-  navigator.clipboard.writeText(code).then(() => {
-    btn.textContent = 'Copied!';
-    btn.style.backgroundColor = '#16a34a';
-    setTimeout(() => {
-      btn.textContent = 'Copy';
-      btn.style.backgroundColor = '#2563eb';
-    }, 1500);
+  // Copy code
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.copy-btn');
+    if (!btn) return;
+    const code = btn.parentElement.querySelector('code').innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.style.backgroundColor = '#16a34a';
+      setTimeout(() => { btn.textContent = original; btn.style.backgroundColor = 'var(--brand)'; }, 1200);
+    });
   });
-}
+
+  // Filter sections
+  const filterInput = document.getElementById('filterInput');
+  const cards = [...document.querySelectorAll('.directive-card')];
+  filterInput.addEventListener('input', () => {
+    const q = filterInput.value.trim().toLowerCase();
+    cards.forEach(card => {
+      const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+      const text = card.innerText.toLowerCase();
+      card.style.display = (!q || tags.includes(q) || text.includes(q)) ? '' : 'none';
+    });
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/') { e.preventDefault(); filterInput.focus(); }
+    if (e.key.toLowerCase() === 'g') { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  });
+
+  // Scrollspy
+  const sections = ['c-loops','for-loop','while-loop','do-while-loop','nested-loops']
+    .map(id => document.getElementById(id));
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        tocLinks.forEach(a => a.classList.remove('active-link'));
+        const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+        active && active.classList.add('active-link');
+      }
+    });
+  }, { rootMargin: '-30% 0px -65% 0px', threshold: [0,1] });
+  sections.forEach(s => s && observer.observe(s));
+
+  // Back-to-top button
+  const toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', () => {
+    toTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+  });
+  toTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
 </script>
 
 </body>

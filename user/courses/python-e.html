@@ -6,111 +6,157 @@
 <title>Python Loops: for, while, break, continue</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body { font-family: 'Segoe UI', sans-serif; }
-pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
-code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
-.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
+body { font-family: 'Segoe UI', sans-serif; background:#fdfdfd; }
+.container { padding-left:3rem; padding-right:3rem; }
+@media (max-width:768px){ .container{ padding-left:1rem; padding-right:1rem; } }
+
+pre { background:#1e1e2f; color:white; padding:1rem; border-radius:0.5rem; overflow-x:auto; position:relative; font-family:'Fira Code',monospace; }
+.copy-btn { position:absolute; top:0.5rem; right:0.5rem; background:#2563eb; color:white; padding:0.25rem 0.5rem; border-radius:0.375rem; font-size:0.75rem; cursor:pointer; }
+
+.keyword { color:#f97316; font-weight:600; }
+.comment { color:#6b7280; font-style:italic; }
+.string { color:#facc15; }
+
+a { text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+h1,h2,h3 { scroll-margin-top:5rem; }
+
+#toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#2563eb; color:white; font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; }
+
+.toc-sticky { position:sticky; top:5.5rem; max-height:calc(100vh-6rem); overflow:auto; padding:0.5rem; background:#f1f5f9; border-radius:0.5rem; }
+.active-link { color:#2563eb; font-weight:700; }
 </style>
 </head>
-<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+<body class="flex flex-col min-h-screen">
 
 <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-<a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-</div>
+  <div class="container flex items-center justify-between py-4">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    <span class="hidden md:block text-lg font-medium">Python Loops</span>
+  </div>
 </header>
 
-<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+<div class="container grid lg:grid-cols-[220px_1fr] gap-8 py-8 flex-1">
 
-<nav class="flex justify-between my-6">
-<a href="python-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="python-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+  <!-- TOC -->
+  <aside class="hidden lg:block">
+    <nav class="toc-sticky text-sm font-medium">
+      <p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#for-loop">for loop</a></li>
+        <li><a href="#while-loop">while loop</a></li>
+        <li><a href="#break-continue">break & continue</a></li>
+        <li><a href="#nested-loops">Nested loops</a></li>
+      </ul>
+    </nav>
+  </aside>
 
-<!-- Section: for loop -->
-<section id="for-loop">
-<h1 class="text-3xl font-bold mb-2">Python <code>for</code> Loop</h1>
-<p>The <strong>for loop</strong> is used to iterate over a sequence (like a list, tuple, string, or range).</p>
-<pre><code># Loop through a list
-fruits = ["apple", "banana", "cherry"]
+  <!-- Main Content -->
+  <main class="space-y-12">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between mb-6">
+      <a href="python-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="python-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+    </nav>
+
+    <!-- Sections -->
+    <section id="for-loop">
+      <h1 class="text-3xl font-bold mb-2 text-purple-600">Python <code>for</code> Loop</h1>
+      <p>The <strong>for loop</strong> iterates over sequences (list, tuple, string, range).</p>
+      <pre><code><span class="comment"># Loop through a list</span>
+fruits = [<span class="string">'apple'</span>, <span class="string">'banana'</span>, <span class="string">'cherry'</span>]
 for fruit in fruits:
     print(fruit)
 
-# Loop with range
+<span class="comment"># Loop with range</span>
 for i in range(5):
-    print("Number:", i)
+    print(<span class="string">'Number:'</span>, i)
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-</section>
+    </section>
 
-<!-- Section: while loop -->
-<section id="while-loop">
-<h2 class="text-2xl font-bold mb-2">Python <code>while</code> Loop</h2>
-<p>The <strong>while loop</strong> runs as long as a condition is true.</p>
-<pre><code># While loop example
+    <section id="while-loop">
+      <h2 class="text-2xl font-bold mb-2 text-green-600">Python <code>while</code> Loop</h2>
+      <p>Runs as long as a condition is true.</p>
+      <pre><code><span class="comment"># While loop example</span>
 count = 0
-while count < 5:
-    print("Count is:", count)
+while count &lt; 5:
+    print(<span class="string">'Count is:'</span>, count)
     count += 1
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-</section>
+    </section>
 
-<!-- Section: break and continue -->
-<section id="break-continue">
-<h2 class="text-2xl font-bold mb-2"><code>break</code> and <code>continue</code></h2>
-<p>
-The <strong>break</strong> statement stops the loop immediately.<br>
-The <strong>continue</strong> statement skips the current iteration and moves to the next.
-</p>
-<pre><code># Using break
+    <section id="break-continue">
+      <h2 class="text-2xl font-bold mb-2 text-blue-600"><code>break</code> and <code>continue</code></h2>
+      <p><strong>break</strong> stops the loop. <strong>continue</strong> skips to the next iteration.</p>
+      <pre><code><span class="comment"># Using break</span>
 for i in range(10):
     if i == 5:
         break
     print(i)
 
-# Using continue
+<span class="comment"># Using continue</span>
 for i in range(10):
     if i % 2 == 0:
         continue
     print(i)
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-</section>
+    </section>
 
-<!-- Section: nested loops -->
-<section id="nested-loops">
-<h2 class="text-2xl font-bold mb-2">Nested Loops</h2>
-<p>A <strong>nested loop</strong> is a loop inside another loop.</p>
-<pre><code># Nested for loops
+    <section id="nested-loops">
+      <h2 class="text-2xl font-bold mb-2 text-red-600">Nested Loops</h2>
+      <p>A <strong>nested loop</strong> is a loop inside another loop.</p>
+      <pre><code><span class="comment"># Nested for loops</span>
 for i in range(3):
     for j in range(2):
-        print("i =", i, ", j =", j)
+        print(<span class="string">'i ='</span>, i, <span class="string">', j ='</span>, j)
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-</section>
+    </section>
 
-<nav class="flex justify-between my-6">
-<a href="python-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="python-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6">
+      <a href="python-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="python-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+    </nav>
 
-</main>
+  </main>
+</div>
 
 <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
 <p>© 2025 Susil. All rights reserved.</p>
 </footer>
 
+<button id="toTop" aria-label="Back to top">↑</button>
+
 <script>
-function copyCode(btn) {
+function copyCode(btn){
   const code = btn.parentElement.querySelector('code').innerText;
-  navigator.clipboard.writeText(code).then(() => {
-    btn.textContent = 'Copied!';
-    btn.style.backgroundColor = '#16a34a';
-    setTimeout(() => {
-      btn.textContent = 'Copy';
-      btn.style.backgroundColor = '#2563eb';
-    }, 1500);
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';
+    btn.style.backgroundColor='#16a34a';
+    setTimeout(()=>{ btn.textContent='Copy'; btn.style.backgroundColor='#2563eb'; },1500);
   });
 }
+
+// Back to top
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', ()=>{ toTop.style.display = window.scrollY > 300 ? 'block' : 'none'; });
+toTop.addEventListener('click', ()=>window.scrollTo({top:0, behavior:'smooth'}));
+
+// TOC highlight
+const sections = [...document.querySelectorAll('section')];
+const tocLinks = [...document.querySelectorAll('#toc a')];
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      tocLinks.forEach(a=>a.classList.remove('active-link'));
+      const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+      active && active.classList.add('active-link');
+    }
+  });
+},{ rootMargin:'-30% 0px -65% 0px', threshold:[0,1] });
+sections.forEach(s=>s && observer.observe(s));
 </script>
 
 </body>

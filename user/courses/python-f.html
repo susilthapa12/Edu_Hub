@@ -6,129 +6,178 @@
 <title>Python Functions</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body { font-family: 'Segoe UI', sans-serif; }
-pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
-code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
-.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
+body { font-family: 'Segoe UI', sans-serif; background:#fdfdfd; }
+.container { padding-left:3rem; padding-right:3rem; }
+@media (max-width:768px){ .container{ padding-left:1rem; padding-right:1rem; } }
+
+pre { background:#1e1e2f; color:white; padding:1rem; border-radius:0.5rem; overflow-x:auto; position:relative; font-family:'Fira Code',monospace; }
+.copy-btn { position:absolute; top:0.5rem; right:0.5rem; background:#2563eb; color:white; padding:0.25rem 0.5rem; border-radius:0.375rem; font-size:0.75rem; cursor:pointer; }
+
+.keyword { color:#f97316; font-weight:600; }
+.comment { color:#6b7280; font-style:italic; }
+.string { color:#facc15; }
+
+a { text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+h1,h2,h3 { scroll-margin-top:5rem; }
+
+#toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#2563eb; color:white; font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; }
+
+.toc-sticky { position:sticky; top:5.5rem; max-height:calc(100vh-6rem); overflow:auto; padding:0.5rem; background:#f1f5f9; border-radius:0.5rem; }
+.active-link { color:#2563eb; font-weight:700; }
 </style>
 </head>
-<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+<body class="flex flex-col min-h-screen">
 
 <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-<a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-</div>
+  <div class="container flex items-center justify-between py-4">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    <span class="hidden md:block text-lg font-medium">Python Functions</span>
+  </div>
 </header>
 
-<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+<div class="container grid lg:grid-cols-[220px_1fr] gap-8 py-8 flex-1">
 
-<nav class="flex justify-between my-6">
-<a href="python-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="python-g.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+  <!-- TOC -->
+  <aside class="hidden lg:block">
+    <nav class="toc-sticky text-sm font-medium">
+      <p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#function-basics">Defining Functions</a></li>
+        <li><a href="#function-parameters">Function Parameters</a></li>
+        <li><a href="#return-values">Returning Values</a></li>
+        <li><a href="#default-arguments">Default Arguments</a></li>
+        <li><a href="#args-kwargs">*args, **kwargs</a></li>
+      </ul>
+    </nav>
+  </aside>
 
-<!-- Section: Basic Function -->
-<section id="function-basics">
-<h1 class="text-3xl font-bold mb-2">Defining and Calling Functions</h1>
-<p>A <strong>function</strong> is a block of reusable code that performs a specific task.</p>
-<pre><code># Defining a simple function
+  <!-- Main Content -->
+  <main class="space-y-12">
+
+    <!-- Navigation Top -->
+    <nav class="flex justify-between mb-6">
+      <a href="python-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="python-g.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+    </nav>
+
+    <!-- Sections -->
+    <section id="function-basics">
+      <h1 class="text-3xl font-bold mb-2 text-purple-600">Defining and Calling Functions</h1>
+      <p>A <strong>function</strong> is a block of reusable code that performs a specific task.</p>
+      <pre><code><span class="comment"># Defining a simple function</span>
 def greet():
-    print("Hello, world!")
+    print(<span class="string">"Hello, world!"</span>)
 
-# Calling the function
+<span class="comment"># Calling the function</span>
 greet()
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-</section>
+    </section>
 
-<!-- Section: Function Parameters -->
-<section id="function-parameters">
-<h2 class="text-2xl font-bold mb-2">Functions with Parameters</h2>
-<p>Functions can accept input values called <strong>parameters</strong>.</p>
-<pre><code># Function with parameters
+    <section id="function-parameters">
+      <h2 class="text-2xl font-bold mb-2 text-green-600">Functions with Parameters</h2>
+      <p>Functions can accept input values called <strong>parameters</strong>.</p>
+      <pre><code><span class="comment"># Function with parameters</span>
 def greet(name):
-    print("Hello,", name)
+    print(<span class="string">"Hello,"</span>, name)
 
-greet("Alice")
-greet("Bob")
+greet(<span class="string">"Alice"</span>)
+greet(<span class="string">"Bob"</span>)
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-</section>
+    </section>
 
-<!-- Section: Return Values -->
-<section id="return-values">
-<h2 class="text-2xl font-bold mb-2">Returning Values</h2>
-<p>Functions can send data back using the <code>return</code> statement.</p>
-<pre><code># Function that returns a value
+    <section id="return-values">
+      <h2 class="text-2xl font-bold mb-2 text-blue-600">Returning Values</h2>
+      <p>Functions can send data back using the <code>return</code> statement.</p>
+      <pre><code><span class="comment"># Function that returns a value</span>
 def add(a, b):
     return a + b
 
 result = add(5, 3)
-print("Sum:", result)
+print(<span class="string">"Sum:"</span>, result)
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-</section>
+    </section>
 
-<!-- Section: Default Arguments -->
-<section id="default-arguments">
-<h2 class="text-2xl font-bold mb-2">Default Arguments</h2>
-<p>You can provide default values for parameters.</p>
-<pre><code># Function with default parameter
-def greet(name="Guest"):
-    print("Hello,", name)
+    <section id="default-arguments">
+      <h2 class="text-2xl font-bold mb-2 text-orange-600">Default Arguments</h2>
+      <p>You can provide default values for parameters.</p>
+      <pre><code><span class="comment"># Function with default parameter</span>
+def greet(name=<span class="string">"Guest"</span>):
+    print(<span class="string">"Hello,"</span>, name)
 
-greet()         # Hello, Guest
-greet("Susil")  # Hello, Susil
+greet()         <span class="comment"># Hello, Guest</span>
+greet(<span class="string">"Susil"</span>)  <span class="comment"># Hello, Susil</span>
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-</section>
+    </section>
 
-<!-- Section: Keyword and Arbitrary Arguments -->
-<section id="args-kwargs">
-<h2 class="text-2xl font-bold mb-2">Keyword Arguments, *args, and **kwargs</h2>
-<p>Python functions support keyword arguments, arbitrary arguments (<code>*args</code>), and arbitrary keyword arguments (<code>**kwargs</code>).</p>
-<pre><code># Keyword arguments
+    <section id="args-kwargs">
+      <h2 class="text-2xl font-bold mb-2 text-red-600">Keyword Arguments, *args, and **kwargs</h2>
+      <p>Python functions support keyword arguments, arbitrary positional arguments (<code>*args</code>), and arbitrary keyword arguments (<code>**kwargs</code>).</p>
+      <pre><code><span class="comment"># Keyword arguments</span>
 def introduce(name, age):
-    print("Name:", name, "| Age:", age)
+    print(<span class="string">"Name:"</span>, name, <span class="string">"| Age:"</span>, age)
 
-introduce(age=25, name="Alice")
+introduce(age=25, name=<span class="string">"Alice"</span>)
 
-# *args: variable number of positional arguments
+<span class="comment"># *args: variable number of positional arguments</span>
 def sum_all(*numbers):
     return sum(numbers)
 
 print(sum_all(1, 2, 3, 4))
 
-# **kwargs: variable number of keyword arguments
+<span class="comment"># **kwargs: variable number of keyword arguments</span>
 def print_info(**info):
     for key, value in info.items():
-        print(key, ":", value)
+        print(key, <span class="string">":"</span>, value)
 
-print_info(name="Bob", city="London", job="Engineer")
+print_info(name=<span class="string">"Bob"</span>, city=<span class="string">"London"</span>, job=<span class="string">"Engineer"</span>)
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-</section>
+    </section>
 
-<nav class="flex justify-between my-6">
-<a href="python-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="python-g.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6">
+      <a href="python-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="python-g.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+    </nav>
 
-</main>
+  </main>
+</div>
 
 <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
 <p>© 2025 Susil. All rights reserved.</p>
 </footer>
 
+<button id="toTop" aria-label="Back to top">↑</button>
+
 <script>
-function copyCode(btn) {
+function copyCode(btn){
   const code = btn.parentElement.querySelector('code').innerText;
-  navigator.clipboard.writeText(code).then(() => {
-    btn.textContent = 'Copied!';
-    btn.style.backgroundColor = '#16a34a';
-    setTimeout(() => {
-      btn.textContent = 'Copy';
-      btn.style.backgroundColor = '#2563eb';
-    }, 1500);
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';
+    btn.style.backgroundColor='#16a34a';
+    setTimeout(()=>{ btn.textContent='Copy'; btn.style.backgroundColor='#2563eb'; },1500);
   });
 }
+
+// Back to top
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', ()=>{ toTop.style.display = window.scrollY > 300 ? 'block' : 'none'; });
+toTop.addEventListener('click', ()=>window.scrollTo({top:0, behavior:'smooth'}));
+
+// TOC highlight
+const sections = [...document.querySelectorAll('section')];
+const tocLinks = [...document.querySelectorAll('#toc a')];
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      tocLinks.forEach(a=>a.classList.remove('active-link'));
+      const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+      active && active.classList.add('active-link');
+    }
+  });
+},{ rootMargin:'-30% 0px -65% 0px', threshold:[0,1] });
+sections.forEach(s=>s && observer.observe(s));
 </script>
 
 </body>

@@ -1,145 +1,551 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MySQL Basics: Databases & Tables</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MySQL Basics: Databases & Tables • EduHub</title>
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- PrismJS (syntax highlighting) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs/components/';</script>
+
   <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
-    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
-    .copy-btn {
-      position: absolute; top: 8px; right: 8px;
-      background: #3b82f6; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    :root {
+      --side-gap: 3rem;    /* double-tab space left/right on desktop */
+      --side-gap-sm: 1rem; /* mobile */
+      --brand: #2563eb;
+      --muted: #6b7280;
+      --glass: rgba(255,255,255,0.6);
     }
+    html,body { height:100%; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+      background: #f8fafc;
+      color: #0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* page full-width with small left/right padding */
+    .page {
+      padding-left: var(--side-gap);
+      padding-right: var(--side-gap);
+    }
+    @media (max-width: 768px) {
+      .page { padding-left: var(--side-gap-sm); padding-right: var(--side-gap-sm); }
+    }
+
+    /* code block visuals */
+    pre { position: relative; border-radius: .6rem; overflow:auto; box-shadow: 0 8px 30px rgba(2,6,23,0.06); margin:0; }
+    pre.sql, pre.code, pre.shell { padding: 1rem; }
+    pre.sql { background: #0b1220; color: #e6edf3; }
+    pre.shell { background: #071022; color:#e6edf3; }
+    pre code { font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.95rem; }
+
+    /* copy & explain buttons (two stacked buttons) */
+    .btn-stack { position: absolute; top: .6rem; right: .6rem; display:flex; flex-direction:column; gap:.4rem; z-index:5; }
+    .code-btn {
+      background: var(--brand);
+      color: #fff;
+      padding: .32rem .6rem;
+      border-radius: .5rem;
+      font-size: .78rem;
+      cursor:pointer;
+      box-shadow: 0 8px 18px rgba(37,99,235,0.12);
+      transition: transform .12s ease, background-color .12s ease;
+      border: none;
+    }
+    .code-btn:hover { transform: translateY(-2px); background-color: #1e40af; }
+    .code-btn.secondary { background: rgba(255,255,255,0.06); color:#e6edf3; font-weight:600; border: 1px solid rgba(255,255,255,0.06); }
+
+    /* small "share link" icon near headings */
+    .heading-anchor {
+      margin-left: .5rem;
+      opacity: .0;
+      transition: opacity .12s ease;
+      cursor: pointer;
+      display:inline-flex; align-items:center;
+    }
+    h2:hover .heading-anchor, h1:hover .heading-anchor, .heading-anchor:focus { opacity: 1; }
+
+    /* TOC */
+    .toc-sticky { position: sticky; top: 5.5rem; max-height: calc(100vh - 6rem); overflow:auto; background: #f1f5f9; border-radius: .5rem; padding: .6rem; }
+    .toc-sticky a.active { color: var(--brand); font-weight:700; }
+
+    /* mobile TOC button */
+    #tocToggle { display:none; }
+    @media (max-width: 1024px) {
+      #tocToggle { display:inline-flex; }
+      aside.toc-col { display:none; }
+    }
+
+    /* back-to-top button */
+    #toTop { display:none; position:fixed; right:1.25rem; bottom:1.25rem; background:var(--brand); color:white; border-radius: .5rem; padding:.5rem .75rem; font-weight:700; z-index:60; cursor:pointer; box-shadow: 0 8px 24px rgba(37,99,235,0.16); }
+
+    /* small helpers */
+    .muted { color: var(--muted); }
+    .pill { display:inline-flex; gap:.4rem; align-items:center; padding:.25rem .5rem; background:#eef2ff; color:#3730a3; border-radius:999px; font-weight:600; font-size:.85rem; }
+
+    /* collapsible examples */
+    .collapsible { cursor:pointer; user-select:none; font-weight:600; color:#1d4ed8; margin: .6rem 0; display:inline-flex; gap:.5rem; align-items:center; }
+    .content-hidden { display:none; }
+
+    /* dark-mode overrides (toggleable) */
+    .dark body { background: #070812; color: #e6edf3; }
+    .dark .toc-sticky { background: #071022; color: #e6edf3; }
+    .dark pre.sql, .dark pre.shell { filter: none; }
+    .dark .page-footer { background: #020617; color: #cbd5e1; }
   </style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<body class="min-h-screen flex flex-col">
 
   <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+  <header class="bg-gradient-to-r from-sky-700 to-indigo-700 text-white sticky top-0 z-50 shadow">
+    <div class="page max-w-full mx-auto flex items-center justify-between gap-4 py-4">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="bg-white/10 p-2 rounded"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M3 7v10a2 2 0 0 0 2 2h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="text-2xl font-extrabold">EduHub</div>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <button id="tocToggle" aria-expanded="false" class="bg-white/20 text-white px-3 py-2 rounded-md md:hidden">Contents</button>
+        <button id="themeToggle" class="bg-white/20 text-white px-3 py-2 rounded-md" title="Toggle light / dark">Toggle theme</button>
+      </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <!-- layout: TOC + main -->
+  <div class="page max-w-full mx-auto grid lg:grid-cols-[240px_1fr] gap-8 py-8 flex-1">
 
-    <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="mysql-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="mysql-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+    <!-- left TOC (desktop) -->
+    <aside class="toc-col">
+      <nav class="toc-sticky text-sm" aria-label="On this page">
+        <p class="uppercase text-gray-700 text-xs mb-3">Contents</p>
+        <input id="searchSections" type="search" placeholder="Filter sections..." aria-label="Filter sections"
+               class="w-full mb-3 rounded-md px-3 py-2 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+        <ul id="tocList" class="space-y-1">
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#create-database">Create Database</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#create-table">Create Table</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#insert-data">Insert Data</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#select-data">Select / Query</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#update-data">Update</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#delete-data">Delete</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#constraints">Constraints & Keys</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#transactions">Transactions</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#normalization">Normalization</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#indexes">Indexes & Performance</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#best-practices">Best Practices</a></li>
+        </ul>
+        <div class="mt-3 border-t pt-3 text-xs muted">
+          <div class="flex items-center justify-between">
+            <span>Sample SQL</span>
+            <button id="downloadSql" class="text-sm text-sky-700 hover:underline">Download</button>
+          </div>
+        </div>
+      </nav>
+    </aside>
 
-    <!-- Creating a Database -->
-    <section id="create-database">
-      <h1 class="text-3xl font-bold mb-2">Creating a Database</h1>
-      <p>Use <code>CREATE DATABASE</code> to create a new database:</p>
+    <!-- main -->
+    <main class="space-y-12">
 
-      <pre><code>-- Create a database named 'MySchool'
-CREATE DATABASE MySchool;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <!-- mobile TOC panel -->
+      <div id="mobileTocPanel" class="hidden md:hidden bg-white shadow rounded p-4">
+        <nav><ul class="space-y-1 text-sm"></ul></nav>
+      </div>
 
-      <p>To use the database:</p>
+      <!-- top nav -->
+      <nav class="flex justify-between items-center">
+        <a href="mysql-course.html" class="bg-slate-100 text-slate-900 px-4 py-2 rounded hover:bg-slate-200">◀ Previous</a>
+        <div class="flex items-center gap-3">
+          <span class="pill">MySQL • Databases & Tables</span>
+          <span class="muted text-sm hidden sm:inline">A short, practical introduction</span>
+        </div>
+      </nav>
 
-      <pre><code>USE MySchool;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      <!-- Create database -->
+      <section id="create-database" class="scroll-mt-28">
+        <h2 class="text-3xl font-extrabold mb-2">
+          Creating a Database
+          <span class="heading-anchor" title="Copy link" tabindex="0" data-anchor="#create-database" aria-label="Copy link">🔗</span>
+        </h2>
+        <p class="muted mb-3">Use <code>CREATE DATABASE</code> to create a logical container for your tables.</p>
 
-    <!-- Creating a Table -->
-    <section id="create-table" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Creating a Table</h2>
-      <p>Use <code>CREATE TABLE</code> to define a new table with columns:</p>
+        <div class="bg-white rounded shadow-sm p-4">
+          <pre class="sql"><div class="btn-stack" aria-hidden><button class="code-btn" data-copy>Copy</button><button class="code-btn secondary" data-copy-explain>Copy EXPLAIN</button></div><code class="language-sql">-- Create a database named 'MySchool'
+CREATE DATABASE MySchool;
+-- Switch to the database
+USE MySchool;</code></pre>
+        </div>
 
-      <pre><code>CREATE TABLE Students (
-    StudentID INT AUTO_INCREMENT PRIMARY KEY,
-    FirstName VARCHAR(50),
-    LastName VARCHAR(50),
-    Age INT,
-    Grade VARCHAR(10)
-);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+        <p class="mt-3">Tip: use lowercase or snake_case for database names on portable systems: <span class="muted">my_school</span>.</p>
+      </section>
 
-    <!-- Inserting Data -->
-    <section id="insert-data" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Inserting Data</h2>
-      <p>Use <code>INSERT INTO</code> to add records:</p>
+      <!-- Create table -->
+      <section id="create-table" class="scroll-mt-28">
+        <h2 class="text-3xl font-extrabold mb-2">
+          Creating a Table
+          <span class="heading-anchor" title="Copy link" tabindex="0" data-anchor="#create-table">🔗</span>
+        </h2>
+        <p class="muted mb-3">Design columns with types and constraints.</p>
 
-      <pre><code>INSERT INTO Students (FirstName, LastName, Age, Grade)
-VALUES ('John', 'Doe', 15, '10th');
+        <div class="bg-white rounded shadow-sm p-4">
+          <pre class="sql"><div class="btn-stack" aria-hidden><button class="code-btn" data-copy>Copy</button><button class="code-btn secondary" data-copy-explain>Copy EXPLAIN</button></div><code class="language-sql">CREATE TABLE Students (
+  StudentID INT AUTO_INCREMENT PRIMARY KEY,
+  FirstName VARCHAR(50) NOT NULL,
+  LastName VARCHAR(50) NOT NULL,
+  Age INT CHECK (Age &gt;= 0),
+  Grade VARCHAR(10),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);</code></pre>
+        </div>
+      </section>
 
-INSERT INTO Students (FirstName, LastName, Age, Grade)
-VALUES ('Jane', 'Smith', 16, '11th');</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      <!-- Insert data -->
+      <section id="insert-data" class="scroll-mt-28">
+        <h2 class="text-3xl font-extrabold mb-2">
+          Inserting Data
+          <span class="heading-anchor" title="Copy link" tabindex="0" data-anchor="#insert-data">🔗</span>
+        </h2>
+        <div class="bg-white rounded shadow-sm p-4">
+          <pre class="sql"><div class="btn-stack" aria-hidden><button class="code-btn" data-copy>Copy</button><button class="code-btn secondary" data-copy-explain>Copy EXPLAIN</button></div><code class="language-sql">INSERT INTO Students (FirstName, LastName, Age, Grade)
+VALUES ('John', 'Doe', 15, '10th'),
+       ('Jane', 'Smith', 16, '11th');</code></pre>
+        </div>
+        <p class="mt-3 muted">You can insert multiple rows in one statement — efficient for bulk inserts.</p>
+      </section>
 
-    <!-- Querying Data -->
-    <section id="select-data" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Querying Data</h2>
-      <p>Use <code>SELECT</code> to view records:</p>
-
-      <pre><code>-- Select all columns
+      <!-- Select -->
+      <section id="select-data" class="scroll-mt-28">
+        <h2 class="text-3xl font-extrabold mb-2">
+          Querying Data (SELECT)
+          <span class="heading-anchor" title="Copy link" tabindex="0" data-anchor="#select-data">🔗</span>
+        </h2>
+        <div class="bg-white rounded shadow-sm p-4">
+          <pre class="sql"><div class="btn-stack" aria-hidden><button class="code-btn" data-copy>Copy</button><button class="code-btn secondary" data-copy-explain>Copy EXPLAIN</button></div><code class="language-sql">-- Select all columns
 SELECT * FROM Students;
 
 -- Select specific columns
-SELECT FirstName, LastName FROM Students;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+SELECT FirstName, LastName FROM Students;
 
-    <!-- Updating Data -->
-    <section id="update-data" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Updating Data</h2>
-      <p>Use <code>UPDATE</code> to modify records:</p>
+-- Filter, sort and limit
+SELECT * FROM Students WHERE Age &gt;= 16 ORDER BY LastName ASC LIMIT 50;</code></pre>
+        </div>
+      </section>
 
-      <pre><code>UPDATE Students
+      <!-- Update -->
+      <section id="update-data" class="scroll-mt-28">
+        <h2 class="text-3xl font-extrabold mb-2">
+          Updating Data
+          <span class="heading-anchor" title="Copy link" tabindex="0" data-anchor="#update-data">🔗</span>
+        </h2>
+        <div class="bg-white rounded shadow-sm p-4">
+          <pre class="sql"><div class="btn-stack" aria-hidden><button class="code-btn" data-copy>Copy</button><button class="code-btn secondary" data-copy-explain>Copy EXPLAIN</button></div><code class="language-sql">UPDATE Students
 SET Grade = '11th'
-WHERE StudentID = 1;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+WHERE StudentID = 1;</code></pre>
+        </div>
+        <p class="mt-3 muted">Always include a WHERE clause when updating — otherwise you'll modify all rows.</p>
+      </section>
 
-    <!-- Deleting Data -->
-    <section id="delete-data" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Deleting Data</h2>
-      <p>Use <code>DELETE</code> to remove records:</p>
+      <!-- Delete -->
+      <section id="delete-data" class="scroll-mt-28">
+        <h2 class="text-3xl font-extrabold mb-2">
+          Deleting Data
+          <span class="heading-anchor" title="Copy link" tabindex="0" data-anchor="#delete-data">🔗</span>
+        </h2>
+        <div class="bg-white rounded shadow-sm p-4">
+          <pre class="sql"><div class="btn-stack" aria-hidden><button class="code-btn" data-copy>Copy</button><button class="code-btn secondary" data-copy-explain>Copy EXPLAIN</button></div><code class="language-sql">DELETE FROM Students
+WHERE StudentID = 2;
 
-      <pre><code>DELETE FROM Students
-WHERE StudentID = 2;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+-- Delete carefully; consider using a transaction or soft-delete flag instead.</code></pre>
+        </div>
+      </section>
 
-    <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="mysql-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="mysql-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+      <!-- Constraints -->
+      <section id="constraints" class="scroll-mt-28">
+        <h2 class="text-3xl font-extrabold mb-2">
+          Constraints & Keys
+          <span class="heading-anchor" title="Copy link" tabindex="0" data-anchor="#constraints">🔗</span>
+        </h2>
+        <ul class="list-disc ml-6 mb-3 muted">
+          <li><strong>PRIMARY KEY</strong> — uniquely identifies rows</li>
+          <li><strong>UNIQUE</strong> — enforces uniqueness</li>
+          <li><strong>NOT NULL</strong> — value required</li>
+          <li><strong>CHECK</strong> — expression-based validation</li>
+          <li><strong>FOREIGN KEY</strong> — enforces referential integrity</li>
+        </ul>
 
-  </main>
+        <div class="bg-white rounded shadow-sm p-4">
+          <pre class="sql"><div class="btn-stack" aria-hidden><button class="code-btn" data-copy>Copy</button><button class="code-btn secondary" data-copy-explain>Copy EXPLAIN</button></div><code class="language-sql">CREATE TABLE orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  student_id INT NOT NULL,
+  total DECIMAL(10,2) NOT NULL,
+  ordered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (student_id) REFERENCES Students(StudentID)
+);</code></pre>
+        </div>
+      </section>
+
+      <!-- Transactions -->
+      <section id="transactions" class="scroll-mt-28">
+        <h2 class="text-3xl font-extrabold mb-2">
+          Transactions
+          <span class="heading-anchor" title="Copy link" tabindex="0" data-anchor="#transactions">🔗</span>
+        </h2>
+        <p class="muted mb-3">Use transactions to ensure multiple statements succeed or fail together.</p>
+        <div class="bg-white rounded shadow-sm p-4">
+          <pre class="sql"><div class="btn-stack" aria-hidden><button class="code-btn" data-copy>Copy</button><button class="code-btn secondary" data-copy-explain>Copy EXPLAIN</button></div><code class="language-sql">START TRANSACTION;
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+COMMIT;
+
+-- Or rollback on error
+ROLLBACK;</code></pre>
+        </div>
+      </section>
+
+      <!-- Normalization -->
+      <section id="normalization" class="scroll-mt-28">
+        <h2 class="text-3xl font-extrabold mb-2">
+          Normalization (Short)
+          <span class="heading-anchor" title="Copy link" tabindex="0" data-anchor="#normalization">🔗</span>
+        </h2>
+        <p class="muted">Normalization reduces redundancy. Typical steps: 1NF, 2NF, 3NF. For many apps, normalized schema improves consistency; for heavy reads, denormalization may be chosen for performance.</p>
+      </section>
+
+      <!-- Indexes -->
+      <section id="indexes" class="scroll-mt-28">
+        <h2 class="text-3xl font-extrabold mb-2">
+          Indexes & Performance
+          <span class="heading-anchor" title="Copy link" tabindex="0" data-anchor="#indexes">🔗</span>
+        </h2>
+        <p class="muted">Add indexes to speed queries, but be mindful of write/space cost.</p>
+
+        <div class="bg-white rounded shadow-sm p-4">
+          <pre class="sql"><div class="btn-stack" aria-hidden><button class="code-btn" data-copy>Copy</button><button class="code-btn secondary" data-copy-explain>Copy EXPLAIN</button></div><code class="language-sql">-- Create index on most-used filter column
+CREATE INDEX idx_students_lastname ON Students(LastName);
+
+-- Drop index if not useful
+DROP INDEX idx_students_lastname ON Students;</code></pre>
+        </div>
+      </section>
+
+      <!-- Best practices -->
+      <section id="best-practices" class="scroll-mt-28">
+        <h2 class="text-3xl font-extrabold mb-2">
+          Best Practices
+          <span class="heading-anchor" title="Copy link" tabindex="0" data-anchor="#best-practices">🔗</span>
+        </h2>
+        <ul class="list-disc ml-6 muted">
+          <li>Use clear naming conventions (snake_case), small normalized tables.</li>
+          <li>Use transactions for multi-step changes; use parameterized queries or prepared statements to prevent SQL injection.</li>
+          <li>Monitor slow query log; use EXPLAIN to inspect query plans.</li>
+          <li>Back up frequently and test restores on staging.</li>
+        </ul>
+      </section>
+
+      <!-- bottom navigation -->
+      <nav class="flex justify-between mt-6">
+        <a href="mysql-course.html" class="bg-slate-100 text-slate-900 px-4 py-2 rounded hover:bg-slate-200">◀ Previous</a>
+        <a href="mysql-b.html" class="bg-slate-100 text-slate-900 px-4 py-2 rounded hover:bg-slate-200">Next ▶</a>
+      </nav>
+
+    </main>
+  </div>
 
   <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-    <p>© 2025 Susil. All rights reserved.</p>
+  <footer class="page-footer bg-slate-900 text-white py-6 mt-auto">
+    <div class="page max-w-full mx-auto text-center text-sm">© 2025 Susil. All rights reserved.</div>
   </footer>
 
-  <script>
-    function copyCode(btn) {
-      const code = btn.parentElement.querySelector('code').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = 'Copied!';
-        btn.style.backgroundColor = '#16a34a';
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.style.backgroundColor = '#3b82f6';
-        }, 1500);
-      });
-    }
-  </script>
+  <!-- Back to top -->
+  <button id="toTop" aria-label="Back to top">↑</button>
 
+  <!-- Floating cheatsheet (small) -->
+  <div id="cheatsheet" class="fixed left-1.25rem bottom-6 hidden lg:block z-40">
+    <div class="bg-white/90 backdrop-blur rounded-lg p-3 shadow">
+      <div class="text-xs font-semibold mb-1">SQL Cheatsheet</div>
+      <div class="text-xs muted space-y-1">
+        <div><strong>SELECT</strong> — read</div>
+        <div><strong>INSERT</strong> — add</div>
+        <div><strong>UPDATE</strong> — modify</div>
+        <div><strong>DELETE</strong> — remove</div>
+        <div><strong>EXPLAIN</strong> — show query plan</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Helper: copy text to clipboard with fallback
+    async function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text);
+      }
+      // fallback
+      const ta = document.createElement('textarea'); ta.value = text;
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } finally { ta.remove(); }
+      return Promise.resolve();
+    }
+
+    // Add behaviors once DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+      Prism.highlightAll();
+
+      // Clone desktop TOC into mobile panel
+      const desktopList = document.querySelector('#tocList');
+      const mobilePanel = document.querySelector('#mobileTocPanel nav ul');
+      if (desktopList && mobilePanel) {
+        mobilePanel.innerHTML = desktopList.innerHTML;
+        mobilePanel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+          document.getElementById('mobileTocPanel').classList.add('hidden');
+        }));
+      }
+
+      // Toggle mobile TOC
+      const tocToggle = document.getElementById('tocToggle');
+      const mobilePanelWrapper = document.getElementById('mobileTocPanel');
+      tocToggle?.addEventListener('click', () => {
+        const open = !mobilePanelWrapper.classList.contains('hidden');
+        mobilePanelWrapper.classList.toggle('hidden');
+        tocToggle.setAttribute('aria-expanded', String(!open));
+      });
+
+      // Add copy / explain handlers for every code block
+      document.querySelectorAll('pre.sql, pre').forEach(pre => {
+        // If a stack isn't present (older markup), create it
+        if (!pre.querySelector('.btn-stack')) {
+          const stack = document.createElement('div');
+          stack.className = 'btn-stack';
+          stack.innerHTML = '<button class="code-btn" data-copy>Copy</button><button class="code-btn secondary" data-copy-explain>Copy EXPLAIN</button>';
+          pre.insertBefore(stack, pre.firstChild);
+        }
+      });
+
+      // Delegate copy clicks
+      document.addEventListener('click', async (e) => {
+        const copyBtn = e.target.closest('[data-copy]');
+        const explainBtn = e.target.closest('[data-copy-explain]');
+        if (copyBtn || explainBtn) {
+          const pre = (copyBtn || explainBtn).closest('pre');
+          const codeEl = pre?.querySelector('code');
+          if (!codeEl) return;
+          const code = codeEl.innerText;
+          const toCopy = explainBtn ? ('EXPLAIN ' + code.replace(/\s+$/,'')) : code;
+          await copyText(toCopy);
+          const b = copyBtn || explainBtn;
+          const original = b.textContent;
+          b.textContent = explainBtn ? 'Copied EXPLAIN!' : 'Copied!';
+          b.style.background = '#16a34a';
+          setTimeout(() => { b.textContent = original; b.style.background = ''; }, 1400);
+        }
+      });
+
+      // Heading anchor copy links
+      document.querySelectorAll('.heading-anchor').forEach(a => {
+        a.addEventListener('click', async () => {
+          const hash = a.getAttribute('data-anchor');
+          const full = location.origin + location.pathname + hash;
+          await copyText(full);
+          const old = a.textContent;
+          a.textContent = '✓';
+          setTimeout(()=> a.textContent = old, 1200);
+        });
+        // also keyboard accessible
+        a.addEventListener('keydown', (ev) => { if(ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); a.click(); } });
+      });
+
+      // Search filter for sections
+      const search = document.getElementById('searchSections');
+      search?.addEventListener('input', (ev) => {
+        const q = (ev.target.value || '').trim().toLowerCase();
+        document.querySelectorAll('main section[id]').forEach(sec => {
+          const text = sec.innerText.toLowerCase();
+          sec.style.display = (!q || text.includes(q)) ? '' : 'none';
+        });
+        // filter TOC items too
+        document.querySelectorAll('#tocList li').forEach(li => {
+          const a = li.querySelector('a');
+          if (!q || (a.textContent || '').toLowerCase().includes(q)) li.style.display = '';
+          else li.style.display = 'none';
+        });
+      });
+
+      // Download sample SQL
+      const sampleSQL = `-- Sample MySchool schema + sample data
+CREATE DATABASE IF NOT EXISTS MySchool;
+USE MySchool;
+
+CREATE TABLE Students (
+  StudentID INT AUTO_INCREMENT PRIMARY KEY,
+  FirstName VARCHAR(50) NOT NULL,
+  LastName VARCHAR(50) NOT NULL,
+  Age INT,
+  Grade VARCHAR(10),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO Students (FirstName, LastName, Age, Grade) VALUES
+('John','Doe',15,'10th'),
+('Jane','Smith',16,'11th'),
+('Sam','Brown',14,'9th');`;
+      document.getElementById('downloadSql')?.addEventListener('click', () => {
+        const blob = new Blob([sampleSQL], { type: 'text/sql' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'myschool_sample.sql';
+        document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+      });
+
+      // TOC Highlight (IntersectionObserver)
+      const sections = document.querySelectorAll('main section[id]');
+      const tocLinks = document.querySelectorAll('#tocList a');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(a=>a.classList.remove('active'));
+            const active = document.querySelector('#tocList a[href="#' + entry.target.id + '"]');
+            if (active) active.classList.add('active');
+          }
+        });
+      }, { root: null, rootMargin: '-30% 0px -60% 0px', threshold: [0,0.5,1] });
+      sections.forEach(s => s && observer.observe(s));
+
+      // Back to top
+      const toTop = document.getElementById('toTop');
+      window.addEventListener('scroll', () => { toTop.style.display = window.scrollY > 300 ? 'block' : 'none'; });
+      toTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+      // Keyboard shortcuts: / focus search, g go top, t toggle theme
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+          search?.focus();
+          return;
+        }
+        if (e.key === 'g' && (e.ctrlKey === false && e.metaKey === false)) { window.scrollTo({ top:0, behavior:'smooth' }); }
+        if (e.key === 't') { document.getElementById('themeToggle')?.click(); }
+      });
+
+      // Theme toggle (persist)
+      const themeToggle = document.getElementById('themeToggle');
+      function applyTheme(isDark) {
+        if (isDark) document.documentElement.classList.add('dark');
+        else document.documentElement.classList.remove('dark');
+        localStorage.setItem('edu_theme_dark', isDark ? '1' : '0');
+      }
+      const pref = localStorage.getItem('edu_theme_dark');
+      if (pref === '1') applyTheme(true);
+      themeToggle?.addEventListener('click', () => {
+        const isDark = !document.documentElement.classList.contains('dark');
+        applyTheme(isDark);
+      });
+
+    }); // DOMContentLoaded end
+  </script>
 </body>
 </html>

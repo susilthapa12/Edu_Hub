@@ -1,102 +1,182 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>C Programming Syntax</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-body { font-family: 'Segoe UI', sans-serif; }
-pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
-code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
-.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C Programming Syntax — EduHub</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- PrismJS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+    }
+    pre {
+      position: relative;
+      background-color: #f5f5f5;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      transition: transform .2s ease;
+    }
+    pre:hover { transform: translateY(-2px); }
+    code { font-family: 'Fira Code', monospace; font-size: 0.95rem; color: #1e1e1e; }
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #2563eb;
+      color: white;
+      padding: .25rem .5rem;
+      font-size: .75rem;
+      border-radius: .375rem;
+      cursor:pointer;
+      border:none;
+      opacity:0.9;
+      transition: opacity .2s ease, background-color .2s ease;
+    }
+    .copy-btn:hover { opacity:1; }
+    .toc-sticky {
+      position: sticky;
+      top:5.5rem;
+      max-height: calc(100vh - 6rem);
+      overflow:auto;
+      padding-right:.25rem;
+    }
+    #toTop {
+      transition: opacity .2s ease;
+      display:none;
+    }
+    section { scroll-margin-top: 6rem; }
+  </style>
 </head>
 <body class="bg-white text-gray-900 min-h-screen flex flex-col">
 
-<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-<a href="c-a.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-</div>
-</header>
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="c-a.html" class="text-2xl font-extrabold tracking-tight">EduHub</a>
+      <button id="tocToggle" class="md:hidden bg-blue-600 px-3 py-1 rounded">Contents</button>
+      <div class="hidden md:block">C Programming Syntax</div>
+    </div>
+  </header>
 
-<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+  <div class="flex-1 flex max-w-7xl mx-auto px-4 py-8 w-full gap-8 flex-col lg:flex-row">
+    <!-- Sidebar / TOC -->
+    <aside id="tocSidebar" class="hidden lg:block lg:w-[260px] bg-white shadow-md rounded p-4 flex-shrink-0">
+      <nav class="toc-sticky text-sm font-medium" aria-label="On this page">
+        <p class="uppercase tracking-wider text-gray-600 text-xs mb-2">Contents</p>
+        <ul id="tocLinks" class="space-y-2">
+          <li><a href="#c-syntax" class="hover:underline">C Syntax Basics</a></li>
+          <li><a href="#basic-structure" class="hover:underline">Basic Program Structure</a></li>
+          <li><a href="#comments" class="hover:underline">Comments</a></li>
+          <li><a href="#statements" class="hover:underline">C Statements</a></li>
+          <li><a href="#case-sensitivity" class="hover:underline">Case Sensitivity</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-<nav class="flex justify-between my-6">
-<a href="c-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="c-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+    <!-- Main Content -->
+    <main class="flex-1 space-y-12 w-full">
+      <!-- Navigation Top -->
+      <nav class="flex justify-between sticky top-16 bg-white z-10 py-2 px-2 rounded shadow-sm">
+        <a href="c-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+        <a href="c-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+      </nav>
 
-<!-- Section: C Syntax -->
-<section id="c-syntax">
-<h1 class="text-3xl font-bold mb-2">C Syntax Basics</h1>
-<p>Here is how a basic C program is structured:</p>
+      <!-- Section: C Syntax -->
+      <section id="c-syntax" class="min-h-screen">
+        <h1 class="text-3xl font-bold mb-2">C Syntax Basics</h1>
+        <p>Here is how a basic C program is structured:</p>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">1. Basic Program Structure</h2>
-<pre><code>#include &lt;stdio.h&gt;
-
+        <h2 id="basic-structure" class="text-2xl font-bold mt-6 mb-2">1. Basic Program Structure</h2>
+        <pre><code class="language-c">#include &lt;stdio.h&gt;
 int main() {
     printf("Hello, World!\n");
     return 0;
-}
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-<p>Explanation:</p>
-<ul class="list-disc list-inside mb-4">
-  <li><code>#include &lt;stdio.h&gt;</code> - includes the standard input/output library.</li>
-  <li><code>int main()</code> - the main function where the program starts.</li>
-  <li><code>printf()</code> - prints output to the screen.</li>
-  <li><code>return 0;</code> - ends the program.</li>
-</ul>
+}</code><button class="copy-btn" aria-label="Copy code">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">2. Comments in C</h2>
-<p>Comments are used to explain code and are ignored by the compiler.</p>
-<pre><code>// This is a single-line comment
+        <h2 id="comments" class="text-2xl font-bold mt-6 mb-2">2. Comments in C</h2>
+        <pre><code class="language-c">// Single-line comment
+/* Multi-line comment */</code><button class="copy-btn" aria-label="Copy code">Copy</button></pre>
 
-/*
-   This is a
-   multi-line comment
-*/
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-
-<h2 class="text-2xl font-bold mt-6 mb-2">3. C Statements</h2>
-<p>Each line of code is called a statement and ends with a semicolon <code>;</code>.</p>
-<pre><code>int a = 5;
+        <h2 id="statements" class="text-2xl font-bold mt-6 mb-2">3. C Statements</h2>
+        <pre><code class="language-c">int a = 5;
 int b = 10;
 int sum = a + b;
-printf("Sum = %d", sum);
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+printf("Sum = %d", sum);</code><button class="copy-btn" aria-label="Copy code">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">4. Case Sensitivity</h2>
-<p>C is case-sensitive: <code>Var</code> and <code>var</code> are different variables.</p>
+        <h2 id="case-sensitivity" class="text-2xl font-bold mt-6 mb-2">4. Case Sensitivity</h2>
+        <p>C is case-sensitive: <code>Var</code> and <code>var</code> are different variables.</p>
+      </section>
 
-</section>
+      <!-- Navigation Bottom -->
+      <nav class="flex justify-between py-2">
+        <a href="c-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+        <a href="c-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+      </nav>
+    </main>
+  </div>
 
-<nav class="flex justify-between my-6">
-<a href="c-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="c-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+  <!-- Footer -->
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+    <p>© 2025 Susil. All rights reserved.</p>
+  </footer>
 
-</main>
+  <!-- Back to Top -->
+  <button id="toTop" class="fixed bottom-5 right-5 rounded-full p-3 shadow-lg bg-blue-600 text-white hover:bg-blue-700" aria-label="Back to top">↑</button>
 
-<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-<p>© 2025 Susil. All rights reserved.</p>
-</footer>
+  <script>
+    // Toggle mobile TOC
+    const tocToggle = document.getElementById('tocToggle');
+    const tocSidebar = document.getElementById('tocSidebar');
+    tocToggle.addEventListener('click', () => tocSidebar.classList.toggle('hidden'));
 
-<script>
-function copyCode(btn) {
-  const code = btn.parentElement.querySelector('code').innerText;
-  navigator.clipboard.writeText(code).then(() => {
-    btn.textContent = 'Copied!';
-    btn.style.backgroundColor = '#16a34a';
-    setTimeout(() => {
-      btn.textContent = 'Copy';
-      btn.style.backgroundColor = '#2563eb';
-    }, 1500);
-  });
-}
-</script>
+    // Copy buttons
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.copy-btn');
+      if(!btn) return;
+      const code = btn.parentElement.querySelector('code');
+      navigator.clipboard.writeText(code.innerText.trim()).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#2563eb';
+        }, 1500);
+      });
+    });
 
+    // Back to top
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      toTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+    toTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+    // PrismJS
+    Prism.highlightAll();
+
+    // Scrollspy for TOC
+    const sections = document.querySelectorAll('section[id]');
+    const tocLinks = document.querySelectorAll('#tocLinks a');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        tocLinks.forEach(a => a.removeAttribute('aria-current'));
+        if(entry.isIntersecting){
+          const id = entry.target.getAttribute('id');
+          const activeLink = document.querySelector(`#tocLinks a[href="#${id}"]`);
+          activeLink?.setAttribute('aria-current','true');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: [0,1] });
+    sections.forEach(s => observer.observe(s));
+  </script>
 </body>
 </html>

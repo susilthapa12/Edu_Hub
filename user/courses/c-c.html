@@ -4,67 +4,113 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>C Programming Variables & Data Types</title>
+
+<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
+
+<!-- PrismJS for syntax highlighting -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.min.css">
+<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js" data-prismjs-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs/components/"></script>
+
 <style>
 body { font-family: 'Segoe UI', sans-serif; }
-pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
-code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
-.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
+pre { position: relative; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; }
+.copy-btn {
+  position: absolute; top: 0.5rem; right: 0.5rem;
+  background: #2563eb; color: #fff; padding: 0.25rem 0.5rem;
+  font-size: 0.75rem; border-radius: 0.375rem; cursor: pointer;
+}
+kbd { border:1px solid #d1d5db; padding:0.125rem 0.25rem; border-radius:0.25rem; background:#f3f4f6; font-size:0.75rem; }
+.active-link { color:#2563eb; font-weight:700; }
 </style>
 </head>
 <body class="bg-white text-gray-900 min-h-screen flex flex-col">
 
-<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-<a href="c-b.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-</div>
+<!-- Header -->
+<header class="bg-blue-700 text-white sticky top-0 z-50 shadow-md">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    <div class="hidden md:flex items-center gap-4">
+      <input id="filterInput" type="search" placeholder="Search sections..."
+             class="rounded-lg px-3 py-2 text-sm text-gray-900 placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-white/70"/>
+      <kbd>/</kbd>
+    </div>
+  </div>
 </header>
 
-<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+<!-- Layout -->
+<div class="max-w-7xl mx-auto w-full px-4 py-8 grid lg:grid-cols-[220px_1fr] gap-8 flex-1">
 
-<nav class="flex justify-between my-6">
-<a href="c-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="c-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+  <!-- Sidebar / TOC -->
+  <aside class="hidden lg:block">
+    <nav class="sticky top-20 space-y-3 text-sm font-medium" aria-label="On this page">
+      <p class="uppercase tracking-wider text-gray-700 text-xs mb-2">On this page</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#c-variables" class="hover:underline">Variables & Data Types</a></li>
+        <li><a href="#declaration" class="hover:underline">Variable Declaration</a></li>
+        <li><a href="#assigning" class="hover:underline">Assigning Values</a></li>
+        <li><a href="#initialize" class="hover:underline">Declaring & Initializing</a></li>
+        <li><a href="#printing" class="hover:underline">Printing Variables</a></li>
+        <li><a href="#format" class="hover:underline">Format Specifiers</a></li>
+      </ul>
+    </nav>
+  </aside>
 
-<!-- Section: Variables & Data Types -->
-<section id="c-variables">
-<h1 class="text-3xl font-bold mb-2">C Variables & Data Types</h1>
-<p>Variables are used to store data. Each variable has a <strong>data type</strong> that defines the kind of data it can hold.</p>
+  <!-- Main Content -->
+  <main class="space-y-12">
 
-<h2 class="text-2xl font-bold mt-6 mb-2">1. Variable Declaration</h2>
-<pre><code>int age;       // integer
+    <!-- Navigation -->
+    <nav class="flex justify-between">
+      <a href="c-b.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="c-d.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+    </nav>
+
+    <!-- Variables Section -->
+    <section id="c-variables" class="scroll-mt-24">
+      <h1 class="text-3xl font-bold mb-2">C Variables & Data Types</h1>
+      <p>Variables store data. Each variable has a <strong>data type</strong> defining the kind of data it can hold.</p>
+
+      <!-- 1. Declaration -->
+      <section id="declaration" class="mt-6">
+        <h2 class="text-2xl font-bold mb-2">1. Variable Declaration</h2>
+        <pre class="rounded-xl border border-gray-300 bg-gray-50 p-4 relative">
+<code class="language-c">int age;       // integer
 float price;    // floating-point number
 char grade;     // single character
-double pi;      // double-precision floating point
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+double pi;      // double-precision floating point</code>
+<button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </pre>
+      </section>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">2. Assigning Values</h2>
-<pre><code>age = 25;
+      <!-- 2. Assigning Values -->
+      <section id="assigning" class="mt-6">
+        <h2 class="text-2xl font-bold mb-2">2. Assigning Values</h2>
+        <pre class="rounded-xl border border-gray-300 bg-gray-50 p-4 relative">
+<code class="language-c">age = 25;
 price = 19.99;
 grade = 'A';
-pi = 3.14159;
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+pi = 3.14159;</code>
+<button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </pre>
+      </section>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">3. Declaring & Initializing in One Line</h2>
-<pre><code>int a = 10;
+      <!-- 3. Declaring & Initializing -->
+      <section id="initialize" class="mt-6">
+        <h2 class="text-2xl font-bold mb-2">3. Declaring & Initializing in One Line</h2>
+        <pre class="rounded-xl border border-gray-300 bg-gray-50 p-4 relative">
+<code class="language-c">int a = 10;
 float b = 5.5;
-char c = 'X';
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+char c = 'X';</code>
+<button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </pre>
+      </section>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">4. Basic Data Types in C</h2>
-<ul class="list-disc list-inside mb-4">
-  <li><code>int</code> – stores integers (e.g., 0, 1, -5)</li>
-  <li><code>float</code> – stores decimal numbers (e.g., 3.14)</li>
-  <li><code>double</code> – stores double-precision decimal numbers</li>
-  <li><code>char</code> – stores a single character (e.g., 'A')</li>
-  <li><code>void</code> – represents no value</li>
-</ul>
-
-<h2 class="text-2xl font-bold mt-6 mb-2">5. Printing Variables</h2>
-<pre><code>#include &lt;stdio.h&gt;
+      <!-- 4. Printing Variables -->
+      <section id="printing" class="mt-6">
+        <h2 class="text-2xl font-bold mb-2">4. Printing Variables</h2>
+        <pre class="rounded-xl border border-gray-300 bg-gray-50 p-4 relative">
+<code class="language-c">#include &lt;stdio.h&gt;
 
 int main() {
     int age = 25;
@@ -76,33 +122,41 @@ int main() {
     printf("Grade: %c\n", grade);
 
     return 0;
-}
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+}</code>
+<button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </pre>
+      </section>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">6. Format Specifiers</h2>
-<ul class="list-disc list-inside mb-4">
-  <li><code>%d</code> – integer</li>
-  <li><code>%f</code> – float</li>
-  <li><code>%.2f</code> – float with 2 decimal places</li>
-  <li><code>%c</code> – char</li>
-  <li><code>%s</code> – string</li>
-</ul>
+      <!-- 5. Format Specifiers -->
+      <section id="format" class="mt-6">
+        <h2 class="text-2xl font-bold mb-2">5. Format Specifiers</h2>
+        <ul class="list-disc list-inside mb-4">
+          <li><code>%d</code> – integer</li>
+          <li><code>%f</code> – float</li>
+          <li><code>%.2f</code> – float with 2 decimals</li>
+          <li><code>%c</code> – char</li>
+          <li><code>%s</code> – string</li>
+        </ul>
+      </section>
+    </section>
 
-</section>
+    <!-- Bottom Navigation -->
+    <nav class="flex justify-between">
+      <a href="c-b.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="c-d.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+    </nav>
 
-<nav class="flex justify-between my-6">
-<a href="c-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="c-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+  </main>
+</div>
 
-</main>
-
-<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+<!-- Footer -->
+<footer class="bg-blue-700 text-white py-6 text-center font-semibold mt-auto">
 <p>© 2025 Susil. All rights reserved.</p>
 </footer>
 
+<!-- Scripts -->
 <script>
-function copyCode(btn) {
+function copyCode(btn){
   const code = btn.parentElement.querySelector('code').innerText;
   navigator.clipboard.writeText(code).then(() => {
     btn.textContent = 'Copied!';
@@ -113,7 +167,32 @@ function copyCode(btn) {
     }, 1500);
   });
 }
-</script>
 
+// Filter search functionality
+const filterInput = document.getElementById('filterInput');
+const sections = [...document.querySelectorAll('main section')];
+filterInput?.addEventListener('input', () => {
+  const q = filterInput.value.toLowerCase();
+  sections.forEach(sec => {
+    sec.style.display = sec.innerText.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+
+// Scrollspy for TOC
+const tocLinks = [...document.querySelectorAll('#toc a')];
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      tocLinks.forEach(a=>a.classList.remove('active-link'));
+      const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+      active?.classList.add('active-link');
+    }
+  });
+}, { rootMargin: '-30% 0px -65% 0px' });
+sections.forEach(s => s && observer.observe(s));
+
+// Prism Highlight
+document.addEventListener('DOMContentLoaded', () => Prism.highlightAll());
+</script>
 </body>
 </html>

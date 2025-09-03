@@ -6,117 +6,132 @@
   <title>Node.js HTTP, Express.js & APIs</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
-    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
-    .copy-btn {
-      position: absolute; top: 8px; right: 8px;
-      background: #3b82f6; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
-    }
+    body { font-family: 'Segoe UI', sans-serif; background:#f9fafb; }
+    .container { padding-left:3rem; padding-right:3rem; }
+    @media (max-width:768px){ .container{ padding-left:1rem; padding-right:1rem; } }
+
+    pre { background:#1e1e2f; padding:1rem; border-radius:0.5rem; overflow-x:auto; position:relative; font-family:'Fira Code', monospace; color:#f9fafb; }
+    .copy-btn { position:absolute; top:0.5rem; right:0.5rem; background:#3b82f6; color:white; padding:0.25rem 0.5rem; border-radius:0.375rem; font-size:0.75rem; cursor:pointer; transition: all 0.2s; }
+    .copy-btn:hover { background:#2563eb; }
+    .keyword { color:#f97316; font-weight:600; }
+    .comment { color:#6b7280; font-style:italic; }
+    .string { color:#facc15; }
+
+    #toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#3b82f6; color:white; font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; }
+    .toc-sticky { position:sticky; top:5.5rem; max-height:calc(100vh-6rem); overflow:auto; padding:0.5rem; background:#f1f5f9; border-radius:0.5rem; font-size:0.875rem; }
+    .active-link { color:#3b82f6; font-weight:700; }
   </style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<body class="flex flex-col min-h-screen">
 
   <!-- Header -->
   <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+    <div class="container flex items-center justify-between py-4">
       <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+      <span class="hidden md:block text-lg font-medium">Node.js HTTP, Express.js & APIs</span>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <div class="container grid lg:grid-cols-[220px_1fr] gap-8 py-8 flex-1">
+    
+    <!-- TOC -->
+    <aside>
+      <nav class="toc-sticky">
+        <p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+        <ul id="toc" class="space-y-1">
+          <li><a href="#http-module">HTTP Module</a></li>
+          <li><a href="#express-basics">Express.js Basics</a></li>
+          <li><a href="#simple-api">Simple API</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-    <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="nodejs-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="nodejs-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+    <!-- Main Content -->
+    <main class="space-y-12">
 
-    <!-- HTTP Module -->
-    <section id="http-module">
-      <h1 class="text-3xl font-bold mb-2">Node.js HTTP Module</h1>
-      <p>The built-in <code>http</code> module allows Node.js to create web servers and handle requests/responses.</p>
+      <!-- Navigation Top -->
+      <nav class="flex justify-between mb-6">
+        <a href="nodejs-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+        <a href="nodejs-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+      </nav>
 
-      <pre><code>const http = require('http');
+      <!-- HTTP Module -->
+      <section id="http-module">
+        <h1 class="text-3xl font-bold mb-2 text-red-600">Node.js HTTP Module</h1>
+        <p>The built-in <code>http</code> module allows Node.js to create web servers and handle requests/responses.</p>
 
-const server = http.createServer((req, res) =&gt; {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hello from HTTP module!');
+        <pre><code><span class="keyword">const</span> http = require(<span class="string">'http'</span>);
+
+<span class="keyword">const</span> server = http.createServer((req, res) =&gt; {
+  res.writeHead(200, {<span class="string">'Content-Type'</span>: <span class="string">'text/plain'</span>});
+  res.end(<span class="string">'Hello from HTTP module!'</span>);
 });
 
 server.listen(3000, () =&gt; {
-  console.log('Server running at http://localhost:3000/');
+  console.log(<span class="string">'Server running at http://localhost:3000/'</span>);
 });</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      </section>
 
-    <!-- Express.js Basics -->
-    <section id="express-basics" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Express.js Basics</h2>
-      <p>Express.js is a minimal and flexible Node.js framework for building web applications and APIs quickly.</p>
+      <!-- Express.js Basics -->
+      <section id="express-basics" class="mt-6">
+        <h2 class="text-2xl font-bold mb-2 text-green-600">Express.js Basics</h2>
+        <p>Express.js is a minimal and flexible Node.js framework for building web applications and APIs quickly.</p>
 
-      <pre><code>const express = require('express');
-const app = express();
-const port = 3000;
+        <pre><code><span class="keyword">const</span> express = require(<span class="string">'express'</span>);
+<span class="keyword">const</span> app = express();
+<span class="keyword">const</span> port = 3000;
 
-// Route
-app.get('/', (req, res) =&gt; {
-  res.send('Hello from Express.js!');
+<span class="comment">// Route</span>
+app.get(<span class="string">'/'</span>, (req, res) =&gt; {
+  res.send(<span class="string">'Hello from Express.js!'</span>);
 });
 
 app.listen(port, () =&gt; {
-  console.log(`Server running at http://localhost:${port}/`);
+  console.log(<span class="string">`Server running at http://localhost:${port}/`</span>);
 });</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      </section>
 
-    <!-- Building a Simple API -->
-    <section id="simple-api" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Building a Simple API</h2>
-      <p>Using Express.js, you can build RESTful APIs:</p>
+      <!-- Building a Simple API -->
+      <section id="simple-api" class="mt-6">
+        <h2 class="text-2xl font-bold mb-2 text-blue-600">Building a Simple API</h2>
+        <p>Using Express.js, you can build RESTful APIs:</p>
 
-      <pre><code>const express = require('express');
-const app = express();
-const port = 3000;
+        <pre><code><span class="keyword">const</span> express = require(<span class="string">'express'</span>);
+<span class="keyword">const</span> app = express();
+<span class="keyword">const</span> port = 3000;
 
-// Sample data
-const users = [
-  { id: 1, name: 'Alice' },
-  { id: 2, name: 'Bob' }
+<span class="comment">// Sample data</span>
+<span class="keyword">const</span> users = [
+  { id: 1, name: <span class="string">'Alice'</span> },
+  { id: 2, name: <span class="string">'Bob'</span> }
 ];
 
-// API route
-app.get('/api/users', (req, res) =&gt; {
+<span class="comment">// API route</span>
+app.get(<span class="string">'/api/users'</span>, (req, res) =&gt; {
   res.json(users);
 });
 
 app.listen(port, () =&gt; {
-  console.log(`API server running at http://localhost:${port}/`);
+  console.log(<span class="string">`API server running at http://localhost:${port}/`</span>);
 });</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      </section>
 
-    <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="nodejs-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="nodejs-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+      <!-- Navigation Bottom -->
+      <nav class="flex justify-between my-6">
+        <a href="nodejs-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+        <a href="nodejs-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+      </nav>
 
-  </main>
+    </main>
+  </div>
 
   <!-- Footer -->
   <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
     <p>© 2025 Susil. All rights reserved.</p>
   </footer>
+
+  <!-- Back to Top -->
+  <button id="toTop" aria-label="Back to top">↑</button>
 
   <script>
     function copyCode(btn) {
@@ -130,6 +145,31 @@ app.listen(port, () =&gt; {
         }, 1500);
       });
     }
+
+    // Back to top button
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      toTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+    toTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Highlight TOC active link
+    const sections = document.querySelectorAll('main section');
+    const tocLinks = document.querySelectorAll('#toc a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 150) current = sec.id;
+      });
+      tocLinks.forEach(link => {
+        link.classList.remove('active-link');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active-link');
+        }
+      });
+    });
   </script>
 
 </body>

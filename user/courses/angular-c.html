@@ -1,122 +1,326 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AngularJS Data Binding & Events</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AngularJS — Data Binding & Events (Interactive)</title>
+  <meta name="description" content="Interactive guide: AngularJS data binding and event handling with live demos and copyable snippets." />
+
+  <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- PrismJS (light theme) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+  <!-- AngularJS (1.8.3) - legacy but widely used in tutorials -->
+  <script src="https://code.angularjs.org/1.8.3/angular.min.js"></script>
+
   <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
-    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
-    .copy-btn {
-      position: absolute; top: 8px; right: 8px;
-      background: #3b82f6; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    :root {
+      --brand: #1d4ed8; /* clear blue */
+      --muted: #475569;  /* darker muted gray for improved legibility */
+      --code-bg: #f7fafc;
     }
+
+    body { font-family: Inter, 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial; }
+    a { text-decoration: none; color: var(--brand); }
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--brand);
+      color: #fff;
+      padding: .25rem .5rem;
+      font-size: .75rem;
+      border-radius: .375rem;
+      cursor: pointer;
+      border: none;
+    }
+    pre { background: var(--code-bg); padding: 1rem; border-radius: .5rem; position: relative; overflow-x:auto; }
+    code { font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: .95rem; color: #0f172a; }
+    .kbd { border:1px solid #e5e7eb; border-bottom-width:2px; padding:.125rem .4rem; border-radius:.375rem; font-size:.75rem; background:#fff; }
+    /* make headings and body text clearer */
+    h1,h2 { color: #0f172a; }
+    p, li { color: var(--muted); line-height:1.6; }
+    /* sidebar sticky area */
+    @media (min-width:1024px) {
+      .toc-sticky { position: sticky; top: 5.5rem; max-height: calc(100vh - 6rem); overflow:auto; padding-right: .25rem; }
+    }
+    /* back to top button */
+    #toTop { transition: opacity .2s ease; }
   </style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<body ng-app="demoApp" class="bg-white text-gray-900 min-h-screen flex flex-col">
+
+  <!-- Skip link for keyboard users -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-white text-gray-900 px-3 py-2 rounded shadow">Skip to content</a>
+
+  <!-- Small EOL note -->
+  <div class="bg-amber-100 text-amber-900 text-sm font-medium">
+    <div class="max-w-7xl mx-auto px-4 py-2">
+      AngularJS reached End-of-Life (EOL) in late 2021 — this guide is for study and legacy maintenance only.
+    </div>
+  </div>
 
   <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+  <header class="bg-blue-700 text-white sticky top-0 z-40 shadow">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
+      <a href="index.html" class="text-2xl font-extrabold tracking-tight">EduHub</a>
+      <span class="hidden sm:inline text-white/90">/ AngularJS — Data Binding & Events</span>
+
+      <div class="ml-auto flex items-center gap-3">
+        <div class="relative">
+          <input id="filterInput" type="search" placeholder="Filter demos (press /)"
+                 class="w-48 md:w-64 rounded-lg px-3 py-2 text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white/60" />
+          <kbd class="absolute right-2 top-1/2 -translate-y-1/2 kbd">/</kbd>
+        </div>
+        <button id="printBtn" class="hidden md:inline-block bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-sm font-semibold">Print</button>
+      </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <!-- Page layout -->
+  <div class="max-w-7xl mx-auto w-full px-4 py-8 grid lg:grid-cols-[260px_1fr] gap-8 flex-1">
 
-    <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="angular-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="angular-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+    <!-- Sidebar / TOC -->
+    <aside class="hidden lg:block">
+      <nav class="toc-sticky text-sm font-medium" aria-label="On this page">
+        <p class="uppercase tracking-wider text-gray-600 text-xs mb-2">On this page</p>
+        <ul id="toc" class="space-y-2">
+          <li><a href="#data-binding" class="hover:underline">Data binding (ng-model)</a></li>
+          <li><a href="#events" class="hover:underline">Event handling (ng-click)</a></li>
+          <li><a href="#ng-change" class="hover:underline">ng-change example</a></li>
+          <li><a href="#best-practices" class="hover:underline">Best practices</a></li>
+          <li><a href="#summary" class="hover:underline">Summary</a></li>
+        </ul>
+        <hr class="my-4 border-gray-200" />
+        <div class="text-xs text-gray-600 space-y-1">
+          <div><span class="kbd">/</span> Focus search</div>
+          <div><span class="kbd">g</span> Go to top</div>
+        </div>
+      </nav>
+    </aside>
 
-    <!-- Data Binding -->
-    <section id="data-binding">
-      <h1 class="text-3xl font-bold mb-2">AngularJS Data Binding</h1>
-      <p>AngularJS provides <strong>two-way data binding</strong>, meaning changes in the model update the view, and changes in the view update the model:</p>
+    <!-- Main content -->
+    <main id="main" class="space-y-12">
+      <!-- top nav -->
+      <nav class="flex justify-between" aria-label="Course navigation">
+        <a href="angular-b.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold">◀ Previous</a>
+        <a href="angular-d.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold">Next ▶</a>
+      </nav>
 
-      <pre><code>&lt;div ng-app=""&gt;
-  &lt;p&gt;Name: &lt;input type="text" ng-model="name"&gt;&lt;/p&gt;
-  &lt;p&gt;Hello {{name}}!&lt;/p&gt;
-&lt;/div&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <!-- Data binding -->
+      <section id="data-binding" class="directive-card" ng-init="binding = {name:'Susil'}">
+        <h1 class="text-3xl font-bold mb-2">AngularJS — Data binding (ng-model)</h1>
+        <p class="mb-4">AngularJS provides <strong>two-way binding</strong> using <code>ng-model</code>. Change the input below and see the model update immediately.</p>
 
-      <p>Any changes in the input field automatically reflect in the paragraph below.</p>
-    </section>
+        <!-- Live demo -->
+        <div class="rounded-xl border border-gray-200 p-4 mb-4">
+          <p class="text-sm text-gray-700 font-semibold mb-2">Live demo</p>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <label class="block">
+              <span class="text-sm font-medium">Name</span>
+              <input type="text" ng-model="binding.name" aria-label="name" class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2">
+            </label>
+            <div class="sm:flex sm:items-center sm:justify-between">
+              <p class="font-semibold">Greeting: <span class="text-indigo-700">{{binding.name || 'Anonymous'}}</span></p>
+              <button class="bg-indigo-600 text-white px-3 py-2 rounded-md hover:bg-indigo-700" ng-click="binding.name = ''">Clear</button>
+            </div>
+          </div>
+        </div>
 
-    <!-- Event Handling -->
-    <section id="events" class="mt-8">
-      <h2 class="text-2xl font-bold mb-2">AngularJS Event Handling</h2>
-      <p>AngularJS supports event directives like <code>ng-click</code> to call functions when events occur:</p>
+        <!-- Code -->
+        <div>
+          <pre><button class="copy-btn" aria-label="Copy code">Copy</button><code class="language-html">&lt;div ng-init="binding = {name:'Susil'}"&gt;
+  &lt;label&gt;
+    Name:
+    &lt;input type="text" ng-model="binding.name"&gt;
+  &lt;/label&gt;
+  &lt;p&gt;Hello {{binding.name}}!&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </section>
 
-      <pre><code>&lt;div ng-app="myApp" ng-controller="myCtrl"&gt;
-  &lt;button ng-click="increment()"&gt;Click Me&lt;/button&gt;
-  &lt;p&gt;Counter: {{counter}}&lt;/p&gt;
+      <!-- Events -->
+      <section id="events">
+        <h2 class="text-2xl font-bold mb-2">Event handling (ng-click)</h2>
+        <p class="mb-4">Event directives like <code>ng-click</code> call controller functions. Below is a safe controller-based example.</p>
+
+        <!-- Live demo: controller-based -->
+        <div class="rounded-xl border border-gray-200 p-4 mb-4" ng-controller="CounterCtrl as vm">
+          <p class="text-sm text-gray-700 font-semibold mb-2">Live demo</p>
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <button class="bg-green-600 text-white px-3 py-2 rounded-md hover:bg-green-700" ng-click="vm.increment()">Click me</button>
+              <button class="bg-red-500 text-white px-3 py-2 rounded-md ml-2 hover:bg-red-600" ng-click="vm.reset()">Reset</button>
+            </div>
+            <p class="font-semibold">Counter: <span class="text-indigo-700">{{vm.counter}}</span></p>
+          </div>
+        </div>
+
+        <!-- Code -->
+        <div>
+          <pre><button class="copy-btn" aria-label="Copy code">Copy</button><code class="language-js">&lt;!-- HTML --&gt;
+&lt;div ng-controller="CounterCtrl as vm"&gt;
+  &lt;button ng-click="vm.increment()"&gt;Click me&lt;/button&gt;
+  &lt;p&gt;Counter: {{vm.counter}}&lt;/p&gt;
 &lt;/div&gt;
 
-&lt;script&gt;
-var app = angular.module('myApp', []);
-app.controller('myCtrl', function($scope) {
-  $scope.counter = 0;
-  $scope.increment = function() {
-    $scope.counter++;
-  };
-});
-&lt;/script&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+&lt;!-- JS (controller) --&gt;
+angular.module('demoApp').controller('CounterCtrl', function() {
+  this.counter = 0;
+  this.increment = function() { this.counter++; };
+  this.reset = function() { this.counter = 0; };
+});</code></pre>
+        </div>
+      </section>
 
-      <p>Clicking the button increases the counter dynamically using AngularJS bindings.</p>
-    </section>
+      <!-- ng-change example -->
+      <section id="ng-change" class="directive-card">
+        <h2 class="text-2xl font-bold mb-2">ng-change (input change handler)</h2>
+        <p class="mb-4">Use <code>ng-change</code> to run logic when the model changes from user input (note: it triggers only for user actions, not programmatic updates).</p>
 
-    <!-- Summary -->
-    <section id="summary" class="mt-8">
-      <h2 class="text-2xl font-bold mb-2">Summary</h2>
-      <ul class="list-disc ml-6 space-y-2">
-        <li>AngularJS provides <strong>two-way data binding</strong> with <code>ng-model</code>.</li>
-        <li>Changes in model update view and vice versa.</li>
-        <li>Event directives like <code>ng-click</code> trigger controller functions.</li>
-        <li>Controllers manage model data and handle events.</li>
-      </ul>
-    </section>
+        <div class="rounded-xl border border-gray-200 p-4 mb-4" ng-init="phone={value:''}">
+          <p class="text-sm text-gray-700 font-semibold mb-2">Live demo</p>
+          <label class="block">
+            <span class="text-sm font-medium">Phone</span>
+            <input type="text" ng-model="phone.value" ng-change="phone.valid = phone.value.length === 10" class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2" placeholder="10 digits">
+          </label>
+          <p class="mt-2 font-semibold">
+            Valid length: <span ng-bind="phone.valid ? 'Yes' : 'No'"></span>
+          </p>
+        </div>
 
-    <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="angular-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="angular-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+        <div>
+          <pre><button class="copy-btn" aria-label="Copy code">Copy</button><code class="language-html">&lt;input type="text" ng-model="phone.value" ng-change="phone.valid = phone.value.length === 10"&gt;
+&lt;p&gt;Valid: &lt;span ng-bind="phone.valid"&gt;&lt;/span&gt;&lt;/p&gt;</code></pre>
+        </div>
+      </section>
 
-  </main>
+      <!-- Best practices -->
+      <section id="best-practices">
+        <h2 class="text-2xl font-bold mb-2">Best practices & tips</h2>
+        <ul class="list-disc ml-6 space-y-2">
+          <li>Use controllers or components instead of scattering <code>ng-init</code> in production code.</li>
+          <li>Prefer controllerAs syntax (shown above) for readability and avoiding $scope confusion.</li>
+          <li>Use one <code>ng-app</code> per page and keep demo models isolated to avoid collisions.</li>
+          <li>Plan migrations: Angular (2+) offers long-term support and modern tooling for new apps.</li>
+        </ul>
+      </section>
+
+      <!-- Summary -->
+      <section id="summary">
+        <h2 class="text-2xl font-bold mb-2">Summary</h2>
+        <ul class="list-disc ml-6 space-y-2">
+          <li><strong>ng-model</strong> = two-way binding between view and model.</li>
+          <li><strong>ng-click</strong> = invoke controller logic on user events.</li>
+          <li><strong>ng-change</strong> = listen for user-driven model changes.</li>
+        </ul>
+      </section>
+
+      <!-- bottom navigation -->
+      <nav class="flex justify-between" aria-label="Course navigation">
+        <a href="angular-b.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold">◀ Previous</a>
+        <a href="angular-d.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold">Next ▶</a>
+      </nav>
+    </main>
+  </div>
 
   <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-    <p>© 2025 Susil. All rights reserved.</p>
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center font-medium">
+    <div class="max-w-7xl mx-auto px-4">© 2025 Susil. All rights reserved.</div>
   </footer>
 
+  <!-- Back to top -->
+  <button id="toTop" class="fixed bottom-5 right-5 hidden rounded-full p-3 shadow-lg bg-blue-600 text-white hover:bg-blue-700" aria-label="Back to top">↑</button>
+
+  <!-- Angular app controllers -->
   <script>
-    function copyCode(btn) {
-      const code = btn.parentElement.querySelector('code').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = 'Copied!';
-        btn.style.backgroundColor = '#16a34a';
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.style.backgroundColor = '#3b82f6';
-        }, 1500);
+    (function () {
+      var app = angular.module('demoApp', []);
+      app.controller('CounterCtrl', function () {
+        this.counter = 0;
+        this.increment = function () { this.counter++; };
+        this.reset = function () { this.counter = 0; };
       });
-    }
+      // attach to window for debugging if useful
+      window.demoApp = app;
+    })();
   </script>
 
+  <!-- UI behaviour: copy, filter, keyboard shortcuts, scrollspy -->
+  <script>
+    // Copy-to-clipboard (delegated)
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.copy-btn');
+      if (!btn) return;
+      var pre = btn.parentElement;
+      var code = pre.querySelector('code');
+      if (!code) return;
+      var text = code.innerText;
+      navigator.clipboard.writeText(text).then(function () {
+        var orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(function () {
+          btn.textContent = orig;
+          btn.style.backgroundColor = '';
+        }, 1200);
+      }).catch(function () {
+        alert('Copy failed. Select and copy manually.');
+      });
+    });
+
+    // Filter input and keyboard shortcut
+    var filterInput = document.getElementById('filterInput');
+    var cards = Array.from(document.querySelectorAll('main section'));
+    filterInput.addEventListener('input', function () {
+      var q = filterInput.value.trim().toLowerCase();
+      cards.forEach(function (card) {
+        var text = card.innerText.toLowerCase();
+        card.style.display = q && !text.includes(q) ? 'none' : '';
+      });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      // forward slash focuses filter
+      if (e.key === '/') { e.preventDefault(); filterInput.focus(); }
+      if (e.key.toLowerCase() === 'g') { window.scrollTo({top:0, behavior:'smooth'}); }
+    });
+
+    // Print
+    var printBtn = document.getElementById('printBtn');
+    if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
+
+    // Back-to-top button
+    var toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', function () {
+      toTop.classList.toggle('hidden', window.scrollY < 300);
+    });
+    toTop.addEventListener('click', function () { window.scrollTo({top:0, behavior:'smooth'}); });
+
+    // Simple scrollspy for TOC highlight (desktop only)
+    try {
+      var tocLinks = Array.from(document.querySelectorAll('#toc a'));
+      var targets = tocLinks.map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(function (a) { a.classList.remove('font-bold'); });
+            var link = document.querySelector('#toc a[href="#' + entry.target.id + '"]');
+            if (link) link.classList.add('font-bold');
+          }
+        });
+      }, { rootMargin: '-30% 0px -60% 0px', threshold: [0, 0.5, 1] });
+      targets.forEach(function (t) { observer.observe(t); });
+    } catch (err) { /* ignore in older browsers */ }
+
+    // Highlight Prism after dynamic content (if any)
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.Prism) Prism.highlightAll();
+    });
+  </script>
 </body>
 </html>

@@ -5,74 +5,127 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MySQL Advanced: Indexes, Views & Procedures</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Prism.js for Syntax Highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+
   <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
-    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    body { font-family: 'Segoe UI', sans-serif; background:#fdfdfd; }
+    .container { padding-left:3rem; padding-right:3rem; }
+    @media (max-width:768px){ .container{ padding-left:1rem; padding-right:1rem; } }
+
+    pre {
+      background: #1e1e2f;
+      padding: 16px;
+      border-radius: 10px;
+      overflow-x: auto;
+      position: relative;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+    }
+    pre:hover { box-shadow: 0 6px 14px rgba(0,0,0,0.25); }
+    code { font-family: 'Fira Code', monospace; font-size: 0.95rem; }
+
     .copy-btn {
       position: absolute; top: 8px; right: 8px;
-      background: #3b82f6; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+      background: #3b82f6; color: white;
+      padding: 3px 8px; font-size: 0.75rem;
+      border-radius: 6px; cursor: pointer;
+      transition: all 0.3s ease;
     }
+    .copy-btn:hover { background: #2563eb; }
+
+    /* Sidebar TOC */
+    .toc-sticky { position:sticky; top:5.5rem; padding:0.5rem; background:#f1f5f9; border-radius:0.5rem; }
+    .active-link { color:#2563eb; font-weight:700; }
+
+    /* Collapsible */
+    .collapsible { cursor:pointer; user-select:none; font-weight:600; color:#1d4ed8; margin-bottom:0.5rem; }
+    .content-hidden { display:none; }
+
+    /* Back to Top */
+    #toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#2563eb; color:white;
+      font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; }
   </style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<body class="flex flex-col min-h-screen">
 
   <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+  <header class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white shadow-md sticky top-0 z-50">
+    <div class="container flex items-center justify-between py-4">
       <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+      <span class="hidden sm:block text-sm opacity-80">MySQL Course</span>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <div class="container grid lg:grid-cols-[220px_1fr] gap-8 py-8 flex-1">
+    
+    <!-- Sidebar TOC -->
+    <aside class="hidden lg:block">
+      <nav class="toc-sticky text-sm font-medium">
+        <p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+        <ul id="toc" class="space-y-1">
+          <li><a href="#indexes">Indexes</a></li>
+          <li><a href="#views">Views</a></li>
+          <li><a href="#stored-procedures">Stored Procedures</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-    <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="mysql-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="mysql-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+    <!-- Main Content -->
+    <main class="space-y-12">
 
-    <!-- Indexes -->
-    <section id="indexes">
-      <h1 class="text-3xl font-bold mb-2">MySQL Indexes</h1>
-      <p>Indexes improve database performance by speeding up searches on a table.</p>
-      
-      <pre><code>-- Create an index on LastName column
+      <!-- Navigation Top -->
+      <nav class="flex justify-between mb-6">
+        <a href="mysql-b.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+        <a href="mysql-d.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
+      </nav>
+
+      <!-- Indexes -->
+      <section id="indexes">
+        <h1 class="text-3xl font-bold mb-2 text-purple-600">MySQL Indexes</h1>
+        <p>Indexes improve performance by speeding up searches on a table.</p>
+
+        <button class="collapsible">▶ Show Examples</button>
+        <div class="content-hidden">
+          <pre><code class="language-sql">-- Create an index on LastName column
 CREATE INDEX idx_lastname ON Students(LastName);
 
 -- Create a unique index on Email column
-CREATE UNIQUE INDEX idx_email ON Students(Email);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+CREATE UNIQUE INDEX idx_email ON Students(Email);</code>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+      </section>
 
-    <!-- Views -->
-    <section id="views" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">MySQL Views</h2>
-      <p>Views are virtual tables based on a SELECT query. They simplify complex queries.</p>
-      
-      <pre><code>-- Create a view of students in 10th grade
+      <!-- Views -->
+      <section id="views">
+        <h2 class="text-2xl font-bold mb-2 text-green-600">MySQL Views</h2>
+        <p>Views are virtual tables based on a SELECT query. They simplify complex queries.</p>
+
+        <button class="collapsible">▶ Show Examples</button>
+        <div class="content-hidden">
+          <pre><code class="language-sql">-- Create a view of students in 10th grade
 CREATE VIEW TenthGradeStudents AS
 SELECT FirstName, LastName, Grade
 FROM Students
 WHERE Grade = '10th';
 
 -- Query the view
-SELECT * FROM TenthGradeStudents;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+SELECT * FROM TenthGradeStudents;</code>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+      </section>
 
-    <!-- Stored Procedures -->
-    <section id="stored-procedures" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Stored Procedures</h2>
-      <p>Stored procedures are reusable SQL code that can be executed repeatedly.</p>
-      
-      <pre><code>-- Create a stored procedure to get students by grade
+      <!-- Stored Procedures -->
+      <section id="stored-procedures">
+        <h2 class="text-2xl font-bold mb-2 text-red-600">Stored Procedures</h2>
+        <p>Stored procedures are reusable SQL code that can be executed repeatedly.</p>
+
+        <button class="collapsible">▶ Show Examples</button>
+        <div class="content-hidden">
+          <pre><code class="language-sql">-- Create a stored procedure to get students by grade
 DELIMITER //
 CREATE PROCEDURE GetStudentsByGrade(IN gradeName VARCHAR(10))
 BEGIN
@@ -81,25 +134,26 @@ END //
 DELIMITER ;
 
 -- Call the procedure
-CALL GetStudentsByGrade('10th');</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+CALL GetStudentsByGrade('10th');</code>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+      </section>
 
-    <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="mysql-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="mysql-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+      <!-- Navigation Bottom -->
+      <nav class="flex justify-between my-6">
+        <a href="mysql-b.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+        <a href="mysql-d.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
+      </nav>
 
-  </main>
+    </main>
+  </div>
 
   <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+  <footer class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-6 mt-auto text-center">
     <p>© 2025 Susil. All rights reserved.</p>
   </footer>
+
+  <button id="toTop" aria-label="Back to top">↑</button>
 
   <script>
     function copyCode(btn) {
@@ -113,6 +167,34 @@ CALL GetStudentsByGrade('10th');</code><button class="copy-btn" onclick="copyCod
         }, 1500);
       });
     }
+
+    // Back to Top
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', ()=>{ toTop.style.display = window.scrollY>300?'block':'none'; });
+    toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+    // TOC Highlight
+    const sections=[...document.querySelectorAll('section')];
+    const tocLinks=[...document.querySelectorAll('#toc a')];
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          tocLinks.forEach(a=>a.classList.remove('active-link'));
+          const active=document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+          active && active.classList.add('active-link');
+        }
+      });
+    },{ rootMargin:'-30% 0px -65% 0px', threshold:[0,1] });
+    sections.forEach(s=>observer.observe(s));
+
+    // Collapsible
+    document.querySelectorAll(".collapsible").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        const content=btn.nextElementSibling;
+        content.classList.toggle("content-hidden");
+        btn.textContent = content.classList.contains("content-hidden") ? "▶ Show Examples" : "▼ Hide Examples";
+      });
+    });
   </script>
 
 </body>

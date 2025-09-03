@@ -3,84 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>C Programming Installation & Setup</title>
+<title>C Programming Installation & Setup — EduHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css">
+<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js" data-prismjs-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs/components/"></script>
 <style>
-body { font-family: 'Segoe UI', sans-serif; }
-pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
-code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
-.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
+body { font-family: 'Segoe UI', sans-serif; margin: 0; }
+pre { position: relative; border-radius: .5rem; overflow-x: auto; transition: transform .2s ease; }
+pre:hover { transform: translateY(-2px); }
+code { font-family: 'Fira Code', monospace; font-size: 0.95rem; }
+.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: .25rem .5rem; font-size: .75rem; border-radius: .375rem; cursor: pointer; border:none; opacity:.9; transition: opacity .2s, background-color .2s; }
+.copy-btn:hover { opacity:1; }
+section { scroll-margin-top: 6rem; }
+.toc-sticky { position: sticky; top: 6rem; max-height: calc(100vh - 6rem); overflow-y: auto; }
+.active-link { color: #2563eb; font-weight: 700; }
+.main-wrapper { padding-left: 4rem; padding-right: 4rem; }
+.section-card { border: 1px solid #e5e7eb; border-radius: 1rem; padding: 1.5rem; background-color: #f9fafb; transition: transform .2s ease, box-shadow .2s ease; }
+.section-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 </style>
 </head>
 <body class="bg-white text-gray-900 min-h-screen flex flex-col">
 
-<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-<a href="c-a.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-</div>
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50 w-full">
+  <div class="px-4 py-4 flex items-center justify-between">
+    <a href="c-a.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+  </div>
 </header>
 
-<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+<div class="main-wrapper lg:grid lg:grid-cols-[220px_1fr] gap-8 flex-1">
+  <aside class="hidden lg:block">
+    <nav class="toc-sticky text-sm space-y-2 font-medium" aria-label="On this page">
+      <p class="uppercase tracking-wider text-gray-700 text-xs mb-2">On this page</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#c-installation" class="hover:underline">Installation</a></li>
+        <li><a href="#c-windows" class="hover:underline">Windows</a></li>
+        <li><a href="#c-linux" class="hover:underline">Linux</a></li>
+        <li><a href="#c-macos" class="hover:underline">MacOS</a></li>
+        <li><a href="#c-compile" class="hover:underline">Compile & Run</a></li>
+      </ul>
+    </nav>
+  </aside>
 
-<nav class="flex justify-between my-6">
-<a href="c-a-syntax.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="c-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+  <main class="space-y-12">
+    <nav class="flex justify-between sticky top-16 bg-white z-10 py-2 px-4 rounded shadow-sm">
+      <a href="c-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="c-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+    </nav>
 
-<!-- Section: Installation -->
-<section id="c-installation">
-<h1 class="text-3xl font-bold mb-2">C Programming Installation & Setup</h1>
-<p>To run C programs, you need a compiler. Here’s how to install C on different platforms:</p>
+    <section id="c-installation" class="section-card">
+      <h1 class="text-3xl font-bold mb-2">C Programming Installation & Setup</h1>
+      <p>To run C programs, you need a compiler. Here’s how to install C on different platforms:</p>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">1. Windows (Using MinGW)</h2>
-<ol class="list-decimal list-inside mb-4">
-  <li>Download MinGW from <a href="https://www.mingw-w64.org/" target="_blank" class="text-blue-600">https://www.mingw-w64.org/</a>.</li>
-  <li>Install MinGW and select <strong>gcc</strong> during setup.</li>
-  <li>Add MinGW <code>bin</code> folder to your system <strong>PATH</strong> environment variable.</li>
-  <li>Verify installation by opening Command Prompt and typing:</li>
-</ol>
-<pre><code>gcc --version</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <h2 id="c-windows" class="text-2xl font-bold mt-6 mb-2">1. Windows (Using MinGW)</h2>
+      <ol class="list-decimal list-inside mb-4 space-y-1">
+        <li>Download MinGW from <a href="https://www.mingw-w64.org/" target="_blank" class="text-blue-600">https://www.mingw-w64.org/</a>.</li>
+        <li>Install MinGW and select <strong>gcc</strong> during setup.</li>
+        <li>Add MinGW <code>bin</code> folder to your system <strong>PATH</strong>.</li>
+        <li>Verify installation:</li>
+      </ol>
+      <pre class="relative"><code>gcc --version</code><button class="copy-btn" onclick="copyCode(this)" aria-label="Copy code">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">2. Linux (Using GCC)</h2>
-<p>Most Linux distributions have GCC installed. To install or update:</p>
-<pre><code>sudo apt update        # Debian/Ubuntu
+      <h2 id="c-linux" class="text-2xl font-bold mt-6 mb-2">2. Linux (Using GCC)</h2>
+      <p>Most Linux distributions have GCC installed. To install or update:</p>
+      <pre class="relative"><code>sudo apt update
 sudo apt install build-essential
 
-gcc --version</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+gcc --version</code><button class="copy-btn" onclick="copyCode(this)" aria-label="Copy code">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">3. MacOS (Using Xcode Command Line Tools)</h2>
-<p>Install GCC via Xcode:</p>
-<pre><code>xcode-select --install
+      <h2 id="c-macos" class="text-2xl font-bold mt-6 mb-2">3. MacOS (Using Xcode Command Line Tools)</h2>
+      <p>Install GCC via Xcode:</p>
+      <pre class="relative"><code>xcode-select --install
 
-gcc --version</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+gcc --version</code><button class="copy-btn" onclick="copyCode(this)" aria-label="Copy code">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">4. Writing and Compiling a Program</h2>
-<p>Create a C file <code>hello.c</code>:</p>
-<pre><code>#include &lt;stdio.h&gt;
+      <h2 id="c-compile" class="text-2xl font-bold mt-6 mb-2">4. Writing and Compiling a Program</h2>
+      <p>Create a C file <code>hello.c</code>:</p>
+      <pre class="relative"><code>#include &lt;stdio.h&gt;
 
 int main() {
     printf("Hello, World!\n");
     return 0;
-}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+}</code><button class="copy-btn" onclick="copyCode(this)" aria-label="Copy code">Copy</button></pre>
 
-<p>Compile and run:</p>
-<pre><code>gcc hello.c -o hello   # Compile
-./hello                 # Run (Linux/Mac)
-hello.exe               # Run (Windows)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <p>Compile and run:</p>
+      <pre class="relative"><code>gcc hello.c -o hello
+./hello
+hello.exe</code><button class="copy-btn" onclick="copyCode(this)" aria-label="Copy code">Copy</button></pre>
+    </section>
 
-</section>
+    <nav class="flex justify-between py-2">
+      <a href="c-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="c-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+    </nav>
+  </main>
+</div>
 
-<nav class="flex justify-between my-6">
-<a href="c-a-syntax.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="c-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+<button id="toTop" class="fixed bottom-5 right-5 hidden rounded-full p-3 shadow-lg bg-blue-600 text-white hover:bg-blue-700" aria-label="Back to top">↑</button>
 
-</main>
-
-<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-<p>© 2025 Susil. All rights reserved.</p>
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center w-full">
+  <p>© 2025 Susil. All rights reserved.</p>
 </footer>
 
 <script>
@@ -95,7 +117,27 @@ function copyCode(btn) {
     }, 1500);
   });
 }
-</script>
 
+document.addEventListener('DOMContentLoaded', () => Prism.highlightAll());
+
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  toTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+});
+toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+const sections = [...document.querySelectorAll('section')];
+const tocLinks = [...document.querySelectorAll('#toc a')];
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      tocLinks.forEach(a => a.classList.remove('active-link'));
+      const active = document.querySelector(`#toc a[href='#${entry.target.id}']`);
+      active && active.classList.add('active-link');
+    }
+  });
+}, { rootMargin: '-30% 0px -65% 0px', threshold: [0,1] });
+sections.forEach(s => observer.observe(s));
+</script>
 </body>
 </html>

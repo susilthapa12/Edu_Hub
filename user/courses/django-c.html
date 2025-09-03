@@ -1,52 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Django Models & ORM</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
-    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
-    .copy-btn {
-      position: absolute; top: 8px; right: 8px;
-      background: #3b82f6; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Django Models & ORM</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Segoe UI', sans-serif; background: #fdfdfd; }
+pre { background: #f5f5f5; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+.copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; background: #3b82f6; color: #fff; padding: 0.25rem 0.5rem; border-radius: 0.375rem; cursor: pointer; font-size: 0.75rem; }
+#toTop { display: none; position: fixed; bottom: 1.5rem; right: 1.5rem; background: #3b82f6; color: white; font-weight: bold; border-radius: 9999px; padding: 0.5rem 0.75rem; cursor: pointer; z-index: 50; }
+.section-content { margin-left: 1rem; }
+@media (max-width: 768px) { .section-content { margin-left: 0; } }
+.toc-sticky { position: sticky; top: 5.5rem; max-height: calc(100vh - 6rem); overflow:auto; padding: 0.5rem; background: #f1f5f9; border-radius: 0.5rem; }
+.active-link { color: #3b82f6; font-weight: 700; }
+</style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<body class="flex flex-col min-h-screen">
 
-  <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-    </div>
-  </header>
+<!-- Header -->
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    <span class="hidden md:block text-lg font-medium">Django Models & ORM</span>
+  </div>
+</header>
+
+<div class="max-w-7xl mx-auto px-4 py-8 grid lg:grid-cols-[220px_1fr] gap-8 flex-1">
+
+  <!-- Table of Contents -->
+  <aside class="hidden lg:block">
+    <nav class="toc-sticky text-sm font-medium">
+      <p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#models">Django Models</a></li>
+        <li><a href="#orm">ORM Queries</a></li>
+        <li><a href="#advanced">Advanced Features</a></li>
+      </ul>
+    </nav>
+  </aside>
 
   <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <main class="space-y-12">
 
     <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="django-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="django-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
+    <nav class="flex justify-between mb-6">
+      <a href="django-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="django-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
     </nav>
 
-    <!-- Django Models -->
-    <section id="models">
-      <h1 class="text-3xl font-bold mb-2">Django Models</h1>
-      <p>Models define the structure of your database in Django using Python classes.</p>
-      
-      <h3 class="text-xl font-semibold mb-1 mt-4">Model Example</h3>
-      <pre><code>from django.db import models
+    <!-- Django Models Section -->
+    <section id="models" class="scroll-mt-24">
+      <h2 class="text-3xl font-bold mb-2 text-purple-600">Django Models</h2>
+      <p class="section-content text-gray-800 font-medium">Models define the structure of your database using Python classes.</p>
+
+      <h3 class="text-2xl font-semibold mb-1 mt-4 text-indigo-600">Model Example</h3>
+      <div class="section-content mt-2">
+        <pre><code>from django.db import models
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
@@ -57,32 +68,30 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      </div>
     </section>
 
-    <!-- ORM Queries -->
-    <section id="orm">
-      <h2 class="text-2xl font-bold mb-2">Django ORM Queries</h2>
-      <p>Django ORM allows you to interact with your database using Python instead of SQL.</p>
+    <!-- ORM Section -->
+    <section id="orm" class="scroll-mt-24">
+      <h2 class="text-3xl font-bold mb-2 text-green-600">Django ORM Queries</h2>
+      <p class="section-content text-gray-800 font-medium">Django ORM allows interaction with the database using Python.</p>
 
-      <h3 class="text-xl font-semibold mb-1 mt-4">Basic Queries</h3>
-      <pre><code># Get all books
+      <h3 class="text-2xl font-semibold mb-1 mt-4 text-blue-600">Basic Queries</h3>
+      <div class="section-content mt-2">
+        <pre><code># Get all books
 books = Book.objects.all()
 
-# Filter books by author
+# Filter by author
 books_by_author = Book.objects.filter(author='John Doe')
 
-# Get a single book
+# Get single book
 book = Book.objects.get(id=1)
-
-# Exclude certain records
-books_not_by_author = Book.objects.exclude(author='Jane Doe')
-
-# Order books by published date
-books_ordered = Book.objects.order_by('published_date')
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      </div>
 
-      <h3 class="text-xl font-semibold mb-1 mt-4">Create, Update, Delete</h3>
-      <pre><code># Create a new book
+      <h3 class="text-2xl font-semibold mb-1 mt-4 text-pink-600">Create, Update, Delete</h3>
+      <div class="section-content mt-2">
+        <pre><code># Create a new book
 new_book = Book.objects.create(
     title='Python 101',
     author='Alice',
@@ -99,71 +108,96 @@ book_to_update.save()
 book_to_delete = Book.objects.get(id=2)
 book_to_delete.delete()
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      </div>
     </section>
 
-    <!-- Advanced Django Features -->
-    <section id="advanced">
-      <h2 class="text-2xl font-bold mb-2">Advanced Django Features</h2>
+    <!-- Advanced Section -->
+    <section id="advanced" class="scroll-mt-24">
+      <h2 class="text-3xl font-bold mb-2 text-red-600">Advanced Django Features</h2>
 
-      <h3 class="text-xl font-semibold mb-1 mt-4">Relationships</h3>
-      <p>Models can relate to each other using ForeignKey, ManyToManyField, and OneToOneField.</p>
-      <pre><code>class Author(models.Model):
+      <h3 class="text-2xl font-semibold mb-1 mt-4 text-orange-600">Relationships</h3>
+      <div class="section-content mt-2">
+        <pre><code>class Author(models.Model):
     name = models.CharField(max_length=100)
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      </div>
 
-      <h3 class="text-xl font-semibold mb-1 mt-4">Model Meta Options</h3>
-      <pre><code>class Book(models.Model):
+      <h3 class="text-2xl font-semibold mb-1 mt-4 text-purple-600">Model Meta Options</h3>
+      <div class="section-content mt-2">
+        <pre><code>class Book(models.Model):
     title = models.CharField(max_length=200)
 
     class Meta:
-        ordering = ['title']  # Default ordering
+        ordering = ['title']
         verbose_name = 'Book'
         verbose_name_plural = 'Books'
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      </div>
 
-      <h3 class="text-xl font-semibold mb-1 mt-4">Custom Model Methods</h3>
-      <pre><code>class Book(models.Model):
+      <h3 class="text-2xl font-semibold mb-1 mt-4 text-teal-600">Custom Model Methods</h3>
+      <div class="section-content mt-2">
+        <pre><code>class Book(models.Model):
     title = models.CharField(max_length=200)
 
     def is_long_title(self):
         return len(self.title) > 50
 </code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      </div>
     </section>
 
     <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="django-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="django-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
+    <nav class="flex justify-between my-6">
+      <a href="django-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="django-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
     </nav>
 
   </main>
+</div>
 
-  <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-    <p>© 2025 Susil. All rights reserved.</p>
-  </footer>
+<!-- Footer -->
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center font-semibold">
+  © 2025 Susil. All rights reserved.
+</footer>
 
-  <script>
-    function copyCode(btn) {
-      const code = btn.parentElement.querySelector('code').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = 'Copied!';
-        btn.style.backgroundColor = '#16a34a';
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.style.backgroundColor = '#3b82f6';
-        }, 1500);
-      });
+<!-- Back to top button -->
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+function copyCode(btn){
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';
+    btn.style.backgroundColor='#16a34a';
+    setTimeout(()=>{
+      btn.textContent='Copy';
+      btn.style.backgroundColor='#3b82f6';
+    },1500);
+  });
+}
+
+// Back to top
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', ()=>{ toTop.style.display = window.scrollY > 300 ? 'block':'none'; });
+toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// TOC highlight
+const sections = [...document.querySelectorAll('section')];
+const tocLinks = [...document.querySelectorAll('#toc a')];
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      tocLinks.forEach(a=>a.classList.remove('active-link'));
+      const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+      active && active.classList.add('active-link');
     }
-  </script>
+  });
+},{ rootMargin:'-30% 0px -65% 0px', threshold:[0,1] });
+sections.forEach(s=>s && observer.observe(s));
+</script>
 
 </body>
 </html>

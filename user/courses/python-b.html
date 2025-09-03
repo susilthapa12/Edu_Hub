@@ -1,150 +1,174 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python Variables and Data Types</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
-    code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
-    .copy-btn {
-      position: absolute; top: 8px; right: 8px;
-      background: #2563eb; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
-    }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-  </style>
-</head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Variables and Data Types</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family:'Segoe UI',sans-serif; background:#fdfdfd; }
+.container { padding-left:3rem; padding-right:3rem; }
+@media (max-width:768px){ .container{ padding-left:1rem; padding-right:1rem; } }
 
-  <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-    </div>
-  </header>
+pre { background:#1e1e2f; color:white; padding:1rem; border-radius:0.5rem; overflow-x:auto; position:relative; font-family:'Fira Code',monospace; }
+.copy-btn { position:absolute; top:0.5rem; right:0.5rem; background:#2563eb; color:white; padding:0.25rem 0.5rem; border-radius:0.375rem; font-size:0.75rem; cursor:pointer; }
+
+.keyword { color:#f97316; font-weight:600; }
+.value { color:#facc15; }
+.comment { color:#6b7280; font-style:italic; }
+
+a { text-decoration:none; }
+a:hover { text-decoration:underline; }
+h1,h2,h3 { scroll-margin-top:5rem; }
+
+#toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#2563eb; color:white; font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; }
+
+.toc-sticky { position:sticky; top:5.5rem; max-height:calc(100vh-6rem); overflow:auto; padding:0.5rem; background:#f1f5f9; border-radius:0.5rem; }
+.active-link { color:#2563eb; font-weight:700; }
+
+.collapsible { cursor:pointer; user-select:none; font-weight:600; color:#1d4ed8; margin-bottom:0.5rem; }
+.content-hidden { display:none; }
+</style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+  <div class="container flex items-center justify-between py-4">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    <span class="hidden md:block text-lg font-medium">Python Variables and Data Types</span>
+  </div>
+</header>
+
+<div class="container grid lg:grid-cols-[220px_1fr] gap-8 py-8 flex-1">
+
+  <!-- TOC -->
+  <aside class="hidden lg:block">
+    <nav class="toc-sticky text-sm font-medium">
+      <p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#variables">Variables</a></li>
+        <li><a href="#data-types">Data Types</a></li>
+        <li><a href="#type-function">Check Data Type</a></li>
+        <li><a href="#basic-operations">Basic Operations</a></li>
+      </ul>
+    </nav>
+  </aside>
 
   <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <main class="space-y-12">
 
     <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="python-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="python-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
+    <nav class="flex justify-between mb-6">
+      <a href="python-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="python-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
     </nav>
 
-    <!-- Section: Variables -->
-    <section id="variables">
-      <h1 class="text-3xl font-bold mb-2">Python Variables</h1>
-      <p>
-        A <strong>variable</strong> is a name used to store data in memory. You can store numbers, text, or other types of data.
-      </p>
+    <!-- Sections -->
+    <section id="variables" class="scroll-mt-24">
+      <h1 class="text-3xl font-bold mb-2 text-purple-600">Python Variables</h1>
+      <p>A <strong>variable</strong> is a name used to store data in memory.</p>
       <p><strong>Key points:</strong></p>
       <ul class="list-disc ml-6">
-        <li>You do not need to declare the data type explicitly.</li>
-        <li>Variable names should be meaningful and start with a letter or underscore.</li>
-        <li>Python is case-sensitive: <code>name</code> and <code>Name</code> are different variables.</li>
+        <li>No need to declare type explicitly.</li>
+        <li>Variable names should start with letter or underscore.</li>
+        <li>Python is case-sensitive: <code>name</code> ≠ <code>Name</code>.</li>
       </ul>
-      <pre><code># Storing different types of data in variables
-x = 10          # integer
-name = "Alice"  # string
-pi = 3.14       # float
-is_active = True  # boolean
+      <pre><code><span class="comment"># Storing different types of data</span>
+<span class="keyword">x</span> = <span class="value">10</span>          
+<span class="keyword">name</span> = <span class="value">"Alice"</span>  
+<span class="keyword">pi</span> = <span class="value">3.14</span>       
+<span class="keyword">is_active</span> = <span class="value">True</span>  
 
 print(x, name, pi, is_active)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
     </section>
 
-    <!-- Section: Data Types -->
-    <section id="data-types">
-      <h2 class="text-2xl font-bold mb-2">Python Data Types</h2>
-      <p>Python has several built-in data types. Some common ones are:</p>
+    <section id="data-types" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-2 text-green-600">Python Data Types</h2>
       <ul class="list-disc ml-6">
-        <li><strong>int</strong>: Whole numbers (e.g., 5, -20)</li>
-        <li><strong>float</strong>: Decimal numbers (e.g., 3.14, -0.5)</li>
-        <li><strong>str</strong>: Text (e.g., "Hello Python")</li>
-        <li><strong>bool</strong>: True or False values</li>
+        <li><strong>int</strong>: Whole numbers</li>
+        <li><strong>float</strong>: Decimal numbers</li>
+        <li><strong>str</strong>: Text</li>
+        <li><strong>bool</strong>: True/False values</li>
       </ul>
-      <pre><code># Examples of data types
-age = 25           # int
-height = 5.9       # float
-city = "London"    # string
-is_student = False # boolean
+      <pre><code><span class="keyword">age</span> = <span class="value">25</span>           
+<span class="keyword">height</span> = <span class="value">5.9</span>       
+<span class="keyword">city</span> = <span class="value">"London"</span>    
+<span class="keyword">is_student</span> = <span class="value">False</span> 
 
 print(age, height, city, is_student)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
     </section>
 
-    <!-- Section: Check Data Type -->
-    <section id="type-function">
-      <h2 class="text-2xl font-bold mb-2">Check Data Type</h2>
-      <p>You can check the type of a variable using the <code>type()</code> function:</p>
-      <pre><code>x = 42
-y = "Python"
+    <section id="type-function" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-2 text-blue-600">Check Data Type</h2>
+      <pre><code><span class="keyword">x</span> = <span class="value">42</span>
+<span class="keyword">y</span> = <span class="value">"Python"</span>
 
-print(type(x))  # Output: &lt;class 'int'&gt;
-print(type(y))  # Output: &lt;class 'str'&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+print(type(x))  <span class="comment"># &lt;class 'int'&gt;</span>
+print(type(y))  <span class="comment"># &lt;class 'str'&gt;</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
     </section>
 
-    <!-- Section: Basic Operations -->
-    <section id="basic-operations">
-      <h2 class="text-2xl font-bold mb-2">Basic Operations</h2>
-      <p>Python can perform arithmetic, comparison, and logical operations easily.</p>
+    <section id="basic-operations" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-2 text-red-600">Basic Operations</h2>
+      <h3 class="text-xl font-semibold mb-1">Arithmetic</h3>
+      <pre><code><span class="keyword">a</span> = <span class="value">10</span>
+<span class="keyword">b</span> = <span class="value">3</span>
 
-      <h3 class="text-xl font-semibold mb-1">Arithmetic Operations</h3>
-      <pre><code>a = 10
-b = 3
+print(a + b)  <span class="comment"># 13</span>
+print(a - b)  <span class="comment"># 7</span>
+print(a * b)  <span class="comment"># 30</span>
+print(a / b)  <span class="comment"># 3.333</span>
+print(a % b)  <span class="comment"># 1</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 
-print(a + b)  # Addition: 13
-print(a - b)  # Subtraction: 7
-print(a * b)  # Multiplication: 30
-print(a / b)  # Division: 3.3333
-print(a % b)  # Modulus: 1 (remainder)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-
-      <h3 class="text-xl font-semibold mb-1">Comparison Operations</h3>
-      <pre><code>a = 10
-b = 3
-
-print(a == b)  # Equal? False
-print(a &gt; b) # Greater than? True
-print(a &lt; b) # Less than? False</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <h3 class="text-xl font-semibold mb-1">Comparison</h3>
+      <pre><code>print(a == b)  <span class="comment"># False</span>
+print(a &gt; b) <span class="comment"># True</span>
+print(a &lt; b) <span class="comment"># False</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
     </section>
 
     <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="python-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="python-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
+    <nav class="flex justify-between my-6">
+      <a href="python-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="python-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
     </nav>
 
   </main>
+</div>
 
-  <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-    <p>© 2025 Susil. All rights reserved.</p>
-  </footer>
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+  <p>© 2025 Susil. All rights reserved.</p>
+</footer>
 
-  <script>
-    function copyCode(btn) {
-      const code = btn.parentElement.querySelector('code').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = 'Copied!';
-        btn.style.backgroundColor = '#16a34a';
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.style.backgroundColor = '#2563eb';
-        }, 1500);
-      });
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+function copyCode(btn){
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';
+    btn.style.backgroundColor='#16a34a';
+    setTimeout(()=>{ btn.textContent='Copy'; btn.style.backgroundColor='#2563eb'; },1500);
+  });
+}
+
+// Back to top
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', ()=>{ toTop.style.display = window.scrollY>300?'block':'none'; });
+toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// TOC highlight
+const sections = [...document.querySelectorAll('section')];
+const tocLinks = [...document.querySelectorAll('#toc a')];
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      tocLinks.forEach(a=>a.classList.remove('active-link'));
+      const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+      active && active.classList.add('active-link');
     }
-  </script>
+  });
+},{ rootMargin:'-30% 0px -65% 0px', threshold:[0,1] });
+sections.forEach(s=>s && observer.observe(s));
+</script>
 
 </body>
 </html>

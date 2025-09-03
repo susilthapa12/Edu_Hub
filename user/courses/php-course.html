@@ -5,93 +5,84 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Introduction to PHP</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Prism.js for syntax highlighting -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+
 <style>
-body { font-family: 'Segoe UI', sans-serif; }
-pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
-code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
-.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
+body { font-family:'Segoe UI',sans-serif; background:#fdfdfd; }
+pre { position: relative; border-radius:0.5rem; padding:1rem; overflow-x:auto; background:#1e1e2f; color:#f5f5f5; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+.copy-btn { position:absolute; top:0.5rem; right:0.5rem; background:#3b82f6; color:white; padding:0.25rem 0.5rem; border-radius:0.375rem; font-size:0.75rem; cursor:pointer; transition:0.3s;}
+.copy-btn:hover { background:#2563eb; }
+a { text-decoration:none; color:#2563eb; transition:0.3s; }
+a:hover { text-decoration:underline; color:#1d4ed8; }
+#toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#3b82f6; color:white; font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; transition:0.3s; }
+#toTop:hover { background:#2563eb; }
+.collapsible { cursor:pointer; user-select:none; background:#fbbf24; padding:0.25rem 0.5rem; border-radius:0.25rem; display:inline-block; margin-top:0.5rem; transition:0.3s; }
+.collapsible:hover { background:#f59e0b; }
+.content-hidden { display:none; }
+/* Full-width layout with double tab padding */
+.container-full { padding-left: 64px; padding-right: 64px; }
+@media (max-width: 1024px){ .container-full { padding-left: 32px; padding-right: 32px; } }
+@media (max-width: 640px){ .container-full { padding-left: 16px; padding-right: 16px; } }
 </style>
 </head>
-<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+<body class="flex flex-col min-h-screen">
 
-<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-<a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-</div>
+<!-- Header -->
+<header class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white p-4 sticky top-0 z-50 shadow-md">
+  <div class="container-full flex justify-between items-center">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    <span class="hidden sm:block text-sm opacity-80">PHP Tutorial</span>
+  </div>
 </header>
 
-<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+<!-- Main Content -->
+<div class="container-full flex-1 space-y-12 mt-8">
 
-<nav class="flex justify-between my-6">
-<a href="python-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="php-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+  <!-- Navigation Top -->
+  <div class="flex justify-between my-6">
+    <a href="python-f.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+    <a href="php-a.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
+  </div>
 
-<!-- Section: PHP Introduction -->
-<section id="php-intro">
-<h1 class="text-3xl font-bold mb-2">PHP Introduction</h1>
-<p class="mb-4">PHP code is executed on the server, and the result is returned to the browser as plain HTML.</p>
+  <!-- Section: PHP Introduction -->
+  <section id="php-intro" class="scroll-mt-24">
+    <h1 class="text-3xl font-bold mb-2 text-purple-600">PHP Introduction</h1>
+    <p class="mb-4">PHP code is executed on the server, and the result is returned to the browser as plain HTML.</p>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">What You Should Already Know</h2>
-<p class="mb-2">Before learning PHP, you should have basic knowledge of:</p>
-<ul class="list-disc list-inside mb-4">
-  <li>HTML</li>
-  <li>CSS</li>
-  <li>JavaScript</li>
-</ul>
-<p>If you need to learn these first, check the tutorials on our <a href="index.html" class="text-blue-600 hover:underline">Home page</a>.</p>
+    <h2 class="text-2xl font-bold mt-6 mb-2 text-green-600">What is PHP?</h2>
+    <ul class="list-disc list-inside mb-4">
+      <li>PHP stands for <strong>"PHP: Hypertext Preprocessor"</strong></li>
+      <li>Open-source scripting language</li>
+      <li>Server-side execution</li>
+      <li>Free to download and use</li>
+    </ul>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">What is PHP?</h2>
-<ul class="list-disc list-inside mb-4">
-  <li>PHP stands for <strong>"PHP: Hypertext Preprocessor"</strong></li>
-  <li>It is an open-source scripting language</li>
-  <li>PHP code is executed on the server</li>
-  <li>Free to download and use</li>
-</ul>
-<p class="mb-4">PHP is powerful and popular: it runs WordPress, powers large social networks, and is simple enough for beginners!</p>
+    <h2 class="text-2xl font-bold mt-6 mb-2 text-green-600">What Can PHP Do?</h2>
+    <ul class="list-disc list-inside mb-4">
+      <li>Generate dynamic content</li>
+      <li>Manage databases</li>
+      <li>Handle forms, cookies, and sessions</li>
+      <li>Output HTML, images, PDFs, XML, and more</li>
+    </ul>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">What is a PHP File?</h2>
-<ul class="list-disc list-inside mb-4">
-  <li>Can contain text, HTML, CSS, JavaScript, and PHP code</li>
-  <li>PHP code is executed on the server and returned as plain HTML</li>
-  <li>File extension is <code>.php</code></li>
-</ul>
+    <p class="collapsible" aria-expanded="false">Click for Extra PHP Notes</p>
+    <div class="content-hidden mt-2 bg-gray-50 p-4 rounded shadow">
+      <ul class="list-disc ml-4">
+        <li>PHP 8 introduces JIT compilation</li>
+        <li>Type declarations are stricter</li>
+        <li>Improved error handling with exceptions</li>
+      </ul>
+    </div>
+  </section>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">What Can PHP Do?</h2>
-<ul class="list-disc list-inside mb-4">
-  <li>Generate dynamic page content</li>
-  <li>Create, open, read, write, delete, and close files on the server</li>
-  <li>Collect form data and send/receive cookies</li>
-  <li>Add, delete, modify data in your database</li>
-  <li>Control user access and encrypt data</li>
-  <li>Output not only HTML but also images, PDF, XML, or any text</li>
-</ul>
-
-<h2 class="text-2xl font-bold mt-6 mb-2">Why PHP?</h2>
-<ul class="list-disc list-inside mb-4">
-  <li>Runs on Windows, Linux, Unix, Mac OS X, etc.</li>
-  <li>Compatible with most servers (Apache, IIS, etc.)</li>
-  <li>Supports a wide range of databases</li>
-  <li>Free and efficient to run</li>
-  <li>Easy to learn</li>
-</ul>
-
-<h2 class="text-2xl font-bold mt-6 mb-2">What's New in PHP 7?</h2>
-<ul class="list-disc list-inside mb-4">
-  <li>Much faster than PHP 5.6</li>
-  <li>Improved error handling</li>
-  <li>Stricter type declarations for function arguments</li>
-  <li>New operators like the spaceship operator (<code>&lt;=&gt;</code>)</li>
-</ul>
-</section>
-
-<!-- Section: Basic PHP Example -->
-<section id="php-example">
-<h2 class="text-2xl font-bold mt-6 mb-2">Basic PHP Example</h2>
-<p class="mb-2">PHP code is written inside <code>&lt;?php ... ?&gt;</code> tags.</p>
-<pre><code>&lt;!DOCTYPE html&gt;
+  <!-- Section: Basic PHP Example -->
+  <section id="php-example" class="scroll-mt-24">
+    <h2 class="text-2xl font-bold mt-6 mb-2 text-red-600">Basic PHP Example</h2>
+    <pre class="language-php"><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;body&gt;
 
@@ -102,33 +93,47 @@ echo "Hello World!";
 ?&gt;
 
 &lt;/body&gt;
-&lt;/html&gt;
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-</section>
+&lt;/html&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+  </section>
 
-<nav class="flex justify-between my-6">
-<a href="python-f.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="php-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+  <!-- Navigation Bottom -->
+  <div class="flex justify-between my-6">
+    <a href="python-f.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+    <a href="php-a.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
+  </div>
 
-</main>
+</div>
 
-<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-<p>© 2025 Susil. All rights reserved.</p>
+<footer class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-6 mt-auto text-center">
+  <p>© 2025 Susil. All rights reserved.</p>
 </footer>
 
+<button id="toTop" aria-label="Back to top">↑</button>
+
 <script>
+// Copy code functionality
 function copyCode(btn) {
   const code = btn.parentElement.querySelector('code').innerText;
   navigator.clipboard.writeText(code).then(() => {
     btn.textContent = 'Copied!';
     btn.style.backgroundColor = '#16a34a';
-    setTimeout(() => {
-      btn.textContent = 'Copy';
-      btn.style.backgroundColor = '#2563eb';
-    }, 1500);
+    setTimeout(() => { btn.textContent = 'Copy'; btn.style.backgroundColor = '#3b82f6'; }, 1500);
   });
 }
+
+// Back to top button
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => { toTop.style.display = window.scrollY > 300 ? 'block' : 'none'; });
+toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// Collapsible sections
+document.querySelectorAll('.collapsible').forEach(item => {
+  item.addEventListener('click', () => {
+    const content = item.nextElementSibling;
+    const isHidden = content.classList.toggle('content-hidden');
+    item.setAttribute('aria-expanded', !isHidden);
+  });
+});
 </script>
 
 </body>

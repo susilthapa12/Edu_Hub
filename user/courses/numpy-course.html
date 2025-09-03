@@ -5,84 +5,192 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NumPy Introduction</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Prism.js for code highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
   <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
-    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    body { font-family: 'Segoe UI', sans-serif; background:#fdfdfd; }
+    .container { padding-left:3rem; padding-right:3rem; }
+    @media (max-width:768px){ .container{ padding-left:1rem; padding-right:1rem; } }
+
+    pre {
+      background: #1e1e2f;
+      padding: 16px;
+      border-radius: 10px;
+      overflow-x: auto;
+      position: relative;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+    }
+    pre:hover { box-shadow: 0 6px 14px rgba(0,0,0,0.25); }
+    code { font-family: 'Fira Code', monospace; font-size:0.95rem; }
+
     .copy-btn {
       position: absolute; top: 8px; right: 8px;
-      background: #3b82f6; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+      background: #3b82f6; color:white; padding:3px 8px;
+      font-size:0.75rem; border-radius:6px; cursor:pointer;
+      transition: all 0.3s ease;
     }
+    .copy-btn:hover { background:#2563eb; }
+
+    /* Sidebar TOC */
+    .toc-sticky { position:sticky; top:5.5rem; padding:0.5rem; background:#f1f5f9; border-radius:0.5rem; }
+    .active-link { color:#2563eb; font-weight:700; }
+
+    /* Collapsible */
+    .collapsible { cursor:pointer; user-select:none; font-weight:600; color:#1d4ed8; margin-bottom:0.5rem; }
+    .content-hidden { display:none; }
+
+    /* Back to Top */
+    #toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#2563eb; color:white;
+      font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; }
   </style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<body class="flex flex-col min-h-screen">
 
   <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+  <header class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white shadow-md sticky top-0 z-50">
+    <div class="container flex items-center justify-between py-4">
       <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+      <span class="hidden sm:block text-sm opacity-80">Python NumPy Course</span>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <div class="container grid lg:grid-cols-[220px_1fr] gap-8 py-8 flex-1">
 
-    <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="python-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="numpy-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+    <!-- Sidebar TOC -->
+    <aside class="hidden lg:block">
+      <nav class="toc-sticky text-sm font-medium">
+        <p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+        <ul id="toc" class="space-y-1">
+          <li><a href="#intro">What is NumPy?</a></li>
+          <li><a href="#why-use">Why Use NumPy?</a></li>
+          <li><a href="#language">Language Behind NumPy</a></li>
+          <li><a href="#example">Example</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-    <!-- NumPy Introduction -->
-    <section id="intro">
-      <h1 class="text-3xl font-bold mb-2">What is NumPy?</h1>
-      <p>NumPy is a Python library used for working with arrays. It also has functions for linear algebra, Fourier transforms, and matrices.</p>
-      <p>Created in 2005 by <strong>Travis Oliphant</strong>, NumPy is an open-source project.</p>
-      <p>NumPy stands for <strong>Numerical Python</strong>.</p>
-    </section>
+    <!-- Main Content -->
+    <main class="space-y-12">
 
-    <!-- Why Use NumPy -->
-    <section id="why-use" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Why Use NumPy?</h2>
-      <p>Python lists are slow for numerical computations. NumPy provides the <code>ndarray</code> object, which is up to 50x faster than lists.</p>
-      <p>NumPy arrays support many built-in operations for fast and efficient computation, making them ideal for data science:</p>
-      <ul class="list-disc ml-6">
-        <li>Arrays are stored contiguously in memory (locality of reference).</li>
-        <li>Optimized for modern CPU architectures.</li>
-        <li>Efficient mathematical operations on large datasets.</li>
-      </ul>
-    </section>
+      <!-- Navigation Top -->
+      <nav class="flex justify-between mb-6">
+        <a href="python-course.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+        <a href="numpy-a.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
+      </nav>
 
-    <!-- NumPy and Programming Languages -->
-    <section id="language" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Which Language is NumPy Written In?</h2>
-      <p>NumPy is primarily a Python library. However, computationally intensive parts are written in <strong>C or C++</strong> for performance.</p>
-      <p>Its source code is available on <a href="https://github.com/numpy/numpy" target="_blank" class="text-blue-600 hover:underline">GitHub</a>.</p>
-    </section>
+      <!-- Sections -->
+      <section id="intro">
+        <h1 class="text-3xl font-bold mb-2 text-purple-600">What is NumPy?</h1>
+        <p>NumPy is a Python library for arrays, linear algebra, matrices, and fast mathematical computation.</p>
+        <p>Created by <strong>Travis Oliphant</strong> in 2005, NumPy is open-source.</p>
+        <p>Stands for <strong>Numerical Python</strong>.</p>
+      </section>
 
-    <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="python-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="numpy-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+      <section id="why-use">
+        <h2 class="text-2xl font-bold mb-2 text-green-600">Why Use NumPy?</h2>
+        <p>NumPy arrays are faster than Python lists:</p>
+        <ul class="list-disc ml-6">
+          <li>Arrays are contiguous in memory.</li>
+          <li>Optimized for CPU architectures.</li>
+          <li>Efficient operations on large datasets.</li>
+        </ul>
 
-  </main>
+        <button class="collapsible">▶ Show Example</button>
+        <div class="content-hidden">
+          <pre><code class="language-python">import numpy as np
+
+arr = np.array([1, 2, 3, 4, 5])
+print("Array:", arr)
+print("Sum:", np.sum(arr))</code>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+      </section>
+
+      <section id="language">
+        <h2 class="text-2xl font-bold mb-2 text-blue-600">Language Behind NumPy</h2>
+        <p>NumPy is written in Python, but heavy computations are in <strong>C or C++</strong>.</p>
+        <p>Source code: <a href="https://github.com/numpy/numpy" target="_blank" class="text-blue-600 hover:underline">GitHub</a></p>
+      </section>
+
+      <section id="example">
+        <h2 class="text-2xl font-bold mb-2 text-red-600">Example: NumPy Array Operations</h2>
+
+        <button class="collapsible">▶ Show Example</button>
+        <div class="content-hidden">
+          <pre><code class="language-python">import numpy as np
+
+a = np.array([1, 2, 3])
+b = np.array([4, 5, 6])
+
+print("Addition:", a + b)
+print("Dot Product:", np.dot(a, b))</code>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+      </section>
+
+      <!-- Navigation Bottom -->
+      <nav class="flex justify-between my-6">
+        <a href="python-course.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+        <a href="numpy-a.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
+      </nav>
+    </main>
+  </div>
 
   <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+  <footer class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-6 mt-auto text-center">
     <p>© 2025 Susil. All rights reserved.</p>
   </footer>
+
+  <!-- Back to Top -->
+  <button id="toTop" aria-label="Back to top">↑</button>
+
+  <script>
+    // Copy code
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.backgroundColor = '#3b82f6';
+        }, 1500);
+      });
+    }
+
+    // Back to Top
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', ()=>{ toTop.style.display = window.scrollY>300?'block':'none'; });
+    toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+    // TOC Highlight
+    const sections=[...document.querySelectorAll('section')];
+    const tocLinks=[...document.querySelectorAll('#toc a')];
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          tocLinks.forEach(a=>a.classList.remove('active-link'));
+          const active=document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+          active && active.classList.add('active-link');
+        }
+      });
+    },{ rootMargin:'-30% 0px -65% 0px', threshold:[0,1] });
+    sections.forEach(s=>observer.observe(s));
+
+    // Collapsible
+    document.querySelectorAll(".collapsible").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        const content=btn.nextElementSibling;
+        content.classList.toggle("content-hidden");
+        btn.textContent = content.classList.contains("content-hidden") ? "▶ Show Example" : "▼ Hide Example";
+      });
+    });
+  </script>
 
 </body>
 </html>

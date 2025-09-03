@@ -6,35 +6,63 @@
 <title>PHP Operators</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body { font-family: 'Segoe UI', sans-serif; }
-pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
-code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
-.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
+body { font-family:'Segoe UI', sans-serif; background:#fdfdfd; }
+pre { position:relative; border-radius:0.5rem; padding:1rem; overflow-x:auto; font-family:'Fira Code', monospace; font-size:0.9rem; background:#1e1e2f; color:#f5f5f5; }
+.copy-btn { position:absolute; top:0.5rem; right:0.5rem; background:#3b82f6; color:white; padding:0.25rem 0.5rem; border-radius:0.375rem; font-size:0.75rem; cursor:pointer; transition:0.3s; }
+.copy-btn:hover { background:#2563eb; }
+a { text-decoration:none; color:#2563eb; transition:0.3s; }
+a:hover { color:#1d4ed8; text-decoration:underline; }
+#toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#3b82f6; color:white; font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; transition:0.3s; }
+#toTop:hover { background:#2563eb; }
+.container-full { padding-left:64px; padding-right:64px; }
+@media(max-width:1024px){.container-full{padding-left:32px;padding-right:32px;}}
+@media(max-width:640px){.container-full{padding-left:16px;padding-right:16px;}}
+/* Sticky TOC */
+.toc-sticky{position:sticky;top:5rem;max-height:calc(100vh-6rem);overflow:auto;background:#f1f5f9;padding:0.5rem;border-radius:0.5rem;font-size:0.9rem;}
+.active-link{color:#2563eb;font-weight:700;}
 </style>
 </head>
-<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+<body class="flex flex-col min-h-screen">
 
-<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+<header class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white p-4 sticky top-0 z-50 shadow-md">
+<div class="container-full flex justify-between items-center">
 <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+<span class="hidden sm:block text-sm opacity-80">PHP Operators</span>
 </div>
 </header>
 
-<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+<div class="container-full flex flex-col lg:flex-row gap-8 mt-8">
 
+<!-- TOC -->
+<aside class="hidden lg:block w-60">
+<nav class="toc-sticky" aria-label="Table of Contents">
+<p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+<ul id="toc" class="space-y-1">
+<li><a href="#php-operators">PHP Operators</a></li>
+<li><a href="#arithmetic">Arithmetic Operators</a></li>
+<li><a href="#assignment">Assignment Operators</a></li>
+<li><a href="#comparison">Comparison Operators</a></li>
+<li><a href="#logical">Logical Operators</a></li>
+<li><a href="#string">String Operators</a></li>
+<li><a href="#increment">Increment / Decrement Operators</a></li>
+<li><a href="#spaceship">Spaceship Operator</a></li>
+</ul>
+</nav>
+</aside>
+
+<main class="flex-1 space-y-12">
+
+<!-- Navigation Top -->
 <nav class="flex justify-between my-6">
-<a href="php-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="php-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+<a href="php-c.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+<a href="php-e.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
 </nav>
 
-<!-- Section: PHP Operators -->
-<section id="php-operators">
-<h1 class="text-3xl font-bold mb-2">PHP Operators</h1>
+<section id="php-operators" class="scroll-mt-24">
+<h1 class="text-3xl font-bold mb-2 text-purple-600">PHP Operators</h1>
 <p>Operators are used to perform operations on variables and values.</p>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">1. Arithmetic Operators</h2>
+<h2 id="arithmetic" class="text-2xl font-bold mt-6 mb-2 text-green-600">1. Arithmetic Operators</h2>
 <pre><code>&lt;?php
 $a = 10;
 $b = 3;
@@ -45,10 +73,9 @@ echo $a * $b; // Multiplication: 30
 echo $a / $b; // Division: 3.3333
 echo $a % $b; // Modulus: 1
 echo $a ** $b; // Exponent: 1000
-?&gt;
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+?&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">2. Assignment Operators</h2>
+<h2 id="assignment" class="text-2xl font-bold mt-6 mb-2 text-green-600">2. Assignment Operators</h2>
 <pre><code>&lt;?php
 $x = 5;
 $x += 3; // $x = $x + 3 → 8
@@ -56,10 +83,9 @@ $x -= 2; // $x = $x - 2 → 6
 $x *= 2; // $x = $x * 2 → 12
 $x /= 4; // $x = $x / 4 → 3
 $x %= 2; // $x = $x % 2 → 1
-?&gt;
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+?&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">3. Comparison Operators</h2>
+<h2 id="comparison" class="text-2xl font-bold mt-6 mb-2 text-green-600">3. Comparison Operators</h2>
 <pre><code>&lt;?php
 $a = 5;
 $b = 10;
@@ -70,10 +96,9 @@ var_dump($a > $b);  // greater than → false
 var_dump($a < $b);  // less than → true
 var_dump($a >= $b); // greater or equal → false
 var_dump($a <= $b); // less or equal → true
-?&gt;
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+?&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">4. Logical Operators</h2>
+<h2 id="logical" class="text-2xl font-bold mt-6 mb-2 text-green-600">4. Logical Operators</h2>
 <pre><code>&lt;?php
 $x = true;
 $y = false;
@@ -81,10 +106,9 @@ $y = false;
 var_dump($x && $y); // AND → false
 var_dump($x || $y); // OR → true
 var_dump(!$x);      // NOT → false
-?&gt;
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+?&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">5. String Operators</h2>
+<h2 id="string" class="text-2xl font-bold mt-6 mb-2 text-green-600">5. String Operators</h2>
 <pre><code>&lt;?php
 $str1 = "Hello ";
 $str2 = "World!";
@@ -92,53 +116,71 @@ $str2 = "World!";
 echo $str1 . $str2;  // Concatenation: Hello World!
 $str1 .= $str2;      // Append: $str1 = "Hello World!"
 echo $str1;
-?&gt;
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+?&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">6. Increment / Decrement Operators</h2>
+<h2 id="increment" class="text-2xl font-bold mt-6 mb-2 text-green-600">6. Increment / Decrement Operators</h2>
 <pre><code>&lt;?php
 $a = 5;
 echo ++$a; // Pre-increment: 6
 echo $a++; // Post-increment: 6 (then $a becomes 7)
 echo --$a; // Pre-decrement: 6
 echo $a--; // Post-decrement: 6 (then $a becomes 5)
-?&gt;
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+?&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">7. Spaceship Operator (PHP 7+)</h2>
+<h2 id="spaceship" class="text-2xl font-bold mt-6 mb-2 text-green-600">7. Spaceship Operator (PHP 7+)</h2>
 <p>Used for combined comparison:</p>
 <pre><code>&lt;?php
 echo 1 &lt;=&gt; 1; // 0 (equal)
 echo 1 &lt;=&gt; 2; // -1 (left smaller)
 echo 2 &lt;=&gt; 1; // 1 (left bigger)
-?&gt;
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+?&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 
 </section>
 
+<!-- Navigation Bottom -->
 <nav class="flex justify-between my-6">
-<a href="php-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="php-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+<a href="php-c.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+<a href="php-e.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
 </nav>
 
 </main>
+</div>
 
-<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+<footer class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-6 mt-auto text-center">
 <p>© 2025 Susil. All rights reserved.</p>
 </footer>
 
+<button id="toTop" aria-label="Back to top">↑</button>
+
 <script>
-function copyCode(btn) {
+// Copy code functionality
+function copyCode(btn){
   const code = btn.parentElement.querySelector('code').innerText;
-  navigator.clipboard.writeText(code).then(() => {
-    btn.textContent = 'Copied!';
-    btn.style.backgroundColor = '#16a34a';
-    setTimeout(() => {
-      btn.textContent = 'Copy';
-      btn.style.backgroundColor = '#2563eb';
-    }, 1500);
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';
+    btn.style.backgroundColor='#16a34a';
+    setTimeout(()=>{ btn.textContent='Copy'; btn.style.backgroundColor='#3b82f6'; },1500);
   });
 }
+
+// Back to top button
+const toTop=document.getElementById('toTop');
+window.addEventListener('scroll',()=>{toTop.style.display=window.scrollY>300?'block':'none';});
+toTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// TOC highlight
+const sections=[...document.querySelectorAll('section h2, section h1')];
+const tocLinks=[...document.querySelectorAll('#toc a')];
+window.addEventListener('scroll',()=>{
+  let fromTop=window.scrollY+80;
+  sections.forEach((section,i)=>{
+    if(section.offsetTop<=fromTop && section.offsetTop+section.offsetHeight>fromTop){
+      tocLinks.forEach(link=>link.classList.remove('active-link'));
+      const id=section.id;
+      if(id) document.querySelector(`#toc a[href="#${id}"]`)?.classList.add('active-link');
+    }
+  });
+});
 </script>
 
 </body>

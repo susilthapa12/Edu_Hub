@@ -1,124 +1,228 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AngularJS Expressions, Controllers & Modules</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AngularJS — Expressions, Controllers & Modules (Bright Mode)</title>
+  <meta name="description" content="Interactive guide with live demos: AngularJS expressions, modules and controllers. Clear high-contrast design with syntax highlighting and copy buttons." />
+
+  <!-- Tailwind Play CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Prism (syntax highlight) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+  <!-- AngularJS -->
+  <script src="https://code.angularjs.org/1.8.3/angular.min.js"></script>
+
   <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
-    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
+    :root { --brand: #2563eb; }
+    body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:#111827; background:#ffffff; }
     .copy-btn {
-      position: absolute; top: 8px; right: 8px;
-      background: #3b82f6; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+      position: absolute; top: 0.5rem; right: 0.5rem;
+      background: var(--brand); color: #fff; font-size: .75rem;
+      padding: .25rem .5rem; border-radius: .375rem; cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,.15);
+    }
+    pre { position: relative; border-radius: .5rem; overflow:auto; background:#f9fafb; }
+    .toc-link.active { color: var(--brand); font-weight:700; }
+    .sr-only.focusable:focus { position: static; clip: auto; width: auto; height: auto; margin: .5rem; padding:.5rem; background: white; color: black; border-radius: .25rem; box-shadow: 0 2px 6px rgba(0,0,0,.12); }
+    @media (min-width: 1024px) {
+      .toc-sticky { position: sticky; top: 4.5rem; max-height: calc(100vh - 6rem); overflow:auto; }
     }
   </style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<body ng-app="eduApp" class="min-h-screen flex flex-col bg-white text-gray-900">
+
+  <!-- Accessible skip link -->
+  <a href="#content" class="sr-only focusable">Skip to content</a>
+
+  <!-- EOL banner -->
+  <div class="bg-amber-100 text-amber-900 text-sm">
+    <div class="max-w-7xl mx-auto px-4 py-2">⚠️ AngularJS is End-of-Life — this page is for learning/legacy maintenance.</div>
+  </div>
 
   <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+  <header class="bg-blue-700 text-white sticky top-0 z-40 shadow">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
+      <a class="text-2xl font-extrabold" href="index.html">EduHub</a>
+      <div class="hidden md:block text-sm text-white/90">/ AngularJS — Expressions, Controllers & Modules</div>
+
+      <div class="ml-auto flex items-center gap-2">
+        <input id="searchBox" type="search" placeholder="Filter sections (press /)" aria-label="Filter" 
+               class="rounded-md px-3 py-2 text-sm w-44 md:w-64 focus:outline-none focus:ring-2 focus:ring-white/70 border border-white/30 bg-white/20 placeholder-white" />
+        <button id="printBtn" class="hidden sm:inline px-3 py-2 rounded-md bg-white/20 hover:bg-white/30 text-sm">Print</button>
+      </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <!-- Layout -->
+  <div class="max-w-7xl mx-auto px-4 py-8 w-full grid lg:grid-cols-[260px_1fr] gap-8 flex-1">
 
-    <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="angular-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="angular-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+    <!-- Sidebar / TOC -->
+    <aside class="hidden lg:block">
+      <nav class="toc-sticky text-sm px-2" aria-label="Table of contents">
+        <p class="uppercase text-xs text-gray-500 mb-3">On this page</p>
+        <ul id="tocList" class="space-y-2">
+          <li><a class="toc-link block" href="#expressions">Expressions</a></li>
+          <li><a class="toc-link block" href="#modules">Modules</a></li>
+          <li><a class="toc-link block" href="#controllers">Controllers</a></li>
+          <li><a class="toc-link block" href="#live-demo">Live demo</a></li>
+          <li><a class="toc-link block" href="#summary">Summary</a></li>
+        </ul>
+        <hr class="my-4 border-gray-300" />
+        <p class="text-xs text-gray-600">Shortcuts</p>
+        <p class="text-xs">Press <span class="px-1 rounded bg-gray-100">/</span> to focus search, <span class="px-1 rounded bg-gray-100">g</span> to go top.</p>
+      </nav>
+    </aside>
 
-    <!-- AngularJS Expressions -->
-    <section id="expressions">
-      <h1 class="text-3xl font-bold mb-2">AngularJS Expressions</h1>
-      <p>AngularJS expressions are written inside double braces <code>{{ expression }}</code> and automatically bind data to the view:</p>
-      <pre><code>&lt;div ng-app=""&gt;
+    <!-- Main content -->
+    <main id="content" class="prose prose-lg space-y-10">
+      <!-- top nav -->
+      <nav class="flex justify-between">
+        <a class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" href="angular-a.html">◀ Previous</a>
+        <a class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" href="angular-c.html">Next ▶</a>
+      </nav>
+
+      <!-- EXPRESSIONS -->
+      <section id="expressions" class="scroll-mt-24" data-tags="expressions interpolation">
+        <h1 class="text-3xl font-bold">AngularJS Expressions</h1>
+        <p class="max-w-2xl">Expressions inside <code>{{ }}</code> automatically bind data to the view and can perform simple calculations.</p>
+
+        <!-- live quick demo -->
+        <div class="mt-4 rounded-lg border border-gray-300 p-4 bg-gray-50">
+          <div ng-controller="ExprCtrl as expr">
+            <label class="block"><span class="text-sm font-semibold">Enter number</span>
+              <input type="number" ng-model="expr.x" class="mt-1 w-full md:w-48 px-3 py-2 rounded-md border border-gray-300" placeholder="e.g., 5"/>
+            </label>
+            <p class="mt-3">5 + 5 = <strong>{{ 5 + 5 }}</strong></p>
+            <p>Double of {{expr.x || 0}} is <strong>{{ (expr.x || 0) * 2 }}</strong></p>
+          </div>
+        </div>
+
+        <!-- code block -->
+        <div class="mt-4">
+          <pre><button class="copy-btn">Copy</button><code class="language-html">&lt;div&gt;
   &lt;p&gt;5 + 5 = {{ 5 + 5 }}&lt;/p&gt;
-&lt;/div&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+&lt;/div&gt;</code></pre>
+        </div>
+      </section>
 
-      <pre><code>&lt;div ng-app=""&gt;
-  &lt;p&gt;Name: &lt;input type="text" ng-model="name"&gt;&lt;/p&gt;
-  &lt;p&gt;Hello {{name}}!&lt;/p&gt;
-&lt;/div&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      <!-- MODULES -->
+      <section id="modules" class="scroll-mt-24" data-tags="module app angular.module">
+        <h2 class="text-2xl font-bold">AngularJS Modules</h2>
+        <p>Modules group controllers, services, and components into a single app structure:</p>
+        <div class="mt-4">
+          <pre><button class="copy-btn">Copy</button><code class="language-js">var app = angular.module('myApp', []);</code></pre>
+        </div>
+      </section>
 
-    <!-- AngularJS Modules -->
-    <section id="modules">
-      <h2 class="text-2xl font-bold mb-2">AngularJS Modules</h2>
-      <p>Modules define the structure of an AngularJS application:</p>
-      <pre><code>var app = angular.module('myApp', []);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-      <p>The first parameter is the module name, the second is a list of dependencies (empty array if none).</p>
-    </section>
+      <!-- CONTROLLERS -->
+      <section id="controllers" class="scroll-mt-24" data-tags="controller scope this as">
+        <h2 class="text-2xl font-bold">Controllers</h2>
+        <p>Controllers attach data and behavior to the view.</p>
 
-    <!-- AngularJS Controllers -->
-    <section id="controllers">
-      <h2 class="text-2xl font-bold mb-2">AngularJS Controllers</h2>
-      <p>Controllers manage application data and logic. They are attached to modules:</p>
-      <pre><code>app.controller('myCtrl', function($scope) {
-  $scope.firstName = "John";
-  $scope.lastName = "Doe";
-});</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-      <p>HTML usage:</p>
-      <pre><code>&lt;div ng-app="myApp" ng-controller="myCtrl"&gt;
-  First Name: &lt;input type="text" ng-model="firstName"&gt;&lt;br&gt;
-  Last Name: &lt;input type="text" ng-model="lastName"&gt;&lt;br&gt;
-  Full Name: {{firstName + " " + lastName}}
-&lt;/div&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+        <div class="mt-4 rounded-lg border border-gray-300 p-4 bg-gray-50">
+          <div ng-controller="NameCtrl as nm">
+            <label class="block"><span class="text-sm font-semibold">First name</span>
+              <input ng-model="nm.first" class="mt-1 px-3 py-2 rounded-md border border-gray-300" placeholder="John" />
+            </label>
+            <label class="block mt-2"><span class="text-sm font-semibold">Last name</span>
+              <input ng-model="nm.last" class="mt-1 px-3 py-2 rounded-md border border-gray-300" placeholder="Doe" />
+            </label>
+            <p class="mt-3">Full name: <strong>{{ nm.first }} {{ nm.last }}</strong></p>
+          </div>
+        </div>
+      </section>
 
-    <!-- Summary -->
-    <section id="summary" class="mt-8">
-      <h2 class="text-2xl font-bold mb-2">Summary</h2>
-      <ul class="list-disc ml-6 space-y-2">
-        <li>Expressions {{ }} bind AngularJS variables to the view.</li>
-        <li>Modules define the AngularJS application structure.</li>
-        <li>Controllers manage data and connect it to the HTML.</li>
-        <li><code>ng-model</code> binds form inputs to controller data.</li>
-      </ul>
-    </section>
+      <!-- LIVE DEMO -->
+      <section id="live-demo" class="scroll-mt-24" data-tags="demo live example">
+        <h2 class="text-2xl font-bold">Live demo — module + controller</h2>
+        <div class="mt-4 rounded-lg border border-gray-300 p-4 bg-gray-50">
+          <div ng-controller="FormCtrl as form">
+            <label class="block"><span class="text-sm font-semibold">Email</span>
+              <input type="email" ng-model="form.email" class="mt-1 w-full md:w-96 px-3 py-2 rounded-md border border-gray-300" placeholder="you@example.com" />
+            </label>
+            <label class="block mt-2">
+              <input type="checkbox" ng-model="form.mag" class="mr-2" /> Subscribe to newsletter
+            </label>
+            <p class="mt-3">Preview: <strong ng-bind="form.email || '—'"></strong> • <span ng-bind="form.mag ? 'Subscribed' : 'Not subscribed'"></span></p>
+          </div>
+        </div>
+      </section>
 
-    <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="angular-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="angular-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+      <!-- SUMMARY -->
+      <section id="summary" class="scroll-mt-24">
+        <h2 class="text-2xl font-bold">Summary</h2>
+        <ul class="list-disc ml-6 space-y-2">
+          <li>Expressions <code>{{ }}</code> bind data to the view.</li>
+          <li>Modules define the application structure.</li>
+          <li>Controllers attach data using controller-as syntax.</li>
+          <li>AngularJS is EOL — migrate if using in production.</li>
+        </ul>
+      </section>
 
-  </main>
+      <!-- bottom nav -->
+      <nav class="flex justify-between">
+        <a class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" href="angular-a.html">◀ Previous</a>
+        <a class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" href="angular-c.html">Next ▶</a>
+      </nav>
+    </main>
+  </div>
 
   <!-- Footer -->
   <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
     <p>© 2025 Susil. All rights reserved.</p>
   </footer>
 
+  <!-- JS -->
   <script>
-    function copyCode(btn) {
-      const code = btn.parentElement.querySelector('code').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = 'Copied!';
-        btn.style.backgroundColor = '#16a34a';
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.style.backgroundColor = '#3b82f6';
-        }, 1500);
-      });
-    }
-  </script>
+    // Angular app + controllers
+    angular.module('eduApp', [])
+      .controller('ExprCtrl', function() { this.x = 5; })
+      .controller('NameCtrl', function() { this.first = 'John'; this.last = 'Doe'; })
+      .controller('FormCtrl', function() { this.email = ''; this.mag = false; });
 
+    // Prism highlight
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.Prism) Prism.highlightAll();
+
+      // Copy buttons
+      document.addEventListener('click', function (e) {
+        var btn = e.target.closest('.copy-btn');
+        if (!btn) return;
+        var code = btn.parentElement.querySelector('code');
+        navigator.clipboard.writeText(code.innerText).then(function () {
+          var original = btn.textContent;
+          btn.textContent = 'Copied!';
+          btn.style.backgroundColor = '#16a34a';
+          setTimeout(function () { btn.textContent = original; btn.style.backgroundColor = ''; }, 1200);
+        });
+      });
+
+      // Search filter
+      var searchBox = document.getElementById('searchBox');
+      var sections = Array.from(document.querySelectorAll('main section'));
+      searchBox.addEventListener('input', function () {
+        var q = searchBox.value.trim().toLowerCase();
+        sections.forEach(function (s) {
+          var tags = (s.getAttribute('data-tags') || '').toLowerCase();
+          var txt = s.innerText.toLowerCase();
+          s.style.display = !q || tags.includes(q) || txt.includes(q) ? '' : 'none';
+        });
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', function (e) {
+        if (e.key === '/') { e.preventDefault(); searchBox.focus(); return; }
+        if (e.key.toLowerCase() === 'g') { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      });
+
+      // Print
+      document.getElementById('printBtn').addEventListener('click', function () { window.print(); });
+    });
+  </script>
 </body>
 </html>

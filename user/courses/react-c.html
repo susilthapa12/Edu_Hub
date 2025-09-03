@@ -1,84 +1,108 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>React JSX, Props & State</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
-    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
-    .copy-btn {
-      position: absolute; top: 8px; right: 8px;
-      background: #3b82f6; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React JSX, Props & State</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family:'Segoe UI',sans-serif; background:#fdfdfd; }
+.container { padding-left:3rem; padding-right:3rem; }
+@media (max-width:768px){ .container{ padding-left:1rem; padding-right:1rem; } }
+pre { background:#1e1e2f; color:white; padding:1rem; border-radius:0.5rem; overflow-x:auto; position:relative; font-family:'Fira Code',monospace; }
+.copy-btn { position:absolute; top:0.5rem; right:0.5rem; background:#3b82f6; color:white; padding:0.25rem 0.5rem; border-radius:0.375rem; font-size:0.75rem; cursor:pointer; }
+.keyword { color:#f97316; font-weight:600; }
+.value { color:#facc15; }
+.comment { color:#6b7280; font-style:italic; }
+#toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#3b82f6; color:white; font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; }
+.toc-sticky { position:sticky; top:5.5rem; max-height:calc(100vh-6rem); overflow:auto; padding:0.5rem; background:#f1f5f9; border-radius:0.5rem; }
+.active-link { color:#3b82f6; font-weight:700; }
+.collapsible { cursor:pointer; user-select:none; font-weight:600; color:#1d4ed8; margin-top:0.5rem; display:inline-block; }
+.content-hidden { display:none; }
+</style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<body class="flex flex-col min-h-screen">
 
-  <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-    </div>
-  </header>
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+  <div class="container flex items-center justify-between py-4">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    <span class="hidden md:block text-lg font-medium">JSX, Props & State</span>
+  </div>
+</header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+<div class="container grid lg:grid-cols-[220px_1fr] gap-8 py-8 flex-1">
 
-    <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="react-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="react-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
+  <!-- TOC -->
+  <aside class="hidden lg:block">
+    <nav class="toc-sticky text-sm font-medium">
+      <p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#jsx">JSX</a></li>
+        <li><a href="#props">Props</a></li>
+        <li><a href="#state">State</a></li>
+        <li><a href="#summary">Summary</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="space-y-12">
+
+    <nav class="flex justify-between mb-6">
+      <a href="react-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="react-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
     </nav>
 
-    <!-- JSX Section -->
-    <section id="jsx">
-      <h1 class="text-3xl font-bold mb-2">Understanding JSX</h1>
-      <p>JSX is a syntax extension for JavaScript. It looks similar to HTML and allows you to write UI components easily.</p>
-      <pre><code>{`const element = <h1>Hello, React!</h1>;`}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    <!-- JSX -->
+    <section id="jsx" class="scroll-mt-24">
+      <h1 class="text-3xl font-bold mb-2 text-purple-600">Understanding JSX</h1>
+      <p>JSX is a syntax extension for JavaScript that looks like HTML and allows writing UI components easily.</p>
+      <pre><code><span class="keyword">const</span> element = &lt;h1&gt;Hello, React!&lt;/h1&gt;;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
       <p>JSX expressions can include JavaScript inside curly braces:</p>
-      <pre><code>{`const name = 'Mohan';
-const greeting = <h1>Hello, {name}!</h1>;`}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <pre><code><span class="keyword">const</span> name = 'Mohan';
+<span class="keyword">const</span> greeting = &lt;h1&gt;Hello, {'{'}name{'}'}!&lt;/h1&gt;;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
     </section>
 
-    <!-- Props Section -->
-    <section id="props">
-      <h2 class="text-2xl font-bold mb-2">Props in React</h2>
+    <!-- Props -->
+    <section id="props" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-2 text-green-600">Props in React</h2>
       <p>Props are inputs to components, allowing data to be passed from parent to child.</p>
-      <pre><code>{`function Welcome(props) {
-  return <h1>Hello, {props.name}!</h1>;
+      <pre><code><span class="keyword">function</span> Welcome(props) {
+  <span class="keyword">return</span> &lt;h1&gt;Hello, {'{'}props.name{'}'}!&lt;/h1&gt;;
 }
 
-<Welcome name="Mohan" />`}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+&lt;Welcome name="Mohan" /&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
     </section>
 
-    <!-- State Section -->
-    <section id="state">
-      <h2 class="text-2xl font-bold mb-2">State in React</h2>
+    <!-- State -->
+    <section id="state" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-2 text-blue-600">State in React</h2>
       <p>State is internal data managed by a component. Changing state triggers a re-render.</p>
-      <pre><code>function Counter() {
-  const [count, setCount] = React.useState(0);
-  return (
+      <pre><code><span class="keyword">function</span> Counter() {
+  <span class="keyword">const</span> [count, setCount] = React.useState(0);
+  <span class="keyword">return</span> (
     &lt;div&gt;
       &lt;p&gt;Clicked {'{'}count{'}'} times&lt;/p&gt;
       &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Click me&lt;/button&gt;
     &lt;/div&gt;
   );
 }</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <span class="collapsible" onclick="toggleContent(this)">Show Advanced Example</span>
+      <div class="content-hidden mt-2">
+        <pre><code><span class="keyword">function</span> ToggleMessage() {
+  <span class="keyword">const</span> [visible, setVisible] = React.useState(false);
+  <span class="keyword">return</span> (
+    &lt;div&gt;
+      &lt;button onClick={() =&gt; setVisible(!visible)}&gt;Toggle Message&lt;/button&gt;
+      {visible &amp;&amp; &lt;p&gt;Hello! Message is visible.&lt;/p&gt;}
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
     </section>
 
-    <!-- Summary Section -->
-    <section id="summary">
-      <h2 class="text-2xl font-bold mb-2">Summary</h2>
+    <!-- Summary -->
+    <section id="summary" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-2 text-orange-600">Summary</h2>
       <ul class="list-disc ml-6 space-y-2">
         <li>JSX allows mixing HTML-like syntax with JavaScript.</li>
         <li>Props allow passing data to components.</li>
@@ -86,36 +110,53 @@ const greeting = <h1>Hello, {name}!</h1>;`}</code><button class="copy-btn" oncli
       </ul>
     </section>
 
-    <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="react-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="react-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
+    <nav class="flex justify-between my-6">
+      <a href="react-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="react-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
     </nav>
 
   </main>
+</div>
 
-  <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-    <p>© 2025 Susil. All rights reserved.</p>
-  </footer>
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+  <p>© 2025 Susil. All rights reserved.</p>
+</footer>
 
-  <script>
-    function copyCode(btn) {
-      const code = btn.parentElement.querySelector('code').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = 'Copied!';
-        btn.style.backgroundColor = '#16a34a';
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.style.backgroundColor = '#3b82f6';
-        }, 1500);
-      });
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+function copyCode(btn){
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';
+    btn.style.backgroundColor='#16a34a';
+    setTimeout(()=>{btn.textContent='Copy'; btn.style.backgroundColor='#3b82f6';},1500);
+  });
+}
+
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', ()=>{ toTop.style.display = window.scrollY>300?'block':'none'; });
+toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+const sections = [...document.querySelectorAll('section')];
+const tocLinks = [...document.querySelectorAll('#toc a')];
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      tocLinks.forEach(a=>a.classList.remove('active-link'));
+      const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+      active && active.classList.add('active-link');
     }
-  </script>
+  });
+},{ rootMargin:'-30% 0px -65% 0px', threshold:[0,1] });
+sections.forEach(s=>s && observer.observe(s));
+
+function toggleContent(btn){
+  const content = btn.nextElementSibling;
+  content.classList.toggle('content-hidden');
+  btn.textContent = content.classList.contains('content-hidden')?'Show Advanced Example':'Hide Advanced Example';
+}
+</script>
 
 </body>
 </html>

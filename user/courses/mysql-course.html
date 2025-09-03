@@ -1,123 +1,487 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MySQL Introduction</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MySQL — Advanced Intro • EduHub</title>
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- PrismJS for syntax highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs/components/';</script>
+
   <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
-    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
-    .copy-btn {
-      position: absolute; top: 8px; right: 8px;
-      background: #3b82f6; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    :root { --side-gap: 2rem; --side-gap-mobile: 1rem; --brand: #2563eb; }
+    html,body { height:100%; }
+    body { font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial; background: #f8fafc; color: #0f172a; }
+
+    /* page padding = double-tab space on left & right (desktop) */
+    .page {
+      padding-left: var(--side-gap);
+      padding-right: var(--side-gap);
     }
+    @media (max-width: 768px){
+      .page { padding-left: var(--side-gap-mobile); padding-right: var(--side-gap-mobile); }
+    }
+
+    /* code block styling */
+    pre { position: relative; border-radius: 0.5rem; overflow:auto; box-shadow: 0 6px 18px rgba(2,6,23,0.06); }
+    pre.sql { background: #0b1220; color: #e6edf3; }
+    pre.shell { background: #0f1724; color: #e6edf3; }
+    pre.code { background: #0b1220; color: #e6edf3; }
+    pre code { font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace; font-size:0.92rem; }
+
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: var(--brand); color:#fff; border-radius: 6px;
+      padding: 0.35rem 0.6rem; font-size: 0.78rem; cursor: pointer;
+      box-shadow: 0 6px 14px rgba(37,99,235,0.12);
+      transition: transform .12s ease, background .12s ease;
+    }
+    .copy-btn:hover { transform: translateY(-2px); background: #1e40af; }
+
+    /* TOC */
+    .toc-sticky { position: sticky; top: 5.5rem; max-height: calc(100vh - 6rem); overflow:auto; background: #f1f5f9; border-radius: 0.5rem; padding: 0.5rem; }
+    .toc-sticky a.active { color: var(--brand); font-weight:700; }
+
+    /* section headers color accents */
+    .accent-http { color: #dc2626; }      /* red */
+    .accent-express { color: #059669; }   /* green */
+    .accent-crud { color: #1d4ed8; }      /* blue */
+
+    /* small helpers */
+    .pill { display:inline-flex; gap:.4rem; align-items:center; padding:.25rem .5rem; background:#eef2ff; color:#3730a3; border-radius:999px; font-weight:600; font-size:.85rem; }
+    .muted { color:#6b7280; }
+
+    /* mobile TOC button */
+    #tocToggle { display:none; }
+    @media (max-width: 1024px) {
+      #tocToggle { display:inline-flex; }
+      aside.toc-col { display:none; }
+    }
+
+    /* back-to-top */
+    #toTop { display:none; position:fixed; right:1.25rem; bottom:1.25rem; background:var(--brand); color:white; border-radius:9999px; padding:.6rem .8rem; font-weight:700; box-shadow: 0 8px 24px rgba(37,99,235,0.16); z-index:60; cursor:pointer; }
   </style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<body class="min-h-screen flex flex-col">
 
   <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+  <header class="bg-gradient-to-r from-sky-700 to-indigo-700 text-white sticky top-0 z-50 shadow">
+    <div class="page max-w-full mx-auto flex items-center justify-between gap-4 py-4">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="bg-white/10 p-2 rounded"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M3 7v10a2 2 0 0 0 2 2h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="text-2xl font-extrabold">EduHub</div>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <button id="tocToggle" aria-expanded="false" class="bg-white/20 text-white px-3 py-2 rounded-md md:hidden">Contents</button>
+        <nav class="hidden md:flex items-center gap-2 text-sm">
+          <a href="courses.html" class="px-3 py-2 rounded hover:bg-white/10">Courses</a>
+          <a href="mysql-a.html" class="px-3 py-2 rounded hover:bg-white/10">Next</a>
+        </nav>
+      </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <!-- Layout: left TOC + main -->
+  <div class="page max-w-full mx-auto grid lg:grid-cols-[240px_1fr] gap-8 py-8 flex-1">
 
-    <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="mysql-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+    <!-- TOC (desktop) -->
+    <aside class="toc-col">
+      <nav class="toc-sticky text-sm">
+        <p class="uppercase text-gray-700 text-xs mb-3">Contents</p>
+        <input id="searchSections" type="search" placeholder="Filter sections..." aria-label="Filter sections"
+               class="w-full mb-3 rounded-md px-3 py-2 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+        <ul id="tocList" class="space-y-1">
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#intro">Introduction</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#what-is-mysql">What is MySQL?</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#who-uses">Who uses MySQL?</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#install">Installation & Setup</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#quick-commands">Quick Commands</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#schema-example">Schema Example</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#crud-examples">CRUD Examples</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#joins">Joins & Queries</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#indexes">Indexes & Performance</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#backup-restore">Backup & Restore</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#connect">Connect from Node/Python</a></li>
+          <li><a class="block px-2 py-1 rounded hover:bg-white" href="#tools">Tools & Next Steps</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-    <!-- Introduction -->
-    <section id="intro">
-      <h1 class="text-3xl font-bold mb-2">Introduction to MySQL</h1>
-      <p>MySQL is a very popular open-source relational database management system (RDBMS).</p>
-    </section>
+    <!-- Main -->
+    <main class="space-y-12">
+      <!-- Mobile TOC panel (hidden on desktop) -->
+      <div id="mobileTocPanel" class="hidden md:hidden bg-white shadow rounded p-4">
+        <nav>
+          <ul class="space-y-1 text-sm">
+            <!-- will be cloned by JS -->
+          </ul>
+        </nav>
+      </div>
 
-    <!-- What is MySQL -->
-    <section id="what-is-mysql" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">What is MySQL?</h2>
-      <ul class="list-disc ml-6">
-        <li>MySQL is a relational database management system</li>
-        <li>MySQL is open-source</li>
-        <li>MySQL is free</li>
-        <li>MySQL is ideal for both small and large applications</li>
-        <li>MySQL is very fast, reliable, scalable, and easy to use</li>
-        <li>MySQL is cross-platform</li>
-        <li>MySQL is compliant with the ANSI SQL standard</li>
-        <li>MySQL was first released in 1995</li>
-        <li>MySQL is developed, distributed, and supported by Oracle Corporation</li>
-        <li>MySQL is named after co-founder Ulf Michael "Monty" Widenius's daughter: My</li>
-      </ul>
-    </section>
+      <!-- Top navigation -->
+      <nav class="flex justify-between">
+        <a href="courses.html" class="bg-slate-100 text-slate-900 px-4 py-2 rounded hover:bg-slate-200">◀ Previous</a>
+        <div class="flex items-center gap-3">
+          <span class="pill">MySQL • RDBMS</span>
+          <a id="downloadSql" class="text-sm text-slate-700 hover:underline cursor-pointer" title="Download sample SQL">Download sample SQL</a>
+        </div>
+      </nav>
 
-    <!-- Who Uses MySQL -->
-    <section id="who-uses" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Who Uses MySQL?</h2>
-      <ul class="list-disc ml-6">
-        <li>Huge websites like Facebook, Twitter, Airbnb, Booking.com, Uber, GitHub, YouTube, etc.</li>
-        <li>Content Management Systems like WordPress, Drupal, Joomla!, Contao, etc.</li>
-        <li>A very large number of web developers around the world</li>
-      </ul>
-    </section>
+      <!-- INTRO -->
+      <section id="intro" class="scroll-mt-28">
+        <h1 class="text-3xl font-extrabold mb-2">Introduction to MySQL</h1>
+        <p class="muted mb-3">MySQL is a popular open-source relational database management system (RDBMS). This lesson covers installation, core concepts, common commands, and examples for web apps.</p>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="p-4 bg-white rounded shadow-sm">
+            <h3 class="font-semibold text-slate-700">Stable & Fast</h3>
+            <p class="text-sm muted">Widely used for production workloads and simple to scale.</p>
+          </div>
+          <div class="p-4 bg-white rounded shadow-sm">
+            <h3 class="font-semibold text-slate-700">Open Source</h3>
+            <p class="text-sm muted">Community and enterprise editions; managed services available.</p>
+          </div>
+          <div class="p-4 bg-white rounded shadow-sm">
+            <h3 class="font-semibold text-slate-700">Ecosystem</h3>
+            <p class="text-sm muted">Works with PHP, Node.js, Python, Java, and many ORMs.</p>
+          </div>
+        </div>
+      </section>
 
-    <!-- Show Data On Your Web Site -->
-    <section id="show-data" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Show Data On Your Web Site</h2>
-      <p>To build a web site that shows data from a database, you will need:</p>
-      <ul class="list-disc ml-6">
-        <li>An RDBMS database program (like MySQL)</li>
-        <li>A server-side scripting language, like PHP</li>
-        <li>To use SQL to get the data you want</li>
-        <li>To use HTML / CSS to style the page</li>
-      </ul>
+      <!-- WHAT IS MYSQL -->
+      <section id="what-is-mysql" class="scroll-mt-28">
+        <h2 class="text-2xl font-bold mb-2 accent-http">What is MySQL?</h2>
+        <ul class="list-disc ml-6 space-y-1">
+          <li>Relational database management system (tables, rows, columns).</li>
+          <li>Maintained by Oracle; many forks and compatible derivatives exist.</li>
+          <li>Supports SQL standard features plus extensions (storage engines, replication).</li>
+        </ul>
+      </section>
 
-      <pre><code>-- Example: Retrieve all customers from a MySQL database
-SELECT * FROM Customers;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      <!-- WHO USES -->
+      <section id="who-uses" class="scroll-mt-28">
+        <h2 class="text-2xl font-bold mb-2 accent-express">Who uses MySQL?</h2>
+        <p class="mb-2 muted">Popular across small sites and large platforms. Example usages:</p>
+        <ul class="list-disc ml-6">
+          <li>Content management systems (WordPress, Drupal)</li>
+          <li>Web apps (e-commerce, blogs, SaaS)</li>
+          <li>Analytics pipelines (with ETL)</li>
+        </ul>
+      </section>
 
-    <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="mysql-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+      <!-- INSTALL -->
+      <section id="install" class="scroll-mt-28">
+        <h2 class="text-2xl font-bold mb-2 accent-crud">Installation & Setup</h2>
+        <p class="muted mb-2">Quick installs & verification (Windows/macOS/Linux).</p>
 
-  </main>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-white p-4 rounded shadow-sm">
+            <h3 class="font-semibold mb-2">macOS (Homebrew)</h3>
+            <pre class="shell"><code class="language-bash"># Install
+brew update
+brew install mysql
+
+# Start and verify
+brew services start mysql
+mysql --version</code></pre>
+          </div>
+
+          <div class="bg-white p-4 rounded shadow-sm">
+            <h3 class="font-semibold mb-2">Ubuntu / Debian</h3>
+            <pre class="shell"><code class="language-bash"># Install
+sudo apt update
+sudo apt install mysql-server
+
+# Secure (set root password, remove test DB)
+sudo mysql_secure_installation
+
+# Verify
+mysql --version</code></pre>
+          </div>
+        </div>
+
+        <div class="mt-4 bg-white p-4 rounded shadow-sm">
+          <h3 class="font-semibold mb-2">Windows / MySQL Installer</h3>
+          <p class="text-sm muted mb-2">Download the installer from the official site and follow GUI steps:</p>
+          <pre class="shell"><code class="language-bash">https://dev.mysql.com/downloads/installer/</code></pre>
+        </div>
+      </section>
+
+      <!-- QUICK COMMANDS -->
+      <section id="quick-commands" class="scroll-mt-28">
+        <h2 class="text-2xl font-bold mb-2 text-indigo-600">Quick Commands</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-white p-4 rounded shadow-sm">
+            <h4 class="font-semibold">Login</h4>
+            <pre class="shell"><code class="language-bash">mysql -u root -p
+# then enter password</code></pre>
+          </div>
+
+          <div class="bg-white p-4 rounded shadow-sm">
+            <h4 class="font-semibold">Create DB & User</h4>
+            <pre class="sql"><code class="language-sql">CREATE DATABASE shop;
+CREATE USER 'appuser'@'localhost' IDENTIFIED BY 'strongpass';
+GRANT ALL ON shop.* TO 'appuser'@'localhost';
+FLUSH PRIVILEGES;</code></pre>
+          </div>
+
+          <div class="bg-white p-4 rounded shadow-sm">
+            <h4 class="font-semibold">Start/Stop service</h4>
+            <pre class="shell"><code class="language-bash"># systemd (Linux)
+sudo systemctl start mysql
+sudo systemctl status mysql
+sudo systemctl stop mysql</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCHEMA EXAMPLE -->
+      <section id="schema-example" class="scroll-mt-28">
+        <h2 class="text-2xl font-bold mb-2 text-rose-600">Schema Example</h2>
+        <p class="muted mb-2">A minimal schema for a products/orders app:</p>
+
+        <pre class="sql"><code class="language-sql">CREATE TABLE products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(200) NOT NULL,
+  price DECIMAL(10,2) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  product_id INT NOT NULL,
+  qty INT NOT NULL DEFAULT 1,
+  ordered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (product_id) REFERENCES products(id)
+);</code></pre>
+      </section>
+
+      <!-- CRUD EXAMPLES -->
+      <section id="crud-examples" class="scroll-mt-28">
+        <h2 class="text-2xl font-bold mb-2 text-sky-600">CRUD Examples</h2>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-white p-4 rounded shadow-sm">
+            <h4 class="font-semibold mb-2">SELECT</h4>
+            <pre class="sql"><code class="language-sql">SELECT id, name, price
+FROM products
+WHERE price &gt; 10.00
+ORDER BY price DESC
+LIMIT 10;</code></pre>
+          </div>
+
+          <div class="bg-white p-4 rounded shadow-sm">
+            <h4 class="font-semibold mb-2">INSERT / UPDATE / DELETE</h4>
+            <pre class="sql"><code class="language-sql">-- Insert
+INSERT INTO products (name, price) VALUES ('Coffee Mug', 9.99);
+
+-- Update
+UPDATE products SET price = 8.99 WHERE id = 1;
+
+-- Delete
+DELETE FROM products WHERE id = 10;</code></pre>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- JOINS -->
+      <section id="joins" class="scroll-mt-28">
+        <h2 class="text-2xl font-bold mb-2 text-purple-600">Joins & Useful Queries</h2>
+        <pre class="sql"><code class="language-sql">-- INNER JOIN example
+SELECT o.id, p.name, o.qty, o.ordered_at
+FROM orders o
+JOIN products p ON p.id = o.product_id
+WHERE o.ordered_at &gt; DATE_SUB(NOW(), INTERVAL 30 DAY);</code></pre>
+
+        <p class="mt-3 muted">Use EXPLAIN &lt;query&gt; to see how MySQL will execute a query (helpful for tuning).</p>
+      </section>
+
+      <!-- INDEXES -->
+      <section id="indexes" class="scroll-mt-28">
+        <h2 class="text-2xl font-bold mb-2 text-emerald-600">Indexes & Performance</h2>
+        <ul class="list-disc ml-6 mb-3">
+          <li>Indexes speed up WHERE/ORDER BY at cost of extra storage and slower writes.</li>
+          <li>Create indexes for columns used frequently in WHERE, JOIN, or ORDER BY.</li>
+        </ul>
+        <pre class="sql"><code class="language-sql">CREATE INDEX idx_products_name ON products(name);
+ALTER TABLE orders ADD INDEX idx_orders_product (product_id);</code></pre>
+        <p class="muted mt-2">Regularly monitor slow query log and use EXPLAIN to improve queries.</p>
+      </section>
+
+      <!-- BACKUP & RESTORE -->
+      <section id="backup-restore" class="scroll-mt-28">
+        <h2 class="text-2xl font-bold mb-2 text-yellow-600">Backup & Restore</h2>
+        <pre class="shell"><code class="language-bash"># Dump a single database
+mysqldump -u root -p shop > shop_backup.sql
+
+# Restore
+mysql -u root -p shop &lt; shop_backup.sql</code></pre>
+        <p class="muted mt-2">For large datasets consider tools like Percona XtraBackup or managed backups from cloud providers.</p>
+      </section>
+
+      <!-- CONNECT FROM APPS -->
+      <section id="connect" class="scroll-mt-28">
+        <h2 class="text-2xl font-bold mb-2 text-fuchsia-600">Connect from Node.js & Python</h2>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-white p-4 rounded shadow-sm">
+            <h4 class="font-semibold">Node.js (mysql2)</h4>
+            <pre class="code"><code class="language-js">const mysql = require('mysql2/promise');
+
+async function run() {
+  const conn = await mysql.createConnection({host:'localhost', user:'appuser', password:'strongpass', database:'shop'});
+  const [rows] = await conn.execute('SELECT * FROM products LIMIT 10');
+  console.log(rows);
+  await conn.end();
+}
+run();</code></pre>
+          </div>
+
+          <div class="bg-white p-4 rounded shadow-sm">
+            <h4 class="font-semibold">Python (pymysql)</h4>
+            <pre class="code"><code class="language-python">import pymysql
+
+conn = pymysql.connect(host='localhost', user='appuser', password='strongpass', db='shop')
+with conn.cursor() as cur:
+    cur.execute("SELECT id, name, price FROM products LIMIT 10")
+    print(cur.fetchall())
+conn.close()</code></pre>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- TOOLS -->
+      <section id="tools" class="scroll-mt-28">
+        <h2 class="text-2xl font-bold mb-2 text-slate-600">Tools & Next Steps</h2>
+        <ul class="list-disc ml-6">
+          <li>MySQL Workbench — GUI for modeling and queries.</li>
+          <li>Adminer or phpMyAdmin — lightweight browser DB tools.</li>
+          <li>Learn transactions, isolation levels, replication, and backups next.</li>
+        </ul>
+
+        <p class="mt-4 muted">Try SQL online at <a href="https://www.db-fiddle.com/" target="_blank" class="text-blue-700 hover:underline">db-fiddle.com</a> or <a href="https://www.sqlfiddle.com/" target="_blank" class="text-blue-700 hover:underline">sqlfiddle.com</a>.</p>
+      </section>
+
+      <!-- Bottom navigation -->
+      <nav class="flex justify-between mt-6">
+        <a href="courses.html" class="bg-slate-100 text-slate-900 px-4 py-2 rounded hover:bg-slate-200">◀ Previous</a>
+        <a href="mysql-a.html" class="bg-slate-100 text-slate-900 px-4 py-2 rounded hover:bg-slate-200">Next ▶</a>
+      </nav>
+    </main>
+  </div>
 
   <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-    <p>© 2025 Susil. All rights reserved.</p>
+  <footer class="bg-slate-900 text-white py-6 mt-auto">
+    <div class="page max-w-full mx-auto text-center text-sm">© 2025 Susil. All rights reserved.</div>
   </footer>
 
-  <script>
-    function copyCode(btn) {
-      const code = btn.parentElement.querySelector('code').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = 'Copied!';
-        btn.style.backgroundColor = '#16a34a';
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.style.backgroundColor = '#3b82f6';
-        }, 1500);
-      });
-    }
-  </script>
+  <!-- Back to top -->
+  <button id="toTop" aria-label="Back to top">↑</button>
 
+  <script>
+    // Copy-to-clipboard using delegation
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.copy-btn');
+      if (!btn) return;
+      const pre = btn.closest('pre');
+      const code = pre?.querySelector('code')?.innerText || '';
+      if (!code) return;
+      navigator.clipboard.writeText(code).then(() => {
+        const old = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.style.background = '#16a34a';
+        setTimeout(() => { btn.textContent = old; btn.style.background = ''; }, 1400);
+      });
+    });
+
+    // TOC highlight using IntersectionObserver
+    const sections = document.querySelectorAll('main section[id]');
+    const tocLinks = document.querySelectorAll('#tocList a');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(a => a.classList.remove('active'));
+          const active = document.querySelector('#tocList a[href="#' + entry.target.id + '"]');
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { root: null, rootMargin: '-30% 0px -60% 0px', threshold: [0, 0.5, 1] });
+    sections.forEach(s => s && obs.observe(s));
+
+    // Back-to-top visibility
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      toTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+    toTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+    // Mobile TOC toggle
+    const tocToggle = document.getElementById('tocToggle');
+    const mobilePanel = document.getElementById('mobileTocPanel');
+    if (tocToggle) {
+      tocToggle.addEventListener('click', () => {
+        const expanded = tocToggle.getAttribute('aria-expanded') === 'true';
+        tocToggle.setAttribute('aria-expanded', !expanded);
+        mobilePanel.classList.toggle('hidden');
+      });
+      // clone desktop TOC into mobile panel for convenience
+      const desktopList = document.querySelector('#tocList');
+      const mobileList = mobilePanel?.querySelector('ul');
+      if (desktopList && mobileList) {
+        mobileList.innerHTML = desktopList.innerHTML;
+        mobileList.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobilePanel.classList.add('hidden')));
+      }
+    }
+
+    // Filter sections via search input
+    const search = document.getElementById('searchSections');
+    search?.addEventListener('input', (e) => {
+      const q = e.target.value.trim().toLowerCase();
+      document.querySelectorAll('main section[id]').forEach(sec => {
+        const text = sec.innerText.toLowerCase();
+        sec.style.display = (!q || text.includes(q)) ? '' : 'none';
+      });
+      // also filter TOC
+      document.querySelectorAll('#tocList li').forEach(li => {
+        const a = li.querySelector('a');
+        if (!q || (a.textContent || '').toLowerCase().includes(q)) li.style.display = '';
+        else li.style.display = 'none';
+      });
+    });
+
+    // Download sample SQL file
+    const sampleSQL = `-- Sample schema and seed
+CREATE DATABASE IF NOT EXISTS shop;
+USE shop;
+
+CREATE TABLE products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(200) NOT NULL,
+  price DECIMAL(10,2) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO products (name, price) VALUES ('Coffee Mug', 9.99), ('T-Shirt', 19.99), ('Notebook', 4.50);`;
+
+    document.getElementById('downloadSql').addEventListener('click', () => {
+      const blob = new Blob([sampleSQL], { type: 'text/sql' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'shop_sample.sql';
+      document.body.appendChild(a); a.click();
+      a.remove(); URL.revokeObjectURL(url);
+    });
+
+    // Ensure Prism highlights dynamic code loaded
+    document.addEventListener('DOMContentLoaded', () => Prism.highlightAll());
+  </script>
 </body>
 </html>

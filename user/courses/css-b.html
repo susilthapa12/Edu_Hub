@@ -1,110 +1,219 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSS Selectors</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 text-gray-900">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Selectors — EduHub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- PrismJS for code highlighting -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.min.css">
+<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js" data-prismjs-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs/components/"></script>
 
-  <!-- Header -->
-  <header class="bg-blue-600 text-white p-4">
-    <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-xl font-bold">CSS Tutorial</h1>
+<style>
+:root { --brand: #2563eb; }
+.copy-btn { position:absolute; top:.5rem; right:.5rem; font-size:.75rem; padding:.25rem .5rem; border-radius:.375rem; background:var(--brand); color:#fff; cursor:pointer; }
+.active-link { color: var(--brand); font-weight: 700; }
+.section-content { margin-left: 2rem; }
+@media (max-width: 768px) { .section-content { margin-left: 0; } }
+@media (min-width: 1024px){ .toc-sticky { position: sticky; top: 5.5rem; max-height: calc(100vh - 6rem); overflow:auto; } }
+</style>
+</head>
+<body class="bg-gray-100 text-gray-900 flex flex-col min-h-screen">
+
+<!-- Header -->
+<header class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow font-bold">
+  <div class="max-w-7xl mx-auto flex justify-between items-center gap-4">
+    <a href="index.html" class="text-2xl md:text-3xl font-extrabold">EduHub</a>
+    <span class="hidden sm:inline text-white/90">/ CSS Selectors</span>
+    <div class="ml-auto relative">
+      <input id="filterInput" type="search" placeholder="Filter sections"
+        class="w-48 md:w-64 rounded-lg px-3 py-2 text-sm text-gray-900 placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-white/70" />
+      <kbd class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 border rounded px-1 text-xs">/</kbd>
     </div>
-  </header>
+  </div>
+</header>
+
+<!-- Layout -->
+<div class="max-w-7xl mx-auto w-full px-4 py-8 grid lg:grid-cols-[260px_1fr] gap-8 flex-1">
+
+  <!-- TOC Sidebar -->
+  <aside class="hidden lg:block">
+    <nav class="toc-sticky text-sm space-y-2 font-medium" aria-label="On this page">
+      <p class="uppercase tracking-wider text-gray-700 text-xs mb-2">On this page</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#element-selector">Element Selector</a></li>
+        <li><a href="#class-selector">Class Selector</a></li>
+        <li><a href="#id-selector">ID Selector</a></li>
+        <li><a href="#multiple-selectors">Multiple Selectors</a></li>
+        <li><a href="#summary">Summary</a></li>
+      </ul>
+      <hr class="my-4 border-gray-300" />
+      <div class="space-y-2">
+        <p class="uppercase tracking-wider text-gray-700 text-xs">Shortcuts</p>
+        <p><span class="kbd">/</span> Focus search</p>
+        <p><span class="kbd">g</span> Go to top</p>
+      </div>
+    </nav>
+  </aside>
 
   <!-- Main Content -->
-  <main class="container mx-auto p-6 bg-white shadow rounded my-6">
+  <main id="main" class="space-y-12">
 
-    <!-- Navigation Buttons (Top) -->
-    <div class="flex justify-between mb-6">
-      <a href="css-course.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
-        ◀ Previous
-      </a>
-      <a href="css-c.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
-        Next ▶
-      </a>
-    </div>
+    <!-- Navigation Top -->
+    <nav class="flex justify-between mb-6">
+      <a href="css-course.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">◀ Previous</a>
+      <a href="css-c.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Next ▶</a>
+    </nav>
 
-    <!-- Content -->
-    <h2 class="text-2xl font-bold mb-4 text-blue-600">CSS Selectors</h2>
+    <!-- Overview -->
+    <section id="overview" class="scroll-mt-24 directive-card">
+      <h1 class="text-3xl font-extrabold mb-2 text-blue-600">CSS Selectors</h1>
+      <p class="section-content font-medium text-gray-800">CSS selectors are patterns used to select the HTML elements you want to style.</p>
+    </section>
 
-    <h3 class="text-xl font-semibold mt-6 mb-2">What are CSS Selectors?</h3>
-    <p class="mb-4">
-      CSS selectors are patterns used to select the HTML elements you want to style.
-    </p>
-
-    <h3 class="text-xl font-semibold mt-6 mb-2">Example: Element Selector</h3>
-    <p class="mb-4">This selector targets all &lt;p&gt; elements on the page:</p>
-    <div class="bg-gray-100 p-4 rounded mb-4">
-      <pre><code>p {
+    <!-- Element Selector -->
+    <section id="element-selector" class="scroll-mt-24 directive-card" data-tags="element selector css">
+      <h2 class="text-2xl font-bold flex justify-between items-center">
+        Element Selector
+        <a href="#element-selector" class="text-sm text-blue-700 hover:underline font-semibold">#</a>
+      </h2>
+      <div class="section-content mt-2 bg-gray-100 p-4 rounded relative">
+        <pre><button class="copy-btn">Copy</button><code class="language-css">p {
   color: red;
   font-size: 18px;
 }</code></pre>
-    </div>
+      </div>
+    </section>
 
-    <h3 class="text-xl font-semibold mt-6 mb-2">Example: Class Selector</h3>
-    <p class="mb-4">
-      This selector targets all elements with class <code>highlight</code>:
-    </p>
-    <div class="bg-gray-100 p-4 rounded mb-4">
-      <pre><code>.highlight {
+    <!-- Class Selector -->
+    <section id="class-selector" class="scroll-mt-24 directive-card" data-tags="class selector css">
+      <h2 class="text-2xl font-bold flex justify-between items-center">
+        Class Selector
+        <a href="#class-selector" class="text-sm text-blue-700 hover:underline font-semibold">#</a>
+      </h2>
+      <div class="section-content mt-2 bg-gray-100 p-4 rounded relative">
+        <pre><button class="copy-btn">Copy</button><code class="language-css">.highlight {
   background-color: yellow;
   font-weight: bold;
 }</code></pre>
-    </div>
+      </div>
+    </section>
 
-    <h3 class="text-xl font-semibold mt-6 mb-2">Example: ID Selector</h3>
-    <p class="mb-4">
-      This selector targets the element with ID <code>main-title</code>:
-    </p>
-    <div class="bg-gray-100 p-4 rounded mb-4">
-      <pre><code>#main-title {
+    <!-- ID Selector -->
+    <section id="id-selector" class="scroll-mt-24 directive-card" data-tags="id selector css">
+      <h2 class="text-2xl font-bold flex justify-between items-center">
+        ID Selector
+        <a href="#id-selector" class="text-sm text-blue-700 hover:underline font-semibold">#</a>
+      </h2>
+      <div class="section-content mt-2 bg-gray-100 p-4 rounded relative">
+        <pre><button class="copy-btn">Copy</button><code class="language-css">#main-title {
   color: blue;
   text-align: center;
 }</code></pre>
-    </div>
+      </div>
+    </section>
 
-    <h3 class="text-xl font-semibold mt-6 mb-2">Example: Multiple Selectors</h3>
-    <p class="mb-4">
-      You can style multiple elements at once by separating them with commas:
-    </p>
-    <div class="bg-gray-100 p-4 rounded mb-4">
-      <pre><code>h1, h2, h3 {
+    <!-- Multiple Selectors -->
+    <section id="multiple-selectors" class="scroll-mt-24 directive-card" data-tags="multiple selectors css">
+      <h2 class="text-2xl font-bold flex justify-between items-center">
+        Multiple Selectors
+        <a href="#multiple-selectors" class="text-sm text-blue-700 hover:underline font-semibold">#</a>
+      </h2>
+      <div class="section-content mt-2 bg-gray-100 p-4 rounded relative">
+        <pre><button class="copy-btn">Copy</button><code class="language-css">h1, h2, h3 {
   font-family: Arial, sans-serif;
   color: green;
 }</code></pre>
-    </div>
+      </div>
+    </section>
 
-    <h3 class="text-xl font-semibold mt-6 mb-2">Chapter Summary</h3>
-    <ul class="list-disc list-inside mb-4">
-      <li>CSS selectors are used to select HTML elements</li>
-      <li>Element selectors target HTML tags</li>
-      <li>Class selectors target elements with a specific class</li>
-      <li>ID selectors target elements with a specific ID</li>
-      <li>Multiple selectors can be styled together using commas</li>
-    </ul>
+    <!-- Summary -->
+    <section id="summary" class="scroll-mt-24 directive-card" data-tags="summary css selectors">
+      <h2 class="text-2xl font-bold flex justify-between items-center">
+        Chapter Summary
+        <a href="#summary" class="text-sm text-blue-700 hover:underline font-semibold">#</a>
+      </h2>
+      <ul class="section-content list-disc list-inside text-gray-800">
+        <li>CSS selectors are used to select HTML elements</li>
+        <li>Element selectors target HTML tags</li>
+        <li>Class selectors target elements with a specific class</li>
+        <li>ID selectors target elements with a specific ID</li>
+        <li>Multiple selectors can be styled together using commas</li>
+      </ul>
+    </section>
 
-    <!-- Navigation Buttons (Bottom) -->
-    <div class="flex justify-between mt-6">
-      <a href="css-course.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
-        ◀ Previous
-      </a>
-      <a href="css-c.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
-        Next ▶
-      </a>
-    </div>
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between mt-6">
+      <a href="css-course.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">◀ Previous</a>
+      <a href="css-c.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Next ▶</a>
+    </nav>
 
   </main>
+</div>
 
-  <!-- Footer -->
-  <footer class="bg-blue-600 text-white p-4 mt-6">
-    <div class="container mx-auto text-center">
-      &copy; © 2025 Susil. All rights reserved.
-    </div>
-  </footer>
+<!-- Footer -->
+<footer class="bg-blue-600 text-white p-4 mt-6 text-center font-semibold">
+  &copy; 2025 Susil. All rights reserved.
+</footer>
 
+<!-- Back to top -->
+<button id="toTop" class="fixed bottom-5 right-5 hidden rounded-full p-3 shadow-lg bg-blue-600 text-white hover:bg-blue-700" aria-label="Back to top">↑</button>
+
+<script>
+  // Copy code
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.copy-btn');
+    if (!btn) return;
+    const code = btn.parentElement.querySelector('code').innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.style.backgroundColor = '#16a34a';
+      setTimeout(() => { btn.textContent = original; btn.style.backgroundColor = 'var(--brand)'; }, 1200);
+    });
+  });
+
+  // Filter sections
+  const filterInput = document.getElementById('filterInput');
+  const cards = [...document.querySelectorAll('.directive-card')];
+  filterInput.addEventListener('input', () => {
+    const q = filterInput.value.trim().toLowerCase();
+    cards.forEach(card => {
+      const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+      const text = card.innerText.toLowerCase();
+      card.style.display = (!q || tags.includes(q) || text.includes(q)) ? '' : 'none';
+    });
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/') { e.preventDefault(); filterInput.focus(); }
+    if (e.key.toLowerCase() === 'g') { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  });
+
+  // Scrollspy
+  const sections = ['overview','element-selector','class-selector','id-selector','multiple-selectors','summary']
+    .map(id => document.getElementById(id));
+  const tocLinks = [...document.querySelectorAll('#toc a')];
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        tocLinks.forEach(a => a.classList.remove('active-link'));
+        const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+        active && active.classList.add('active-link');
+      }
+    });
+  }, { rootMargin: '-30% 0px -65% 0px', threshold: [0,1] });
+  sections.forEach(s => s && observer.observe(s));
+
+  // Back-to-top button
+  const toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', () => {
+    toTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+  });
+  toTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+</script>
 </body>
 </html>

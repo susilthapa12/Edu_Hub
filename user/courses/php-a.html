@@ -6,106 +6,153 @@
 <title>PHP Installation & Setup</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body { font-family: 'Segoe UI', sans-serif; }
-pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
-code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
-.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
+body { font-family:'Segoe UI',sans-serif; background:#fdfdfd; }
+pre { position: relative; border-radius:0.5rem; padding:1rem; overflow-x:auto; font-family:'Fira Code', monospace; font-size:0.9rem; background:#1e1e2f; color:#f5f5f5; }
+.copy-btn { position:absolute; top:0.5rem; right:0.5rem; background:#3b82f6; color:white; padding:0.25rem 0.5rem; border-radius:0.375rem; font-size:0.75rem; cursor:pointer; transition:0.3s; }
+.copy-btn:hover { background:#2563eb; }
+a { text-decoration:none; color:#2563eb; transition:0.3s; }
+a:hover { color:#1d4ed8; text-decoration:underline; }
+#toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#3b82f6; color:white; font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; transition:0.3s; }
+#toTop:hover { background:#2563eb; }
+/* Full-width layout with double tab padding */
+.container-full { padding-left:64px; padding-right:64px; }
+@media (max-width:1024px){ .container-full { padding-left:32px; padding-right:32px; } }
+@media (max-width:640px){ .container-full { padding-left:16px; padding-right:16px; } }
+/* Sticky TOC */
+.toc-sticky { position:sticky; top:5rem; max-height:calc(100vh - 6rem); overflow:auto; background:#f1f5f9; padding:0.5rem; border-radius:0.5rem; }
+.active-link { color:#2563eb; font-weight:700; }
 </style>
 </head>
-<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+<body class="flex flex-col min-h-screen">
 
-<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-<a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-</div>
+<!-- Header -->
+<header class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white p-4 sticky top-0 z-50 shadow-md">
+  <div class="container-full flex justify-between items-center">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    <span class="hidden sm:block text-sm opacity-80">PHP Installation & Setup</span>
+  </div>
 </header>
 
-<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+<!-- Main Content -->
+<div class="container-full flex flex-col lg:flex-row gap-8 mt-8">
 
-<nav class="flex justify-between my-6">
-<a href="php-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="php-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+  <!-- TOC -->
+  <aside class="hidden lg:block w-60">
+    <nav class="toc-sticky text-sm font-medium" aria-label="Table of Contents">
+      <p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#php-installation">PHP Installation & Setup</a></li>
+        <li><a href="#requirements">Requirements</a></li>
+        <li><a href="#windows">Installation on Windows</a></li>
+        <li><a href="#linux">Installation on Linux</a></li>
+        <li><a href="#macos">Installation on macOS</a></li>
+        <li><a href="#verify">Verify PHP Installation</a></li>
+        <li><a href="#editor">Editor Recommendation</a></li>
+      </ul>
+    </nav>
+  </aside>
 
-<!-- Section: PHP Installation -->
-<section id="php-installation">
-<h1 class="text-3xl font-bold mb-2">PHP Installation & Setup</h1>
+  <!-- Main Section -->
+  <main class="flex-1 space-y-12">
 
-<h2 class="text-2xl font-bold mt-6 mb-2">1. Requirements</h2>
-<ul class="list-disc list-inside mb-4">
-  <li>Web Server (Apache, Nginx, IIS, etc.)</li>
-  <li>PHP runtime (PHP 7.x or higher recommended)</li>
-  <li>Database (MySQL, MariaDB, PostgreSQL) if you plan to store data</li>
-</ul>
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6">
+      <a href="php-course.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="php-b.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
+    </nav>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">2. Installation on Windows</h2>
-<p class="mb-2">The easiest way is to install a pre-packaged environment like XAMPP or WampServer:</p>
-<ul class="list-disc list-inside mb-4">
-  <li>Download <a href="https://www.apachefriends.org/index.html" class="text-blue-600 hover:underline">XAMPP</a> or <a href="https://www.wampserver.com/" class="text-blue-600 hover:underline">WampServer</a></li>
-  <li>Run the installer and follow the instructions</li>
-  <li>Start Apache and MySQL from the control panel</li>
-  <li>Place PHP files in the <code>htdocs</code> folder (for XAMPP)</li>
-</ul>
+    <!-- PHP Installation Section -->
+    <section id="php-installation" class="scroll-mt-24">
+      <h1 class="text-3xl font-bold mb-2 text-purple-600">PHP Installation & Setup</h1>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">3. Installation on Linux (Ubuntu/Debian)</h2>
-<p class="mb-2">Use the terminal to install Apache and PHP:</p>
-<pre><code>sudo apt update
+      <h2 id="requirements" class="text-2xl font-bold mt-6 mb-2 text-green-600">1. Requirements</h2>
+      <ul class="list-disc list-inside mb-4">
+        <li>Web Server (Apache, Nginx, IIS, etc.)</li>
+        <li>PHP runtime (PHP 7.x or higher recommended)</li>
+        <li>Database (MySQL, MariaDB, PostgreSQL) if you plan to store data</li>
+      </ul>
+
+      <h2 id="windows" class="text-2xl font-bold mt-6 mb-2 text-green-600">2. Installation on Windows</h2>
+      <p class="mb-2">The easiest way is to install a pre-packaged environment like XAMPP or WampServer:</p>
+      <ul class="list-disc list-inside mb-4">
+        <li>Download <a href="https://www.apachefriends.org/index.html" class="hover:underline">XAMPP</a> or <a href="https://www.wampserver.com/" class="hover:underline">WampServer</a></li>
+        <li>Run the installer and follow the instructions</li>
+        <li>Start Apache and MySQL from the control panel</li>
+        <li>Place PHP files in the <code>htdocs</code> folder (for XAMPP)</li>
+      </ul>
+
+      <h2 id="linux" class="text-2xl font-bold mt-6 mb-2 text-green-600">3. Installation on Linux (Ubuntu/Debian)</h2>
+      <p class="mb-2">Use the terminal to install Apache and PHP:</p>
+      <pre><code>sudo apt update
 sudo apt install apache2
 sudo apt install php libapache2-mod-php
-sudo systemctl restart apache2
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-<p>PHP files are usually placed in <code>/var/www/html/</code>.</p>
+sudo systemctl restart apache2</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <p>PHP files are usually placed in <code>/var/www/html/</code>.</p>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">4. Installation on macOS</h2>
-<p class="mb-2">macOS comes with PHP pre-installed. To check version:</p>
-<pre><code>php -v
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-<p class="mb-2">For more control, you can install PHP via <a href="https://brew.sh/" class="text-blue-600 hover:underline">Homebrew</a>:</p>
-<pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install php
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <h2 id="macos" class="text-2xl font-bold mt-6 mb-2 text-green-600">4. Installation on macOS</h2>
+      <p class="mb-2">macOS comes with PHP pre-installed. To check version:</p>
+      <pre><code>php -v</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <p class="mb-2">For more control, you can install PHP via <a href="https://brew.sh/" class="hover:underline">Homebrew</a>:</p>
+      <pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install php</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">5. Verify PHP Installation</h2>
-<p class="mb-2">Create a file named <code>info.php</code> in your server directory with the following content:</p>
-<pre><code>&lt;?php
+      <h2 id="verify" class="text-2xl font-bold mt-6 mb-2 text-green-600">5. Verify PHP Installation</h2>
+      <pre><code>&lt;?php
 phpinfo();
-?&gt;
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-<p>Open <code>http://localhost/info.php</code> in your browser. You should see the PHP configuration page.</p>
+?&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      <p>Open <code>http://localhost/info.php</code> in your browser. You should see the PHP configuration page.</p>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">6. Editor Recommendation</h2>
-<ul class="list-disc list-inside mb-4">
-  <li>Visual Studio Code (VS Code) – lightweight, free, and supports PHP extensions</li>
-  <li>PHPStorm – full-featured, professional IDE (paid)</li>
-</ul>
+      <h2 id="editor" class="text-2xl font-bold mt-6 mb-2 text-green-600">6. Editor Recommendation</h2>
+      <ul class="list-disc list-inside mb-4">
+        <li>Visual Studio Code (VS Code) – lightweight, free, and supports PHP extensions</li>
+        <li>PHPStorm – full-featured, professional IDE (paid)</li>
+      </ul>
+    </section>
 
-</section>
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6">
+      <a href="php-course.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="php-b.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
+    </nav>
 
-<nav class="flex justify-between my-6">
-<a href="php-course.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="php-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+  </main>
+</div>
 
-</main>
-
-<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+<footer class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-6 mt-auto text-center">
 <p>© 2025 Susil. All rights reserved.</p>
 </footer>
 
+<button id="toTop" aria-label="Back to top">↑</button>
+
 <script>
+// Copy code
 function copyCode(btn) {
   const code = btn.parentElement.querySelector('code').innerText;
   navigator.clipboard.writeText(code).then(() => {
     btn.textContent = 'Copied!';
     btn.style.backgroundColor = '#16a34a';
-    setTimeout(() => {
-      btn.textContent = 'Copy';
-      btn.style.backgroundColor = '#2563eb';
-    }, 1500);
+    setTimeout(() => { btn.textContent = 'Copy'; btn.style.backgroundColor = '#3b82f6'; }, 1500);
   });
 }
+
+// Back to top button
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => { toTop.style.display = window.scrollY > 300 ? 'block' : 'none'; });
+toTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+// TOC highlight
+const sections = [...document.querySelectorAll('section h2, section h1')];
+const tocLinks = [...document.querySelectorAll('#toc a')];
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      tocLinks.forEach(a => a.classList.remove('active-link'));
+      const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+      active && active.classList.add('active-link');
+    }
+  });
+},{ rootMargin:'-30% 0px -65% 0px', threshold:[0,1] });
+sections.forEach(s => s && observer.observe(s));
 </script>
 
 </body>

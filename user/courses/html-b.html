@@ -1,48 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HTML Basic Examples</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Basic Examples</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Prism.js for code highlighting -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+
+<style>
+body { background:#fdfdfd; font-family:'Segoe UI',sans-serif; }
+pre { position: relative; border-radius:0.5rem; padding:1rem; overflow-x:auto; }
+.copy-btn { position:absolute; top:0.5rem; right:0.5rem; background:#3b82f6; color:white; padding:0.25rem 0.5rem; border-radius:0.375rem; font-size:0.75rem; cursor:pointer; transition:0.3s;}
+.copy-btn:hover { background:#2563eb; }
+.collapsible { cursor:pointer; user-select:none; font-weight:600; color:#1d4ed8; margin-bottom:0.5rem; display:flex; align-items:center; gap:0.25rem; }
+.content-hidden { display:none; }
+</style>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="flex flex-col min-h-screen">
 
-  <!-- Header -->
-  <header class="bg-blue-600 text-white p-4">
-    <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-xl font-bold">HTML Tutorial</h1>
-    </div>
-  </header>
+<!-- Header -->
+<header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 sticky top-0 z-50 shadow-md">
+  <div class="container mx-auto flex justify-between items-center">
+    <h1 class="text-xl font-bold">HTML Tutorial</h1>
+  </div>
+</header>
 
-  <!-- Main Content -->
-  <main class="container mx-auto p-6 bg-white shadow rounded my-6">
+<!-- Main Content -->
+<main class="container mx-auto p-6 flex-1 space-y-8">
 
-    <!-- Navigation Buttons (Top) -->
-    <div class="flex justify-between mb-6">
-      <a href="html-a.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
-        ◀ Previous
-      </a>
-      <a href="html-c.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
-        Next ▶
-      </a>
-    </div>
+  <!-- Navigation Top -->
+  <div class="flex justify-between mb-6">
+    <a href="html-a.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">◀ Previous</a>
+    <a href="html-c.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">Next ▶</a>
+  </div>
 
-    <!-- Content -->
-    <h2 class="text-2xl font-bold mb-4">HTML Basic Examples</h2>
-    <p class="mb-4">In this chapter we will show some basic HTML examples.</p>
-    <p class="mb-4">Don't worry if we use tags you have not learned about yet.</p>
+  <h2 class="text-2xl font-bold mb-4">HTML Basic Examples</h2>
+  <p class="mb-4">In this chapter we will show some basic HTML examples.</p>
+  <p class="mb-4">Don't worry if we use tags you have not learned about yet.</p>
 
+  <!-- HTML Documents -->
+  <div>
     <h3 class="text-xl font-semibold mt-6 mb-2">HTML Documents</h3>
-    <p class="mb-4">
-      All HTML documents must start with a document type declaration: <code>&lt;!DOCTYPE html&gt;</code>.
-      The HTML document itself begins with <code>&lt;html&gt;</code> and ends with <code>&lt;/html&gt;</code>.
-      The visible part of the HTML document is between <code>&lt;body&gt;</code> and <code>&lt;/body&gt;</code>.
+    <p class="mb-2">
+      All HTML documents start with <code>&lt;!DOCTYPE html&gt;</code>. The HTML document itself begins with <code>&lt;html&gt;</code> and ends with <code>&lt;/html&gt;</code>. The visible part is between <code>&lt;body&gt;</code> and <code>&lt;/body&gt;</code>.
     </p>
 
     <div class="bg-gray-100 p-4 rounded mb-4">
       <p class="font-semibold mb-2">Example</p>
-      <pre><code>&lt;!DOCTYPE html&gt;
+      <pre class="language-markup"><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;body&gt;
 
@@ -50,86 +59,81 @@
 &lt;p&gt;My first paragraph.&lt;/p&gt;
 
 &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+&lt;/html&gt;</code></pre>
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     </div>
+  </div>
 
-    <h3 class="text-xl font-semibold mt-6 mb-2">The &lt;!DOCTYPE&gt; Declaration</h3>
-    <p class="mb-4">
-      The <code>&lt;!DOCTYPE&gt;</code> declaration represents the document type, and helps browsers to display web pages correctly.
-      It must only appear once, at the top of the page (before any HTML tags).
-      The declaration is not case sensitive.
-      The declaration for HTML5 is:
+  <!-- DOCTYPE -->
+  <div>
+    <h3 class="text-xl font-semibold mt-6 mb-2">&lt;!DOCTYPE&gt; Declaration</h3>
+    <p class="mb-2">
+      The <code>&lt;!DOCTYPE&gt;</code> declaration tells browsers to display pages correctly. Must appear once at the top of the page.
     </p>
-    <div class="bg-gray-100 p-4 rounded mb-4">
-      <pre><code>&lt;!DOCTYPE html&gt;</code></pre>
-    </div>
+    <pre class="language-markup"><code>&lt;!DOCTYPE html&gt;</code></pre>
+    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+  </div>
 
+  <!-- HTML Headings -->
+  <div>
     <h3 class="text-xl font-semibold mt-6 mb-2">HTML Headings</h3>
-    <p class="mb-4">
-      HTML headings are defined with the <code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code> tags.
-      <code>&lt;h1&gt;</code> defines the most important heading. <code>&lt;h6&gt;</code> defines the least important heading:
-    </p>
-    <div class="bg-gray-100 p-4 rounded mb-4">
-      <p class="font-semibold mb-2">Example</p>
-      <pre><code>&lt;h1&gt;This is heading 1&lt;/h1&gt;
-&lt;h2&gt;This is heading 2&lt;/h2&gt;
-&lt;h3&gt;This is heading 3&lt;/h3&gt;
-</code></pre>
-    </div>
+    <p class="mb-2">Defined with <code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code>. <code>&lt;h1&gt;</code> is most important.</p>
+    <pre class="language-markup"><code>&lt;h1&gt;Heading 1&lt;/h1&gt;
+&lt;h2&gt;Heading 2&lt;/h2&gt;
+&lt;h3&gt;Heading 3&lt;/h3&gt;</code></pre>
+    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+  </div>
 
+  <!-- HTML Paragraphs -->
+  <div>
     <h3 class="text-xl font-semibold mt-6 mb-2">HTML Paragraphs</h3>
-    <p class="mb-4">
-      HTML paragraphs are defined with the <code>&lt;p&gt;</code> tag:
-    </p>
-    <div class="bg-gray-100 p-4 rounded mb-4">
-      <p class="font-semibold mb-2">Example</p>
-      <pre><code>&lt;p&gt;This is a paragraph.&lt;/p&gt;
-&lt;p&gt;This is another paragraph.&lt;/p&gt;
-</code></pre>
-    </div>
+    <pre class="language-markup"><code>&lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;p&gt;This is another paragraph.&lt;/p&gt;</code></pre>
+    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+  </div>
 
+  <!-- HTML Links -->
+  <div>
     <h3 class="text-xl font-semibold mt-6 mb-2">HTML Links</h3>
-    <p class="mb-4">
-      HTML links are defined with the <code>&lt;a&gt;</code> tag:
-    </p>
-    <div class="bg-gray-100 p-4 rounded mb-4">
-      <p class="font-semibold mb-2">Example</p>
-      <pre><code>&lt;a href="https://www.w3schools.com"&gt;This is a link&lt;/a&gt;
-</code></pre>
-    </div>
-    <p class="mb-4">
-      The link's destination is specified in the <code>href</code> attribute.
-      Attributes provide additional information about HTML elements.
-    </p>
+    <pre class="language-markup"><code>&lt;a href="https://www.w3schools.com"&gt;This is a link&lt;/a&gt;</code></pre>
+    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+  </div>
 
+  <!-- HTML Images -->
+  <div>
     <h3 class="text-xl font-semibold mt-6 mb-2">HTML Images</h3>
-    <p class="mb-4">
-      HTML images are defined with the <code>&lt;img&gt;</code> tag. The source file (<code>src</code>), alternative text (<code>alt</code>), width, and height are provided as attributes:
-    </p>
-    <div class="bg-gray-100 p-4 rounded mb-4">
-      <p class="font-semibold mb-2">Example</p>
-      <pre><code>&lt;img src="w3schools.jpg" alt="W3Schools.com" width="104" height="142"&gt;
-</code></pre>
-    </div>
+    <pre class="language-markup"><code>&lt;img src="w3schools.jpg" alt="W3Schools.com" width="104" height="142"&gt;</code></pre>
+    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+  </div>
 
-    <!-- Navigation Buttons (Bottom) -->
-    <div class="flex justify-between mt-6">
-      <a href="previous.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
-        ◀ Previous
-      </a>
-      <a href="html-c.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">
-        Next ▶
-      </a>
-    </div>
-  </main>
+  <!-- Navigation Bottom -->
+  <div class="flex justify-between mt-6">
+    <a href="html-a.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">◀ Previous</a>
+    <a href="html-c.html" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">Next ▶</a>
+  </div>
 
-  <!-- Footer -->
-  <footer class="bg-blue-600 text-white p-4 mt-6">
-    <div class="container mx-auto text-center">
-      &copy; © 2025 Susil. All rights reserved.
-    </div>
-  </footer>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 mt-6">
+  <div class="container mx-auto text-center">
+    &copy; 2025 Susil. All rights reserved.
+  </div>
+</footer>
+
+<script>
+function copyCode(btn){
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';
+    btn.style.backgroundColor='#16a34a';
+    setTimeout(()=>{
+      btn.textContent='Copy';
+      btn.style.backgroundColor='#3b82f6';
+    },1500);
+  });
+}
+</script>
 
 </body>
 </html>

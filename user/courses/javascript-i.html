@@ -1,166 +1,415 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JavaScript Objects</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JavaScript Objects — EduHub</title>
+  <meta name="description" content="Interactive guide to JavaScript objects with live examples, copy buttons and syntax highlighting." />
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Prism.js (syntax highlighting) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css">
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-clike.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-markup.min.js"></script>
+
   <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    iframe { border: 1px solid #ddd; width: 100%; min-height: 200px; }
-    pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
-    code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
-    .copy-btn {
-      position: absolute; top: 8px; right: 8px;
-      background: #2563eb; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    :root{
+      --brand-purple: #7c3aed;
+      --brand-blue: #2563eb;
+      --accent: linear-gradient(90deg,#7c3aed 0%,#2563eb 55%,#06b6d4 100%);
+      --card-bg: #ffffff;
     }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    html,body { height: 100%; }
+    body { font-family: Inter, 'Segoe UI', system-ui, -apple-system, sans-serif; background: #f8fafc; color: #0f172a; -webkit-font-smoothing:antialiased; }
+    .brand-gradient { background: var(--accent); }
+    /* cards & code */
+    .lesson-card { background: var(--card-bg); border: 1px solid rgba(37,99,235,0.06); border-left: 6px solid transparent; padding: 1rem; border-radius: .75rem; transition: all .25s ease; }
+    .lesson-card[data-accent="purple"]{ border-left-color: var(--brand-purple); }
+    .lesson-card[data-accent="blue"]{ border-left-color: var(--brand-blue); }
+    .fade-in { transform: translateY(8px); opacity: 0; transition: all .45s cubic-bezier(.2,.9,.3,1); }
+    .fade-in.visible { transform: translateY(0); opacity: 1; }
+    pre { position: relative; border-radius: .6rem; padding: 1rem; overflow:auto; box-shadow: 0 8px 24px rgba(2,6,23,0.04); }
+    code { font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: .95rem; }
+    .copy-btn { position: absolute; top:.6rem; right:.6rem; font-size:.75rem; padding:.3rem .55rem; border-radius:.375rem; background:var(--brand-blue); color:#fff; border:none; cursor:pointer; transition: transform .12s ease, background-color .12s ease; }
+    .copy-btn:active{ transform: translateY(1px); }
+    .copied { background:#16a34a !important; }
+    .toc-sticky { position: sticky; top: 5.5rem; max-height: calc(100vh - 6rem); overflow:auto; }
+    .active-link { color: var(--brand-blue); font-weight: 700; }
+    .kbd { border:1px solid #e6edf3; border-bottom-width:2px; padding:.125rem .375rem; border-radius:.375rem; font-size:.75rem;}
+    [x-cloak] { display:none!important; }
+    @media print { .no-print { display:none!important; } }
   </style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+<body class="min-h-screen flex flex-col">
+
+  <!-- Skip link -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 bg-white text-slate-900 px-3 py-2 rounded shadow font-semibold">Skip to content</a>
+
+  <!-- A11y announcer -->
+  <div id="a11y-announcer" aria-live="polite" class="sr-only" role="status"></div>
 
   <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+  <header class="brand-gradient text-white sticky top-0 z-40 no-print">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
+      <a href="index.html" class="flex items-center gap-3" aria-label="EduHub home">
+        <div class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center text-2xl">📘</div>
+        <div class="text-lg lg:text-2xl font-extrabold tracking-tight">EduHub</div>
+      </a>
+
+      <div class="hidden sm:flex items-center gap-3 ml-3">
+        <span class="text-white/90">/ JavaScript — Objects</span>
+      </div>
+
+      <div class="ml-auto flex items-center gap-2">
+        <div class="relative">
+          <input id="filterInput" aria-label="Filter topics" placeholder="Filter topics (press /)" type="search"
+                 class="w-44 md:w-72 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-white/60" />
+          <kbd class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 kbd">/</kbd>
+        </div>
+
+        <button id="printBtn" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-sm font-semibold no-print">Print</button>
+        <button id="tocToggle" class="lg:hidden bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-sm font-semibold no-print">Menu</button>
+      </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <!-- Layout -->
+  <div class="max-w-7xl mx-auto w-full px-4 py-8 grid lg:grid-cols-[260px_1fr] gap-8 flex-1">
 
-    <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="javascript-h.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="javascript-j.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+    <!-- Sidebar TOC (desktop) -->
+    <aside class="hidden lg:block">
+      <nav class="toc-sticky text-sm space-y-3 font-medium bg-white/60 p-3 rounded-lg shadow-sm" aria-label="On this page">
+        <p class="uppercase tracking-wider text-slate-600 text-xs mb-1">On this page</p>
+        <ul id="toc" class="space-y-1">
+          <li><a href="#intro" class="hover:underline">Introduction</a></li>
+          <li><a href="#create" class="hover:underline">Creating an Object</a></li>
+          <li><a href="#access" class="hover:underline">Accessing Properties</a></li>
+          <li><a href="#change" class="hover:underline">Changing Properties</a></li>
+          <li><a href="#add" class="hover:underline">Adding Properties</a></li>
+          <li><a href="#delete" class="hover:underline">Deleting Properties</a></li>
+          <li><a href="#methods" class="hover:underline">Object Methods</a></li>
+          <li><a href="#loop" class="hover:underline">Looping Through Objects</a></li>
+        </ul>
 
-    <!-- Intro -->
-    <section id="intro">
-      <h1 class="text-3xl font-bold mb-2">JavaScript Objects</h1>
-      <p>
-        Objects are variables that can hold **multiple related values** as properties.  
-        Each property has a <strong>key</strong> (name) and a <strong>value</strong>.  
-        Objects can also contain **functions** called methods.
-      </p>
-    </section>
+        <hr class="my-3 border-slate-200" />
+        <div class="text-xs text-slate-600 space-y-1">
+          <div><span class="kbd">/</span> Focus search</div>
+          <div><span class="kbd">g</span> Go to top</div>
+        </div>
+      </nav>
+    </aside>
 
-    <!-- Creating an Object -->
-    <section id="create">
-      <h2 class="text-2xl font-bold mb-2">Creating an Object</h2>
-      <p>Use curly braces <code>{}</code> to create an object.</p>
-      <pre><code>let person = {
-  name: "John",
-  age: 25,
-  city: "New York"
-};
-document.write(person.name + ", " + person.age + ", " + person.city);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-      <button onclick="runCode('example1')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
-      <iframe id="example1"></iframe>
-    </section>
+    <!-- Mobile drawer -->
+    <div id="mobileDrawer" class="fixed inset-0 z-50 hidden lg:hidden" aria-hidden="true">
+      <div id="drawerBackdrop" class="absolute inset-0 bg-black/45" onclick="toggleDrawer()"></div>
+      <div class="relative bg-white w-72 h-full p-4 shadow-xl">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-semibold">On this page</h3>
+          <button onclick="toggleDrawer()" class="text-slate-600">Close</button>
+        </div>
+        <nav class="flex flex-col gap-2 text-sm">
+          <a href="#intro" onclick="toggleDrawer()" class="hover:text-blue-600">Introduction</a>
+          <a href="#create" onclick="toggleDrawer()" class="hover:text-blue-600">Creating an Object</a>
+          <a href="#access" onclick="toggleDrawer()" class="hover:text-blue-600">Accessing Properties</a>
+          <a href="#change" onclick="toggleDrawer()" class="hover:text-blue-600">Changing Properties</a>
+          <a href="#add" onclick="toggleDrawer()" class="hover:text-blue-600">Adding Properties</a>
+          <a href="#delete" onclick="toggleDrawer()" class="hover:text-blue-600">Deleting Properties</a>
+          <a href="#methods" onclick="toggleDrawer()" class="hover:text-blue-600">Object Methods</a>
+          <a href="#loop" onclick="toggleDrawer()" class="hover:text-blue-600">Looping Through Objects</a>
+        </nav>
+      </div>
+    </div>
 
-    <!-- Accessing Properties -->
-    <section id="access">
-      <h2 class="text-2xl font-bold mb-2">Accessing Object Properties</h2>
-      <p>You can access values using dot <code>.</code> or bracket <code>[]</code> notation.</p>
-      <pre><code>let person = {name: "Alice", age: 30};
+    <!-- Main -->
+    <main id="main" class="space-y-8">
+
+      <!-- top nav -->
+      <nav class="flex justify-between items-center">
+        <a href="javascript-h.html" class="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-sm border">◀ Previous</a>
+        <a href="javascript-j.html" class="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-sm border">Next ▶</a>
+      </nav>
+
+      <!-- INTRO -->
+      <article id="intro" class="lesson-card fade-in visible" data-accent="purple" data-tags="objects properties methods">
+        <h1 class="text-2xl font-extrabold mb-2">JavaScript Objects</h1>
+        <p class="text-slate-700">Objects hold multiple related values as properties (key/value pairs). Properties can be primitive values, arrays, or even functions (methods).</p>
+      </article>
+
+      <!-- Creating an Object -->
+      <article id="create" class="lesson-card fade-in" data-accent="blue" data-tags="create object literal">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-semibold">Creating an Object</h2>
+          <span class="text-sm text-slate-500">object literal</span>
+        </div>
+
+        <div class="mt-3 relative">
+          <pre aria-label="Code: Create object"><button class="copy-btn" data-copy>Copy</button><code class="language-js">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;p id="out"&gt;&lt;/p&gt;
+  &lt;script&gt;
+    let person = {
+      name: "John",
+      age: 25,
+      city: "New York"
+    };
+    document.getElementById("out").innerText = person.name + ", " + person.age + ", " + person.city;
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+          <div class="mt-3 flex items-center gap-3">
+            <button data-run="example1" class="bg-gradient-to-r from-indigo-500 to-cyan-400 text-white px-4 py-2 rounded shadow-sm">Try It Yourself</button>
+          </div>
+
+          <iframe id="example1" class="w-full mt-4 rounded-lg border" style="min-height:200px;"></iframe>
+        </div>
+      </article>
+
+      <!-- Accessing Properties -->
+      <article id="access" class="lesson-card fade-in" data-accent="teal" data-tags="access dot bracket">
+        <h2 class="text-xl font-semibold">Accessing Object Properties</h2>
+        <p class="text-slate-700 mt-1">Use dot <code>obj.key</code> or bracket <code>obj['key']</code> notation.</p>
+
+        <div class="mt-3 relative">
+          <pre aria-label="Code: Access properties"><button class="copy-btn" data-copy>Copy</button><code class="language-js">let person = {name: "Alice", age: 30};
 document.write(person.name); // Alice
-document.write(person["age"]); // 30</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+document.write("&lt;br&gt;" + person["age"]); // 30</code></pre>
+        </div>
+      </article>
 
-    <!-- Changing Properties -->
-    <section id="change">
-      <h2 class="text-2xl font-bold mb-2">Changing Object Properties</h2>
-      <pre><code>let person = {name: "Alice", age: 30};
+      <!-- Changing Properties -->
+      <article id="change" class="lesson-card fade-in" data-accent="purple" data-tags="change update">
+        <h2 class="text-xl font-semibold">Changing Object Properties</h2>
+
+        <div class="mt-3 relative">
+          <pre aria-label="Code: Change properties"><button class="copy-btn" data-copy>Copy</button><code class="language-js">let person = {name: "Alice", age: 30};
 person.age = 31;
 person["name"] = "Bob";
-document.write(person.name + ", " + person.age); // Bob, 31</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+document.write(person.name + ", " + person.age); // Bob, 31</code></pre>
+        </div>
+      </article>
 
-    <!-- Adding Properties -->
-    <section id="add">
-      <h2 class="text-2xl font-bold mb-2">Adding Properties</h2>
-      <pre><code>let person = {name: "Alice"};
+      <!-- Adding Properties -->
+      <article id="add" class="lesson-card fade-in" data-accent="blue" data-tags="add new property">
+        <h2 class="text-xl font-semibold">Adding Properties</h2>
+
+        <div class="mt-3 relative">
+          <pre aria-label="Code: Add properties"><button class="copy-btn" data-copy>Copy</button><code class="language-js">let person = {name: "Alice"};
 person.city = "Paris";
-document.write(person.name + ", " + person.city); // Alice, Paris</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+document.write(person.name + ", " + person.city); // Alice, Paris</code></pre>
+        </div>
+      </article>
 
-    <!-- Deleting Properties -->
-    <section id="delete">
-      <h2 class="text-2xl font-bold mb-2">Deleting Properties</h2>
-      <pre><code>let person = {name: "Alice", age: 30};
+      <!-- Deleting Properties -->
+      <article id="delete" class="lesson-card fade-in" data-accent="teal" data-tags="delete remove property">
+        <h2 class="text-xl font-semibold">Deleting Properties</h2>
+
+        <div class="mt-3 relative">
+          <pre aria-label="Code: Delete property"><button class="copy-btn" data-copy>Copy</button><code class="language-js">let person = {name: "Alice", age: 30};
 delete person.age;
-document.write(person.age); // undefined</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+document.write(person.age); // undefined</code></pre>
+        </div>
+      </article>
 
-    <!-- Object Methods -->
-    <section id="methods">
-      <h2 class="text-2xl font-bold mb-2">Object Methods</h2>
-      <p>Objects can have functions as values. These are called methods.</p>
-      <pre><code>let person = {
+      <!-- Object Methods -->
+      <article id="methods" class="lesson-card fade-in" data-accent="purple" data-tags="methods this function">
+        <h2 class="text-xl font-semibold">Object Methods</h2>
+        <p class="text-slate-700 mt-1">Objects may contain functions called methods; inside methods `this` refers to the object.</p>
+
+        <div class="mt-3 relative">
+          <pre aria-label="Code: Object methods"><button class="copy-btn" data-copy>Copy</button><code class="language-js">let person = {
   name: "John",
   greet: function() {
     return "Hello, " + this.name;
   }
 };
-document.write(person.greet()); // Hello, John</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+document.write(person.greet()); // Hello, John</code></pre>
+        </div>
+      </article>
 
-    <!-- Looping Through Objects -->
-    <section id="loop">
-      <h2 class="text-2xl font-bold mb-2">Looping Through Objects</h2>
-      <p>Use <code>for...in</code> to loop through object properties.</p>
-      <pre><code>let person = {name: "Alice", age: 30, city: "Paris"};
+      <!-- Looping Through Objects -->
+      <article id="loop" class="lesson-card fade-in" data-accent="blue" data-tags="for in loop properties">
+        <h2 class="text-xl font-semibold">Looping Through Objects</h2>
+        <p class="text-slate-700 mt-1">Use <code>for...in</code> to iterate keys (own/prototype keys differ; prefer `Object.keys()` for own keys).</p>
+
+        <div class="mt-3 relative">
+          <pre aria-label="Code: Loop object"><button class="copy-btn" data-copy>Copy</button><code class="language-js">let person = {name: "Alice", age: 30, city: "Paris"};
 for (let key in person) {
   document.write(key + ": " + person[key] + "&lt;br&gt;");
-}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+}</code></pre>
+        </div>
+      </article>
 
-    <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="javascript-h.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="javascript-j.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
-
-  </main>
+      <!-- bottom nav -->
+      <nav class="flex justify-between items-center">
+        <a href="javascript-h.html" class="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-sm border">◀ Previous</a>
+        <a href="javascript-j.html" class="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-sm border">Next ▶</a>
+      </nav>
+    </main>
+  </div>
 
   <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-    <p>© 2025 Susil. All rights reserved.</p>
+  <footer class="bg-white border-t mt-8">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-center text-sm text-slate-600">
+      © 2025 Susil. All rights reserved.
+    </div>
   </footer>
 
-  <!-- Script -->
+  <!-- Back to top -->
+  <button id="toTop" class="fixed bottom-6 right-6 hidden rounded-full p-3 shadow-lg bg-white text-slate-900 no-print" aria-label="Back to top">↑</button>
+
   <script>
-    function runCode(id) {
-      const iframe = document.getElementById(id);
-      const code = iframe.previousElementSibling.previousElementSibling.innerText;
-      iframe.srcdoc = code;
+    // Accessibility announcer
+    const announcer = document.getElementById('a11y-announcer');
+    function announce(msg){ announcer.textContent = msg; }
+
+    // Prism highlight on load
+    document.addEventListener('DOMContentLoaded', () => Prism.highlightAll());
+
+    // Utility: decode HTML entities (so "&lt;div&gt;" becomes "<div>")
+    function decodeHtmlEntities(s){
+      const txt = document.createElement('textarea');
+      txt.innerHTML = s;
+      return txt.value;
+    }
+
+    // Delegated copy-to-clipboard (works for all .copy-btn with data-copy)
+    document.addEventListener('click', async (e) => {
+      const btn = e.target.closest('[data-copy], .copy-btn');
+      if (!btn) return;
+      // find closest PRE then CODE
+      const pre = btn.closest('pre') || btn.parentElement;
+      const codeEl = pre?.querySelector('code');
+      if (!codeEl) return;
+      try {
+        await navigator.clipboard.writeText(codeEl.innerText);
+        const original = btn.innerText;
+        btn.classList.add('copied');
+        btn.innerText = 'Copied!';
+        announce('Code copied to clipboard');
+        setTimeout(()=> { btn.classList.remove('copied'); btn.innerText = original; }, 1400);
+      } catch {
+        announce('Unable to copy code');
+      }
+    });
+
+    // Run snippet in iframe — finds nearest PRE/ CODE before iframe
+    function runSnippetForId(iframeId){
+      const iframe = document.getElementById(iframeId);
+      if(!iframe) return;
+      // find preceding PRE/ CODE
+      let el = iframe.previousElementSibling;
+      while(el && !(el.tagName === 'PRE' || (el.querySelector && el.querySelector('code')))) el = el.previousElementSibling;
+      let codeEl = el ? (el.querySelector('code') || (el.tagName === 'CODE' ? el : null)) : null;
+
+      // fallback: scan PREs
+      if(!codeEl){
+        const pres = [...document.querySelectorAll('pre')];
+        for (const p of pres) {
+          if (p.nextElementSibling === iframe || p.nextElementSibling?.contains(iframe)) { codeEl = p.querySelector('code'); break; }
+        }
+      }
+      if(!codeEl) return;
+
+      const raw = codeEl.innerText;
+      const html = decodeHtmlEntities(raw);
+      iframe.srcdoc = html;
       iframe.onload = () => {
-        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 40 + 'px';
+        try { iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 40 + 'px'; } catch(e){}
       };
     }
-    function copyCode(btn) {
-      const code = btn.parentElement.querySelector('code').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = 'Copied!';
-        btn.style.backgroundColor = '#16a34a';
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.style.backgroundColor = '#2563eb';
-        }, 1500);
-      });
-    }
-  </script>
 
+    // Wire Try-It buttons
+    document.querySelectorAll('[data-run]').forEach(btn => {
+      btn.addEventListener('click', () => runSnippetForId(btn.getAttribute('data-run')));
+    });
+    // also support buttons by id pattern used above
+    document.querySelectorAll('button[data-run], button[data-run-id]').forEach(b => b.addEventListener('click', (e)=>{
+      const id = b.getAttribute('data-run') || b.getAttribute('data-run-id');
+      runSnippetForId(id);
+    }));
+
+    // For our explicit Try-It buttons: map data-run attributes to iframe IDs
+    document.querySelectorAll('[data-run]').forEach(btn => {
+      btn.addEventListener('click', () => runSnippetForId(btn.getAttribute('data-run')));
+    });
+
+    // Simple handler for the few example buttons added inline (data-run)
+    document.querySelectorAll('button[data-run]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-run');
+        runSnippetForId(id);
+      });
+    });
+
+    // If there are buttons with attribute data-run (we used that in markup), wire them:
+    document.querySelectorAll('[data-run]').forEach(btn => {
+      const tgt = btn.getAttribute('data-run');
+      if (!document.getElementById(tgt)) return;
+    });
+
+    // Filter/search behavior
+    const filterInput = document.getElementById('filterInput');
+    const cards = [...document.querySelectorAll('.lesson-card')];
+    filterInput.addEventListener('input', () => {
+      const q = filterInput.value.trim().toLowerCase();
+      cards.forEach(card => {
+        const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+        const text = card.innerText.toLowerCase();
+        const match = !q || tags.includes(q) || text.includes(q);
+        if (match) {
+          card.classList.remove('hidden-card');
+          requestAnimationFrame(()=> card.classList.add('visible'));
+        } else {
+          card.classList.add('hidden-card');
+        }
+      });
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/') { e.preventDefault(); filterInput.focus(); }
+      if (e.key.toLowerCase() === 'g') { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      if (e.key === 'Escape' && !document.getElementById('mobileDrawer').classList.contains('hidden')) toggleDrawer();
+    });
+
+    // Scrollspy
+    const sectionIds = ['intro','create','access','change','add','delete','methods','loop'];
+    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+    const tocLinks = [...document.querySelectorAll('#toc a')];
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(a => a.classList.remove('active-link'));
+          const link = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+          if (link) link.classList.add('active-link');
+        }
+      });
+    }, { rootMargin: '-30% 0px -55% 0px', threshold: [0, 0.6] });
+    sections.forEach(s => s && observer.observe(s));
+
+    // Back to top button
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => { toTop.style.display = window.scrollY > 300 ? 'block' : 'none'; });
+    toTop.addEventListener('click', ()=> window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Print
+    document.getElementById('printBtn').addEventListener('click', ()=> window.print());
+
+    // Mobile drawer toggle
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    function toggleDrawer(){ mobileDrawer.classList.toggle('hidden'); }
+    document.getElementById('tocToggle').addEventListener('click', toggleDrawer);
+    window.toggleDrawer = toggleDrawer;
+
+    // Reveal animation
+    document.querySelectorAll('.fade-in').forEach((el,i) => setTimeout(()=> el.classList.add('visible'), 80 * i));
+  </script>
 </body>
 </html>

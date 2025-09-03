@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JavaScript Syntax</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JavaScript Syntax — EduHub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: 'Segoe UI', sans-serif; }
@@ -12,46 +12,59 @@
     code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
     .copy-btn {
       position: absolute; top: 8px; right: 8px;
-      background: #2563eb; color: white; padding: 2px 6px; 
+      background: #2563eb; color: white; padding: 2px 6px;
       font-size: 0.75rem; border-radius: 4px; cursor: pointer;
     }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    .toc a.active { font-weight: 600; color: #2563eb; }
+    [x-cloak] { display: none !important; }
   </style>
 </head>
 <body class="flex flex-col bg-white text-gray-900 min-h-screen">
 
   <!-- Header -->
   <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
       <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+      <!-- Mobile TOC Button -->
+      <button class="lg:hidden bg-blue-500 px-3 py-1 rounded focus:ring-2 focus:ring-white" onclick="toggleDrawer()">
+        Menu
+      </button>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <div class="flex-1 flex max-w-7xl mx-auto w-full">
+    <!-- Sidebar TOC -->
+    <aside id="drawer" class="toc hidden lg:block w-64 bg-gray-50 border-r p-4 sticky top-20 h-fit space-y-2">
+      <h2 class="text-lg font-semibold mb-2">On this page</h2>
+      <nav class="flex flex-col space-y-1">
+        <a href="#intro" class="hover:text-blue-600">Introduction</a>
+        <a href="#statements" class="hover:text-blue-600">Statements</a>
+        <a href="#semicolons" class="hover:text-blue-600">Semicolons</a>
+        <a href="#case" class="hover:text-blue-600">Case Sensitivity</a>
+        <a href="#comments" class="hover:text-blue-600">Comments</a>
+      </nav>
+    </aside>
 
-    <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="javascript.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="javascript-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+    <!-- Main Content -->
+    <main class="flex-1 p-6 space-y-12">
 
-    <!-- Intro -->
-    <section id="intro">
-      <h1 class="text-3xl font-bold mb-2">JavaScript Syntax</h1>
-      <p>JavaScript syntax is the set of rules that define how programs are constructed. JavaScript programs are made up of statements, expressions, and keywords.</p>
-    </section>
+      <!-- Top Nav -->
+      <nav class="flex justify-between my-6" aria-label="Course navigation">
+        <a href="javascript.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+        <a href="javascript-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+      </nav>
 
-    <!-- Statements -->
-    <section id="statements">
-      <h2 class="text-2xl font-bold mb-2">JavaScript Statements</h2>
-      <p>JavaScript statements are instructions that are executed by the browser.</p>
-      <pre><code>&lt;!DOCTYPE html&gt;
+      <!-- Intro -->
+      <section id="intro">
+        <h1 class="text-3xl font-bold mb-2">JavaScript Syntax</h1>
+        <p>JavaScript syntax is the set of rules that define how programs are constructed. JavaScript programs are made up of statements, expressions, and keywords.</p>
+      </section>
+
+      <!-- Statements -->
+      <section id="statements">
+        <h2 class="text-2xl font-bold mb-2">JavaScript Statements</h2>
+        <p>JavaScript statements are instructions that are executed by the browser.</p>
+        <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;body&gt;
   &lt;h2&gt;JavaScript Statements&lt;/h2&gt;
@@ -67,56 +80,53 @@
   &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-      <button onclick="runCode('example1')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
-      <iframe id="example1"></iframe>
-    </section>
+        <button onclick="runCode('example1')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
+        <iframe id="example1"></iframe>
+      </section>
 
-    <!-- Semicolons -->
-    <section id="semicolons">
-      <h2 class="text-2xl font-bold mb-2">Semicolons</h2>
-      <p>Semicolons separate JavaScript statements. They are optional if the statement is written on a new line, but best practice is to always use them.</p>
-      <pre><code>let a = 10;
+      <!-- Semicolons -->
+      <section id="semicolons">
+        <h2 class="text-2xl font-bold mb-2">Semicolons</h2>
+        <p>Semicolons separate JavaScript statements. They are optional if the statement is written on a new line, but best practice is to always use them.</p>
+        <pre><code>let a = 10;
 let b = 20;
 let c = a + b;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      </section>
 
-    <!-- Case Sensitivity -->
-    <section id="case">
-      <h2 class="text-2xl font-bold mb-2">Case Sensitivity</h2>
-      <p>JavaScript is case-sensitive. Variables named <code>lastname</code> and <code>lastName</code> are two different variables.</p>
-      <pre><code>let lastname = "Smith";
+      <!-- Case Sensitivity -->
+      <section id="case">
+        <h2 class="text-2xl font-bold mb-2">Case Sensitivity</h2>
+        <p>JavaScript is case-sensitive. Variables named <code>lastname</code> and <code>lastName</code> are two different variables.</p>
+        <pre><code>let lastname = "Smith";
 let lastName = "Johnson";
 
 document.write(lastname);
 document.write("&lt;br&gt;");
 document.write(lastName);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-      <button onclick="runCode('example2')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
-      <iframe id="example2"></iframe>
-    </section>
+        <button onclick="runCode('example2')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
+        <iframe id="example2"></iframe>
+      </section>
 
-    <!-- Comments -->
-    <section id="comments">
-      <h2 class="text-2xl font-bold mb-2">JavaScript Comments</h2>
-      <p>Comments can be used to explain code and make it more readable. JavaScript ignores comments.</p>
-      <pre><code>// This is a single-line comment
+      <!-- Comments -->
+      <section id="comments">
+        <h2 class="text-2xl font-bold mb-2">JavaScript Comments</h2>
+        <p>Comments can be used to explain code and make it more readable. JavaScript ignores comments.</p>
+        <pre><code>// This is a single-line comment
 
 /* 
    This is a 
    multi-line comment
 */</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      </section>
 
-    <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="javascript.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="javascript-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+      <!-- Bottom Nav -->
+      <nav class="flex justify-between my-6" aria-label="Course navigation">
+        <a href="javascript.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+        <a href="javascript-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
+      </nav>
 
-  </main>
+    </main>
+  </div>
 
   <!-- Footer -->
   <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
@@ -125,6 +135,40 @@ document.write(lastName);</code><button class="copy-btn" onclick="copyCode(this)
 
   <!-- Script -->
   <script>
+    // Scrollspy to highlight active TOC link
+    const sections = document.querySelectorAll('main section');
+    const navLinks = document.querySelectorAll('.toc a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        const top = window.scrollY;
+        const offset = sec.offsetTop - 120;
+        const height = sec.offsetHeight;
+        if (top >= offset && top < offset + height) {
+          current = sec.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Mobile drawer toggle
+    function toggleDrawer() {
+      const drawer = document.getElementById('drawer');
+      drawer.classList.toggle('hidden');
+      drawer.classList.toggle('fixed');
+      drawer.classList.toggle('top-20');
+      drawer.classList.toggle('left-0');
+      drawer.classList.toggle('bg-white');
+      drawer.classList.toggle('shadow-lg');
+      drawer.classList.toggle('p-4');
+    }
+
+    // Try It Yourself iframe loader
     function runCode(id) {
       const iframe = document.getElementById(id);
       const code = iframe.previousElementSibling.previousElementSibling.innerText;
@@ -133,6 +177,8 @@ document.write(lastName);</code><button class="copy-btn" onclick="copyCode(this)
         iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 40 + 'px';
       };
     }
+
+    // Copy to clipboard
     function copyCode(btn) {
       const code = btn.parentElement.querySelector('code').innerText;
       navigator.clipboard.writeText(code).then(() => {

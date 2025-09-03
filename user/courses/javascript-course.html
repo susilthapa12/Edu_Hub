@@ -1,160 +1,241 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JavaScript Tutorial Introduction</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JavaScript Introduction — EduHub</title>
+  <meta name="description" content="Interactive JavaScript tutorial with live demos, syntax highlighting, copy buttons, and responsive design." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📘</text></svg>">
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- PrismJS for syntax highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js" data-prismjs-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs/components/"></script>
+
   <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    iframe { border: 1px solid #ddd; width: 100%; min-height: 200px; }
-    pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
-    code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
+    :root { --brand: #2563eb; }
+    .prose-code pre { position: relative; }
     .copy-btn {
-      position: absolute; top: 8px; right: 8px;
-      background: #2563eb; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+      position: absolute; top: .5rem; right: .5rem;
+      font-size: .75rem; padding: .25rem .5rem; border-radius: .375rem;
+      background: var(--brand); color: #fff; cursor: pointer;
     }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    .active-link { color: var(--brand); font-weight: 700; }
+    iframe { border: 1px solid #ddd; width: 100%; min-height: 200px; border-radius: .5rem; }
+    .kbd { border:1px solid #d1d5db; border-bottom-width:2px; padding:.125rem .375rem; border-radius:.375rem; font-size:.75rem;}
+    @media (min-width: 1024px){
+      .toc-sticky { position: sticky; top: 5.5rem; max-height: calc(100vh - 6rem); overflow:auto; }
+    }
   </style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<body class="bg-white text-gray-900 min-h-screen flex flex-col font-sans">
+
+  <!-- Skip link -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 bg-white text-gray-900 px-3 py-2 rounded shadow font-semibold">Skip to content</a>
 
   <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+  <header class="bg-blue-700 text-white sticky top-0 z-40 shadow font-bold">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
+      <a href="index.html" class="text-2xl lg:text-3xl font-extrabold tracking-wide">EduHub</a>
+      <span class="text-white/90 hidden sm:inline">/ JavaScript Introduction</span>
+      <div class="ml-auto flex items-center gap-2">
+        <div class="relative">
+          <input id="filterInput" type="search" placeholder="Filter topics"
+            class="w-48 md:w-72 rounded-lg px-3 py-2 text-sm text-gray-900 placeholder:text-gray-600
+                   focus:outline-none focus:ring-2 focus:ring-white/70" />
+          <kbd class="absolute right-2 top-1/2 -translate-y-1/2 kbd bg-white/70">/</kbd>
+        </div>
+        <button id="printBtn" class="hidden sm:inline-block bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-sm font-semibold">Print</button>
+      </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <!-- Layout -->
+  <div class="max-w-7xl mx-auto w-full px-4 py-8 grid lg:grid-cols-[260px_1fr] gap-8 flex-1">
 
-    <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="html-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="javascript-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+    <!-- TOC Sidebar -->
+    <aside class="hidden lg:block">
+      <nav class="toc-sticky text-sm space-y-2 font-medium" aria-label="On this page">
+        <p class="uppercase tracking-wider text-gray-700 text-xs mb-2">On this page</p>
+        <ul id="toc" class="space-y-1">
+          <li><a href="#intro" class="hover:underline">Introduction</a></li>
+          <li><a href="#why-js" class="hover:underline">Why JavaScript?</a></li>
+          <li><a href="#change-content" class="hover:underline">Change Content</a></li>
+          <li><a href="#quotes" class="hover:underline">Quotes</a></li>
+          <li><a href="#attributes" class="hover:underline">Attributes</a></li>
+          <li><a href="#styles" class="hover:underline">Styles</a></li>
+          <li><a href="#hide" class="hover:underline">Hide Elements</a></li>
+          <li><a href="#show" class="hover:underline">Show Elements</a></li>
+        </ul>
+        <hr class="my-4 border-gray-300" />
+        <div class="space-y-2">
+          <p class="uppercase tracking-wider text-gray-700 text-xs">Shortcuts</p>
+          <p><span class="kbd">/</span> Focus search</p>
+          <p><span class="kbd">g</span> Go to top</p>
+        </div>
+      </nav>
+    </aside>
 
-    <!-- Intro -->
-    <section id="intro">
-      <h1 class="text-3xl font-bold mb-2">JavaScript Introduction</h1>
-      <p>JavaScript is the programming language of the web. It can update and change both HTML and CSS. It can calculate, manipulate and validate data.</p>
-    </section>
+    <!-- Main Content -->
+    <main id="main" class="prose-code space-y-12">
 
-    <!-- Why Study -->
-    <section id="why-js">
-      <h2 class="text-2xl font-bold mb-2">Why Study JavaScript?</h2>
-      <p>JavaScript is one of the 3 languages all web developers must learn:</p>
-      <ul class="list-decimal list-inside space-y-1 mt-2">
-        <li><strong>HTML</strong> to define the content of web pages</li>
-        <li><strong>CSS</strong> to specify the layout of web pages</li>
-        <li><strong>JavaScript</strong> to program the behavior of web pages</li>
-      </ul>
-    </section>
+      <!-- Navigation Top -->
+      <nav class="flex justify-between" aria-label="Course navigation">
+        <a href="html-a.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold transition">◀ Previous</a>
+        <a href="javascript-a.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold transition">Next ▶</a>
+      </nav>
 
-    <!-- Change Content -->
-    <section id="change-content">
-      <h2 class="text-2xl font-bold mb-2">JavaScript Can Change HTML Content</h2>
-      <p>One of many JavaScript HTML methods is <code>getElementById()</code>. The example below finds an HTML element and changes its content:</p>
-      <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;body&gt;
-  &lt;p id="demo"&gt;Original text&lt;/p&gt;
-  &lt;script&gt;
-    document.getElementById("demo").innerHTML = "Hello JavaScript";
-  &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-      <button onclick="runCode('example1')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
-      <iframe id="example1"></iframe>
-    </section>
+      <!-- Intro Section -->
+      <section id="intro" class="scroll-mt-24 directive-card" data-tags="javascript intro basics">
+        <h1 class="text-3xl font-extrabold mb-2">JavaScript Introduction</h1>
+        <p>JavaScript is the programming language of the web. It can update and change both HTML and CSS. It can calculate, manipulate and validate data.</p>
+      </section>
 
-    <!-- Double vs Single Quotes -->
-    <section id="quotes">
-      <h2 class="text-2xl font-bold mb-2">JavaScript accepts both double and single quotes</h2>
-      <pre><code>document.getElementById("demo").innerHTML = "Hello JavaScript";
-document.getElementById('demo').innerHTML = 'Hello JavaScript';</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      <!-- Why Study JavaScript -->
+      <section id="why-js" class="scroll-mt-24 directive-card" data-tags="javascript why study html css behavior">
+        <h2 class="text-2xl font-bold">Why Study JavaScript?</h2>
+        <ul class="list-disc ml-6 space-y-2 font-medium text-gray-800 mt-3">
+          <li><strong>HTML</strong> to define content</li>
+          <li><strong>CSS</strong> to specify layout</li>
+          <li><strong>JavaScript</strong> to program behavior</li>
+        </ul>
+      </section>
 
-    <!-- Change Attributes -->
-    <section id="attributes">
-      <h2 class="text-2xl font-bold mb-2">JavaScript Can Change HTML Attribute Values</h2>
-      <p>In this example JavaScript changes the value of the <code>src</code> attribute of an image:</p>
-      <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;body&gt;
-  &lt;img id="myImage" src="pic_off.gif" style="width:100px"&gt;
-  &lt;button onclick="document.getElementById('myImage').src='pic_on.gif'"&gt;Turn on the light&lt;/button&gt;
-  &lt;button onclick="document.getElementById('myImage').src='pic_off.gif'"&gt;Turn off the light&lt;/button&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-      <button onclick="runCode('example2')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
-      <iframe id="example2"></iframe>
-    </section>
+      <!-- Change Content -->
+      <section id="change-content" class="scroll-mt-24 directive-card" data-tags="javascript dom change html content">
+        <h2 class="text-2xl font-bold">JavaScript Can Change HTML Content</h2>
+        <p>One of many JavaScript HTML methods is <code>getElementById()</code>. The example below finds an HTML element and changes its content:</p>
+<pre><button class="copy-btn">Copy</button><code class="language-html">&lt;p id="demo"&gt;Original text&lt;/p&gt;
+&lt;script&gt;
+  document.getElementById("demo").innerHTML = "Hello JavaScript";
+&lt;/script&gt;</code></pre>
+        <button onclick="runCode('example1')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
+        <iframe id="example1"></iframe>
+      </section>
 
-    <!-- Change Styles -->
-    <section id="styles">
-      <h2 class="text-2xl font-bold mb-2">JavaScript Can Change HTML Styles</h2>
-      <pre><code>document.getElementById("demo").style.fontSize = "35px";</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      <!-- Quotes -->
+      <section id="quotes" class="scroll-mt-24 directive-card" data-tags="javascript quotes double single">
+        <h2 class="text-2xl font-bold">JavaScript accepts both double and single quotes</h2>
+<pre><button class="copy-btn">Copy</button><code class="language-js">document.getElementById("demo").innerHTML = "Hello JavaScript";
+document.getElementById('demo').innerHTML = 'Hello JavaScript';</code></pre>
+      </section>
 
-    <!-- Hide Elements -->
-    <section id="hide">
-      <h2 class="text-2xl font-bold mb-2">JavaScript Can Hide HTML Elements</h2>
-      <pre><code>document.getElementById("demo").style.display = "none";</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      <!-- Attributes -->
+      <section id="attributes" class="scroll-mt-24 directive-card" data-tags="javascript dom attributes src">
+        <h2 class="text-2xl font-bold">JavaScript Can Change HTML Attributes</h2>
+        <p>In this example JavaScript changes the value of the <code>src</code> attribute of an image:</p>
+<pre><button class="copy-btn">Copy</button><code class="language-html">&lt;img id="myImage" src="pic_off.gif" style="width:100px"&gt;
+&lt;button onclick="document.getElementById('myImage').src='pic_on.gif'"&gt;Turn on&lt;/button&gt;
+&lt;button onclick="document.getElementById('myImage').src='pic_off.gif'"&gt;Turn off&lt;/button&gt;</code></pre>
+        <button onclick="runCode('example2')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
+        <iframe id="example2"></iframe>
+      </section>
 
-    <!-- Show Elements -->
-    <section id="show">
-      <h2 class="text-2xl font-bold mb-2">JavaScript Can Show HTML Elements</h2>
-      <pre><code>document.getElementById("demo").style.display = "block";</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+      <!-- Styles -->
+      <section id="styles" class="scroll-mt-24 directive-card" data-tags="javascript dom css styles">
+        <h2 class="text-2xl font-bold">JavaScript Can Change HTML Styles</h2>
+<pre><button class="copy-btn">Copy</button><code class="language-js">document.getElementById("demo").style.fontSize = "35px";</code></pre>
+      </section>
 
-    <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="html-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="javascript-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+      <!-- Hide Elements -->
+      <section id="hide" class="scroll-mt-24 directive-card" data-tags="javascript hide elements">
+        <h2 class="text-2xl font-bold">JavaScript Can Hide HTML Elements</h2>
+<pre><button class="copy-btn">Copy</button><code class="language-js">document.getElementById("demo").style.display = "none";</code></pre>
+      </section>
 
-  </main>
+      <!-- Show Elements -->
+      <section id="show" class="scroll-mt-24 directive-card" data-tags="javascript show elements">
+        <h2 class="text-2xl font-bold">JavaScript Can Show HTML Elements</h2>
+<pre><button class="copy-btn">Copy</button><code class="language-js">document.getElementById("demo").style.display = "block";</code></pre>
+      </section>
+
+      <!-- Navigation Bottom -->
+      <nav class="flex justify-between" aria-label="Course navigation">
+        <a href="html-a.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold transition">◀ Previous</a>
+        <a href="javascript-a.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold transition">Next ▶</a>
+      </nav>
+    </main>
+  </div>
 
   <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+  <footer class="bg-blue-700 text-white py-6 mt-auto text-center font-semibold">
     <p>© 2025 Susil. All rights reserved.</p>
   </footer>
 
-  <!-- Script -->
+  <!-- Back to top -->
+  <button id="toTop" class="fixed bottom-5 right-5 hidden rounded-full p-3 shadow-lg bg-blue-600 text-white hover:bg-blue-700" aria-label="Back to top">↑</button>
+
+  <!-- Scripts -->
   <script>
+    // Copy code
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.copy-btn');
+      if (!btn) return;
+      const code = btn.parentElement.querySelector('code')?.innerText || '';
+      navigator.clipboard.writeText(code).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.style.backgroundColor = '#16a34a';
+        setTimeout(() => { btn.textContent = original; btn.style.backgroundColor = 'var(--brand)'; }, 1200);
+      });
+    });
+
+    // Run code inside iframe
     function runCode(id) {
       const iframe = document.getElementById(id);
-      const code = iframe.previousElementSibling.previousElementSibling.innerText;
+      const code = iframe.previousElementSibling.previousElementSibling.querySelector('code').innerText;
       iframe.srcdoc = code;
       iframe.onload = () => {
         iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 40 + 'px';
       };
     }
-    function copyCode(btn) {
-      const code = btn.parentElement.querySelector('code').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = 'Copied!';
-        btn.style.backgroundColor = '#16a34a';
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.style.backgroundColor = '#2563eb';
-        }, 1500);
-      });
-    }
-  </script>
 
+    // Print
+    document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+    // Filter cards
+    const filterInput = document.getElementById('filterInput');
+    const cards = [...document.querySelectorAll('.directive-card')];
+    filterInput.addEventListener('input', () => {
+      const q = filterInput.value.trim().toLowerCase();
+      cards.forEach(card => {
+        const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+        const text = card.innerText.toLowerCase();
+        const match = !q || tags.includes(q) || text.includes(q);
+        card.style.display = match ? '' : 'none';
+      });
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/') { e.preventDefault(); filterInput.focus(); }
+      if (e.key.toLowerCase() === 'g') { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    });
+
+    // Scrollspy
+    const sections = ['intro','why-js','change-content','quotes','attributes','styles','hide','show']
+      .map(id => document.getElementById(id));
+    const tocLinks = [...document.querySelectorAll('#toc a')];
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(a => a.classList.remove('active-link'));
+          const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+          active && active.classList.add('active-link');
+        }
+      });
+    }, { rootMargin: '-30% 0px -65% 0px', threshold: [0, 1] });
+    sections.forEach(s => s && observer.observe(s));
+
+    // Back-to-top
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      toTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
 </body>
 </html>

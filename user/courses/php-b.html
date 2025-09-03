@@ -6,54 +6,81 @@
 <title>PHP Syntax Basics</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body { font-family: 'Segoe UI', sans-serif; }
-pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
-code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
-.copy-btn { position: absolute; top: 8px; right: 8px; background: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 4px; cursor: pointer; }
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
+body { font-family: 'Segoe UI', sans-serif; background:#fdfdfd; }
+pre { position: relative; border-radius:0.5rem; padding:1rem; overflow-x:auto; font-family:'Fira Code', monospace; font-size:0.9rem; background:#1e1e2f; color:#f5f5f5; }
+.copy-btn { position:absolute; top:0.5rem; right:0.5rem; background:#3b82f6; color:white; padding:0.25rem 0.5rem; border-radius:0.375rem; font-size:0.75rem; cursor:pointer; transition:0.3s; }
+.copy-btn:hover { background:#2563eb; }
+a { text-decoration:none; color:#2563eb; transition:0.3s; }
+a:hover { color:#1d4ed8; text-decoration:underline; }
+#toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#3b82f6; color:white; font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; transition:0.3s; }
+#toTop:hover { background:#2563eb; }
+/* Full-width layout */
+.container-full { padding-left:64px; padding-right:64px; }
+@media (max-width:1024px){ .container-full { padding-left:32px; padding-right:32px; } }
+@media (max-width:640px){ .container-full { padding-left:16px; padding-right:16px; } }
+/* Sticky TOC */
+.toc-sticky { position:sticky; top:5rem; max-height:calc(100vh - 6rem); overflow:auto; background:#f1f5f9; padding:0.5rem; border-radius:0.5rem; font-size:0.9rem; }
+.active-link { color:#2563eb; font-weight:700; }
 </style>
 </head>
-<body class="bg-white text-gray-900 min-h-screen flex flex-col">
+<body class="flex flex-col min-h-screen">
 
-<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-<div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-<a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-</div>
+<header class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white p-4 sticky top-0 z-50 shadow-md">
+  <div class="container-full flex justify-between items-center">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    <span class="hidden sm:block text-sm opacity-80">PHP Syntax Basics</span>
+  </div>
 </header>
 
-<main class="flex-1 p-6 max-w-6xl mx-auto space-y-12 mt-8">
+<div class="container-full flex flex-col lg:flex-row gap-8 mt-8">
 
-<nav class="flex justify-between my-6">
-<a href="php-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="php-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+  <!-- TOC -->
+  <aside class="hidden lg:block w-60">
+    <nav class="toc-sticky" aria-label="Table of Contents">
+      <p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#php-syntax">PHP Syntax Basics</a></li>
+        <li><a href="#php-tags">PHP Tags</a></li>
+        <li><a href="#php-comments">PHP Comments</a></li>
+        <li><a href="#php-statements">PHP Statements</a></li>
+        <li><a href="#case-sensitivity">Case Sensitivity</a></li>
+      </ul>
+    </nav>
+  </aside>
 
-<!-- Section: PHP Syntax Basics -->
-<section id="php-syntax">
-<h1 class="text-3xl font-bold mb-2">PHP Syntax Basics</h1>
-<p>PHP code is executed on the server and enclosed within special tags: <code>&lt;?php ... ?&gt;</code></p>
+  <!-- Main Content -->
+  <main class="flex-1 space-y-12">
 
-<h2 class="text-2xl font-bold mt-6 mb-2">PHP Tags</h2>
-<p>PHP can be embedded in HTML using:</p>
-<ul class="list-disc list-inside mb-4">
-  <li><strong>Standard tags:</strong> <code>&lt;?php ... ?&gt;</code> (most common)</li>
-  <li><strong>Short echo tags:</strong> <code>&lt;?= ... ?&gt;</code> (used for quick echo)</li>
-</ul>
-<pre><code>&lt;?php
+    <!-- Navigation Top -->
+    <nav class="flex justify-between my-6">
+      <a href="php-a.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="php-c.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
+    </nav>
+
+    <!-- Section: PHP Syntax Basics -->
+    <section id="php-syntax" class="scroll-mt-24">
+      <h1 class="text-3xl font-bold mb-2 text-purple-600">PHP Syntax Basics</h1>
+      <p>PHP code is executed on the server and enclosed within special tags: <code>&lt;?php ... ?&gt;</code></p>
+
+      <h2 id="php-tags" class="text-2xl font-bold mt-6 mb-2 text-green-600">PHP Tags</h2>
+      <p>PHP can be embedded in HTML using:</p>
+      <ul class="list-disc list-inside mb-4">
+        <li><strong>Standard tags:</strong> <code>&lt;?php ... ?&gt;</code> (most common)</li>
+        <li><strong>Short echo tags:</strong> <code>&lt;?= ... ?&gt;</code> (used for quick echo)</li>
+      </ul>
+      <pre><code>&lt;?php
 echo "Hello World!";
 ?&gt;
 
-&lt;?= "Hello World!" ?&gt;
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+&lt;?= "Hello World!" ?&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">PHP Comments</h2>
-<p>Comments are notes in code and are ignored by PHP.</p>
-<ul class="list-disc list-inside mb-4">
-  <li>Single-line comments using <code>//</code> or <code>#</code></li>
-  <li>Multi-line comments using <code>/* ... */</code></li>
-</ul>
-<pre><code>&lt;?php
+      <h2 id="php-comments" class="text-2xl font-bold mt-6 mb-2 text-green-600">PHP Comments</h2>
+      <p>Comments are notes in code and are ignored by PHP.</p>
+      <ul class="list-disc list-inside mb-4">
+        <li>Single-line comments using <code>//</code> or <code>#</code></li>
+        <li>Multi-line comments using <code>/* ... */</code></li>
+      </ul>
+      <pre><code>&lt;?php
 // This is a single-line comment
 # This is also a comment
 
@@ -62,53 +89,71 @@ This is a multi-line comment
 It can span multiple lines
 */
 echo "Hello Comments!";
-?&gt;
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+?&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">PHP Statements</h2>
-<p>PHP statements are terminated with a semicolon <code>;</code>.</p>
-<pre><code>&lt;?php
+      <h2 id="php-statements" class="text-2xl font-bold mt-6 mb-2 text-green-600">PHP Statements</h2>
+      <p>PHP statements are terminated with a semicolon <code>;</code>.</p>
+      <pre><code>&lt;?php
 echo "Statement 1";
 echo "Statement 2";
-?&gt;
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+?&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 
-<h2 class="text-2xl font-bold mt-6 mb-2">Case Sensitivity</h2>
-<p>Function names in PHP are case-insensitive, but variables are case-sensitive.</p>
-<pre><code>&lt;?php
+      <h2 id="case-sensitivity" class="text-2xl font-bold mt-6 mb-2 text-green-600">Case Sensitivity</h2>
+      <p>Function names in PHP are case-insensitive, but variables are case-sensitive.</p>
+      <pre><code>&lt;?php
 $color = "red";
 $Color = "blue"; // different variable
 
 echo $color; // outputs: red
 echo $Color; // outputs: blue
-?&gt;
-</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+?&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 
-</section>
+    </section>
 
-<nav class="flex justify-between my-6">
-<a href="php-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
-<a href="php-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
-</nav>
+    <!-- Navigation Bottom -->
+    <nav class="flex justify-between my-6">
+      <a href="php-a.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="php-c.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
+    </nav>
 
-</main>
+  </main>
+</div>
 
-<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+<footer class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-6 mt-auto text-center">
 <p>© 2025 Susil. All rights reserved.</p>
 </footer>
 
+<button id="toTop" aria-label="Back to top">↑</button>
+
 <script>
-function copyCode(btn) {
+// Copy code functionality
+function copyCode(btn){
   const code = btn.parentElement.querySelector('code').innerText;
-  navigator.clipboard.writeText(code).then(() => {
-    btn.textContent = 'Copied!';
-    btn.style.backgroundColor = '#16a34a';
-    setTimeout(() => {
-      btn.textContent = 'Copy';
-      btn.style.backgroundColor = '#2563eb';
-    }, 1500);
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';
+    btn.style.backgroundColor='#16a34a';
+    setTimeout(()=>{ btn.textContent='Copy'; btn.style.backgroundColor='#3b82f6'; },1500);
   });
 }
+
+// Back to top
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', ()=>{ toTop.style.display = window.scrollY>300?'block':'none'; });
+toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// TOC highlight
+const sections = [...document.querySelectorAll('section h2, section h1')];
+const tocLinks = [...document.querySelectorAll('#toc a')];
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      tocLinks.forEach(a=>a.classList.remove('active-link'));
+      const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+      active && active.classList.add('active-link');
+    }
+  });
+},{ rootMargin:'-30% 0px -65% 0px', threshold:[0,1] });
+sections.forEach(s=>s && observer.observe(s));
 </script>
 
 </body>

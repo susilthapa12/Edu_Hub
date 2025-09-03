@@ -1,73 +1,104 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NumPy Advanced Topics</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
-    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
-    .copy-btn {
-      position: absolute; top: 8px; right: 8px;
-      background: #3b82f6; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
-    }
-  </style>
-</head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NumPy Advanced Topics</title>
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-    </div>
-  </header>
+<!-- Prism.js for syntax highlighting -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+<style>
+body { font-family: 'Segoe UI', sans-serif; background:#fdfdfd; }
+pre { background: #1e1e2f; padding:16px; border-radius:10px; overflow-x:auto; position:relative; font-family:'Fira Code', monospace; }
+.copy-btn { position:absolute; top:8px; right:8px; background:#3b82f6; color:white; padding:3px 8px; border-radius:6px; cursor:pointer; transition:all 0.3s ease; }
+.copy-btn:hover { background:#2563eb; }
+.collapsible { cursor:pointer; font-weight:600; color:#1d4ed8; margin-bottom:0.5rem; display:flex; align-items:center; gap:0.25rem; }
+.content-hidden { display:none; }
+#toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#2563eb; color:white; font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; }
+a { text-decoration:none; }
+a:hover { text-decoration:underline; }
+h1,h2,h3 { scroll-margin-top:5rem; }
+.container { padding-left:2rem; padding-right:2rem; }
+@media (max-width:768px){ .container{ padding-left:1rem; padding-right:1rem; } }
+.toc-sticky { position:sticky; top:5.5rem; max-height:calc(100vh-6rem); overflow:auto; padding:0.5rem; background:#f1f5f9; border-radius:0.5rem; }
+.active-link { color:#2563eb; font-weight:700; }
+</style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+<header class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white shadow-md sticky top-0 z-50">
+  <div class="container flex items-center justify-between py-4">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    <span class="hidden sm:block text-sm opacity-80">NumPy Advanced Topics</span>
+  </div>
+</header>
+
+<div class="container grid lg:grid-cols-[220px_1fr] gap-8 py-8 flex-1">
+
+  <!-- TOC -->
+  <aside class="hidden lg:block">
+    <nav class="toc-sticky text-sm font-medium">
+      <p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#indexing">Array Indexing</a></li>
+        <li><a href="#slicing">Array Slicing</a></li>
+        <li><a href="#matrix">Matrix Operations</a></li>
+        <li><a href="#boolean">Boolean Indexing</a></li>
+      </ul>
+    </nav>
+  </aside>
 
   <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <main class="space-y-12">
 
     <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="numpy-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="numpy-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
+    <nav class="flex justify-between my-6">
+      <a href="numpy-b.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="numpy-d.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
     </nav>
 
     <!-- Array Indexing -->
     <section id="indexing">
-      <h1 class="text-3xl font-bold mb-2">NumPy Indexing</h1>
+      <h1 class="text-3xl font-bold mb-2 text-purple-600">NumPy Indexing</h1>
       <p>You can access elements of arrays using indices.</p>
-      <pre><code>import numpy as np
+      <button class="collapsible">▶ Show Example</button>
+      <div class="content-hidden">
+        <pre><code class="language-python">import numpy as np
 
 arr = np.array([10, 20, 30, 40, 50])
 print(arr[0])  # First element
-print(arr[-1]) # Last element</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+print(arr[-1]) # Last element</code>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      </div>
     </section>
 
     <!-- Array Slicing -->
-    <section id="slicing" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">NumPy Slicing</h2>
+    <section id="slicing">
+      <h2 class="text-2xl font-bold mb-2 text-green-600">NumPy Slicing</h2>
       <p>Slice arrays to access multiple elements.</p>
-      <pre><code>import numpy as np
+      <button class="collapsible">▶ Show Example</button>
+      <div class="content-hidden">
+        <pre><code class="language-python">import numpy as np
 
 arr = np.array([10, 20, 30, 40, 50])
 print(arr[1:4])  # Elements at index 1,2,3
 print(arr[:3])   # First three elements
-print(arr[::2])  # Every second element</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+print(arr[::2])  # Every second element</code>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      </div>
     </section>
 
     <!-- Matrix Operations -->
-    <section id="matrix" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Matrix Operations</h2>
+    <section id="matrix">
+      <h2 class="text-2xl font-bold mb-2 text-blue-600">Matrix Operations</h2>
       <p>NumPy supports matrix addition, multiplication, and transpose.</p>
-      <pre><code>import numpy as np
+      <button class="collapsible">▶ Show Example</button>
+      <div class="content-hidden">
+        <pre><code class="language-python">import numpy as np
 
 A = np.array([[1, 2], [3, 4]])
 B = np.array([[5, 6], [7, 8]])
@@ -79,49 +110,84 @@ print(A + B)
 print(A @ B)
 
 # Transpose
-print(A.T)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+print(A.T)</code>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      </div>
     </section>
 
     <!-- Boolean Indexing -->
-    <section id="boolean" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">Boolean Indexing</h2>
+    <section id="boolean">
+      <h2 class="text-2xl font-bold mb-2 text-red-600">Boolean Indexing</h2>
       <p>Filter arrays using conditions.</p>
-      <pre><code>import numpy as np
+      <button class="collapsible">▶ Show Example</button>
+      <div class="content-hidden">
+        <pre><code class="language-python">import numpy as np
 
 arr = np.array([10, 20, 30, 40, 50])
-print(arr[arr > 25])  # [30 40 50]</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+print(arr[arr > 25])  # [30 40 50]</code>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      </div>
     </section>
 
     <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="numpy-b.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="numpy-d.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
+    <nav class="flex justify-between my-6">
+      <a href="numpy-b.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="numpy-d.html" class="bg-blue-500 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-600 transition">Next ▶</a>
     </nav>
 
   </main>
+</div>
 
-  <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-    <p>© 2025 Susil. All rights reserved.</p>
-  </footer>
+<footer class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-6 mt-auto text-center">
+  <p>© 2025 Susil. All rights reserved.</p>
+</footer>
 
-  <script>
-    function copyCode(btn) {
-      const code = btn.parentElement.querySelector('code').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = 'Copied!';
-        btn.style.backgroundColor = '#16a34a';
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.style.backgroundColor = '#3b82f6';
-        }, 1500);
-      });
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+// Copy code
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.style.backgroundColor = '#16a34a';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.style.backgroundColor = '#3b82f6';
+    }, 1500);
+  });
+}
+
+// Back to top
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  toTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+});
+toTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+// Collapsible code blocks
+document.querySelectorAll(".collapsible").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const content = btn.nextElementSibling;
+    content.classList.toggle("content-hidden");
+    btn.textContent = content.classList.contains("content-hidden") ? "▶ Show Example" : "▼ Hide Example";
+  });
+});
+
+// TOC highlight
+const sections = [...document.querySelectorAll('section')];
+const tocLinks = [...document.querySelectorAll('#toc a')];
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      tocLinks.forEach(a=>a.classList.remove('active-link'));
+      const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+      active && active.classList.add('active-link');
     }
-  </script>
+  });
+},{ rootMargin:'-30% 0px -65% 0px', threshold:[0,1] });
+sections.forEach(s=>s && observer.observe(s));
+</script>
 
 </body>
 </html>

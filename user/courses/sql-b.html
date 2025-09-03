@@ -1,109 +1,152 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SQL Insert, Update, Delete</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; position: relative; }
-    code { font-family: 'Fira Code', monospace; color: #1e1e1e; }
-    .copy-btn {
-      position: absolute; top: 8px; right: 8px;
-      background: #3b82f6; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQL Insert, Update, Delete</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Segoe UI', sans-serif; background:#fdfdfd; }
+.container { width:100%; padding-left:3rem; padding-right:3rem; }
+@media (max-width:768px){ .container{ padding-left:1rem; padding-right:1rem; } }
+pre { background:#1e1e2f; color:white; padding:1rem; border-radius:0.5rem; overflow-x:auto; position:relative; font-family:'Fira Code', monospace; }
+.copy-btn { position:absolute; top:0.5rem; right:0.5rem; background:#3b82f6; color:white; padding:0.25rem 0.5rem; border-radius:0.375rem; font-size:0.75rem; cursor:pointer; }
+.keyword { color:#f97316; font-weight:600; }
+.table { color:#10b981; }
+.value { color:#facc15; }
+.comment { color:#6b7280; font-style:italic; }
+#toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#3b82f6; color:white; font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; }
+.toc-sticky { position:sticky; top:5.5rem; max-height:calc(100vh-6rem); overflow:auto; padding:0.5rem; background:#f1f5f9; border-radius:0.5rem; }
+.active-link { color:#3b82f6; font-weight:700; }
+.collapsible { cursor:pointer; user-select:none; font-weight:600; color:#1d4ed8; }
+.content-hidden { display:none; }
+</style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<body class="flex flex-col min-h-screen">
 
-  <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-    </div>
-  </header>
+<!-- Header -->
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+  <div class="container flex items-center justify-between py-4">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    <span class="hidden md:block text-lg font-medium">SQL Insert, Update, Delete</span>
+  </div>
+</header>
+
+<div class="container grid lg:grid-cols-[220px_1fr] gap-8 py-8 flex-1">
+
+  <!-- TOC -->
+  <aside class="hidden lg:block">
+    <nav class="toc-sticky text-sm font-medium">
+      <p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#insert">INSERT Statement</a></li>
+        <li><a href="#update">UPDATE Statement</a></li>
+        <li><a href="#delete">DELETE Statement</a></li>
+      </ul>
+    </nav>
+  </aside>
 
   <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <main class="space-y-12">
 
     <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="sql-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="sql-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
+    <nav class="flex justify-between mb-6">
+      <a href="sql-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="sql-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
     </nav>
 
     <!-- INSERT -->
-    <section id="insert">
-      <h1 class="text-3xl font-bold mb-2">INSERT Statement</h1>
-      <p>The <code>INSERT</code> statement is used to add new records into a table.</p>
-
-      <pre><code>INSERT INTO Customers (CustomerName, ContactName, Country)
-VALUES ('Maria Anders', 'Maria', 'Germany');</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-
-      <p>This query adds a new customer to the <code>Customers</code> table.</p>
+    <section id="insert" class="scroll-mt-24">
+      <h1 class="text-3xl font-bold mb-2 text-green-600">INSERT Statement</h1>
+      <p>Add new records to a table:</p>
+      <pre><code><span class="keyword">INSERT INTO</span> <span class="table">Customers</span> (<span class="table">CustomerName</span>, <span class="table">ContactName</span>, <span class="table">Country</span>)
+<span class="keyword">VALUES</span> ('<span class="value">Maria Anders</span>', '<span class="value">Maria</span>', '<span class="value">Germany</span>');</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
     </section>
 
     <!-- UPDATE -->
-    <section id="update" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">UPDATE Statement</h2>
-      <p>The <code>UPDATE</code> statement modifies existing records in a table.</p>
-
-      <pre><code>UPDATE Customers
-SET ContactName = 'Maria Smith', Country = 'Germany'
-WHERE CustomerID = 1;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-
-      <p>This query updates the customer with <code>CustomerID = 1</code>.</p>
+    <section id="update" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-2 text-orange-600">UPDATE Statement</h2>
+      <p>Modify existing records:</p>
+      <pre><code><span class="keyword">UPDATE</span> <span class="table">Customers</span>
+<span class="keyword">SET</span> <span class="table">ContactName</span> = '<span class="value">Maria Smith</span>', <span class="table">Country</span> = '<span class="value">Germany</span>'
+<span class="keyword">WHERE</span> <span class="table">CustomerID</span> = <span class="value">1</span>;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
     </section>
 
     <!-- DELETE -->
-    <section id="delete" class="mt-6">
-      <h2 class="text-2xl font-bold mb-2">DELETE Statement</h2>
-      <p>The <code>DELETE</code> statement removes records from a table.</p>
+    <section id="delete" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-2 text-red-600">DELETE Statement</h2>
+      <p>Remove records from a table:</p>
+      <pre><code><span class="keyword">DELETE FROM</span> <span class="table">Customers</span>
+<span class="keyword">WHERE</span> <span class="table">CustomerID</span> = <span class="value">1</span>;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
 
-      <pre><code>DELETE FROM Customers
-WHERE CustomerID = 1;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-
-      <p>This query deletes the customer with <code>CustomerID = 1</code> from the table.</p>
+    <!-- Collapsible Advanced Example -->
+    <section class="scroll-mt-24">
+      <p class="mt-2 collapsible bg-yellow-100 px-2 py-1 rounded">Click to see Advanced SQL Example</p>
+      <div class="content-hidden mt-2 bg-gray-50 p-4 rounded shadow">
+        <pre><code><span class="keyword">UPDATE</span> <span class="table">Customers</span>
+<span class="keyword">SET</span> <span class="table">Country</span> = '<span class="value">France</span>'
+<span class="keyword">WHERE</span> <span class="table">CustomerName</span> LIKE '<span class="value">Maria%</span>';</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      </div>
     </section>
 
     <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="sql-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="sql-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
+    <nav class="flex justify-between my-6">
+      <a href="sql-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="sql-c.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
     </nav>
 
   </main>
+</div>
 
-  <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-    <p>© 2025 Susil. All rights reserved.</p>
-  </footer>
+<!-- Footer -->
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+<p>© 2025 Susil. All rights reserved.</p>
+</footer>
 
-  <script>
-    function copyCode(btn) {
-      const code = btn.parentElement.querySelector('code').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = 'Copied!';
-        btn.style.backgroundColor = '#16a34a';
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.style.backgroundColor = '#3b82f6';
-        }, 1500);
-      });
+<!-- Back to top -->
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+function copyCode(btn){
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';
+    btn.style.backgroundColor='#16a34a';
+    setTimeout(()=>{
+      btn.textContent='Copy';
+      btn.style.backgroundColor='#3b82f6';
+    },1500);
+  });
+}
+
+// Back to top
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', ()=>{ toTop.style.display = window.scrollY > 300 ? 'block':'none'; });
+toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// Collapsible sections
+document.querySelectorAll('.collapsible').forEach(item=>{
+  item.addEventListener('click', ()=>{
+    const content = item.nextElementSibling;
+    content.classList.toggle('content-hidden');
+  });
+});
+
+// TOC highlight
+const sections = [...document.querySelectorAll('section')];
+const tocLinks = [...document.querySelectorAll('#toc a')];
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      tocLinks.forEach(a=>a.classList.remove('active-link'));
+      const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+      active && active.classList.add('active-link');
     }
-  </script>
+  });
+},{ rootMargin:'-30% 0px -65% 0px', threshold:[0,1] });
+sections.forEach(s=>s && observer.observe(s));
+</script>
 
 </body>
 </html>

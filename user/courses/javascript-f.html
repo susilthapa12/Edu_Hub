@@ -1,62 +1,153 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JavaScript Loops</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JavaScript Loops — EduHub</title>
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Prism.js (syntax highlighting) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css">
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-clike.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-markup.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"
+          data-prismjs-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs/components/"></script>
+
   <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    iframe { border: 1px solid #ddd; width: 100%; min-height: 200px; }
-    pre { position: relative; background-color: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; }
-    code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #1e1e1e; }
-    .copy-btn {
-      position: absolute; top: 8px; right: 8px;
-      background: #2563eb; color: white; padding: 2px 6px; 
-      font-size: 0.75rem; border-radius: 4px; cursor: pointer;
+    :root{
+      --brand-a: #7c3aed;
+      --brand-b: #2563eb;
+      --accent: linear-gradient(90deg,#7c3aed 0%,#2563eb 50%,#06b6d4 100%);
     }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    body { font-family: Inter, 'Segoe UI', system-ui, -apple-system, sans-serif; background:#f8fafc; color:#0f172a;}
+    .brand-gradient { background: var(--accent); }
+    pre { position: relative; padding: 1rem; border-radius: .6rem; overflow-x: auto; box-shadow: 0 8px 24px rgba(2,6,23,0.04); }
+    code { font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size:.95rem; }
+    .copy-btn {
+      position: absolute; top: .6rem; right: .6rem;
+      font-size: .75rem; padding:.25rem .5rem; border-radius:.375rem;
+      background: var(--brand-b); color:#fff; border: none; cursor:pointer;
+      transition: transform .12s ease, background-color .12s ease;
+    }
+    .copy-btn:active { transform: translateY(1px); }
+    .lesson-card { background: #fff; border:1px solid rgba(37,99,235,0.06); border-left: 6px solid transparent; padding:1rem; border-radius:.75rem; transition: all .28s ease; }
+    .lesson-card[data-accent="purple"]{ border-left-color:#7c3aed; }
+    .lesson-card[data-accent="blue"]{ border-left-color:#2563eb; }
+    .lesson-card[data-accent="teal"]{ border-left-color:#06b6d4; }
+    .fade-in { transform: translateY(8px); opacity: 0; transition: all .45s cubic-bezier(.2,.9,.3,1); }
+    .fade-in.visible { transform: translateY(0); opacity: 1; }
+    .hidden-card { opacity: 0; transform: scale(.995); max-height: 0; padding: 0 !important; margin: 0 !important; overflow: hidden; pointer-events: none; transition: all .28s ease; }
+    .toc-sticky { position: sticky; top: 5.5rem; max-height: calc(100vh - 6rem); overflow:auto; }
+    .active-link { color: var(--brand-b); font-weight: 700; }
+    .kbd { border:1px solid #e6edf3; border-bottom-width:2px; padding:.125rem .375rem; border-radius:.375rem; font-size:.75rem;}
+    [x-cloak]{ display:none !important; }
+    @media print { .no-print { display:none !important; } }
   </style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+
+<body class="min-h-screen flex flex-col">
+
+  <!-- Skip link -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 bg-white text-slate-900 px-3 py-2 rounded shadow font-semibold">Skip to content</a>
+
+  <!-- Screen-reader announcer -->
+  <div id="a11y-announcer" aria-live="polite" class="sr-only" role="status"></div>
 
   <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+  <header class="brand-gradient text-white sticky top-0 z-40 no-print">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center text-2xl">📘</div>
+        <div class="text-lg lg:text-2xl font-extrabold tracking-tight">EduHub</div>
+      </a>
+      <div class="hidden sm:flex items-center gap-3 ml-3">
+        <span class="text-white/90">/ JavaScript — Loops</span>
+      </div>
+
+      <div class="ml-auto flex items-center gap-2">
+        <div class="relative">
+          <input id="filterInput" aria-label="Filter topics" placeholder="Filter topics (press /)" type="search"
+                 class="w-44 md:w-72 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-white/60" />
+          <kbd class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 kbd">/</kbd>
+        </div>
+
+        <button id="printBtn" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-sm font-semibold no-print">Print</button>
+        <button id="tocToggle" class="lg:hidden bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg text-sm font-semibold no-print">Menu</button>
+      </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <!-- Layout -->
+  <div class="max-w-7xl mx-auto w-full px-4 py-8 grid lg:grid-cols-[260px_1fr] gap-8 flex-1">
 
-    <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="javascript-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="javascript-g.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+    <!-- Desktop TOC -->
+    <aside class="hidden lg:block">
+      <nav class="toc-sticky text-sm space-y-3 font-medium bg-white/60 p-3 rounded-lg shadow-sm" aria-label="On this page">
+        <p class="uppercase tracking-wider text-slate-600 text-xs mb-1">On this page</p>
+        <ul id="toc" class="space-y-1">
+          <li><a href="#intro" class="hover:underline">Introduction</a></li>
+          <li><a href="#for" class="hover:underline">for</a></li>
+          <li><a href="#while" class="hover:underline">while</a></li>
+          <li><a href="#do-while" class="hover:underline">do...while</a></li>
+          <li><a href="#for-of" class="hover:underline">for...of</a></li>
+          <li><a href="#for-in" class="hover:underline">for...in</a></li>
+        </ul>
 
-    <!-- Intro -->
-    <section id="intro">
-      <h1 class="text-3xl font-bold mb-2">JavaScript Loops</h1>
-      <p>
-        Loops let you run the same block of code multiple times.  
-        Instead of writing code again and again, you use a loop to repeat it automatically.
-      </p>
-    </section>
+        <hr class="my-3 border-slate-200" />
+        <div class="text-xs text-slate-600 space-y-1">
+          <div><span class="kbd">/</span> Focus search</div>
+          <div><span class="kbd">g</span> Go to top</div>
+        </div>
+      </nav>
+    </aside>
 
-    <!-- for Loop -->
-    <section id="for">
-      <h2 class="text-2xl font-bold mb-2">The for Loop</h2>
-      <p>
-        The <code>for</code> loop is used when you know how many times you want to run the code.
-      </p>
-      <pre><code>&lt;!DOCTYPE html&gt;
+    <!-- Mobile Drawer -->
+    <div id="mobileDrawer" class="fixed inset-0 z-50 hidden lg:hidden" aria-hidden="true">
+      <div id="drawerBackdrop" class="absolute inset-0 bg-black/45" onclick="toggleDrawer()"></div>
+      <div class="relative bg-white w-72 h-full p-4 shadow-xl">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-semibold">On this page</h3>
+          <button onclick="toggleDrawer()" class="text-slate-600">Close</button>
+        </div>
+        <nav class="flex flex-col gap-2 text-sm">
+          <a href="#intro" onclick="toggleDrawer()" class="hover:text-blue-600">Introduction</a>
+          <a href="#for" onclick="toggleDrawer()" class="hover:text-blue-600">for</a>
+          <a href="#while" onclick="toggleDrawer()" class="hover:text-blue-600">while</a>
+          <a href="#do-while" onclick="toggleDrawer()" class="hover:text-blue-600">do...while</a>
+          <a href="#for-of" onclick="toggleDrawer()" class="hover:text-blue-600">for...of</a>
+          <a href="#for-in" onclick="toggleDrawer()" class="hover:text-blue-600">for...in</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Main -->
+    <main id="main" class="space-y-8">
+
+      <!-- Top nav -->
+      <nav class="flex justify-between items-center">
+        <a href="javascript-e.html" class="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-sm border">◀ Previous</a>
+        <a href="javascript-g.html" class="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-sm border">Next ▶</a>
+      </nav>
+
+      <!-- Intro -->
+      <article id="intro" class="lesson-card fade-in visible" data-accent="purple" data-tags="loops iteration for while do while">
+        <h1 class="text-2xl font-extrabold mb-2">JavaScript Loops</h1>
+        <p class="text-slate-700">Loops let you run the same block of code multiple times. Instead of repeating code, use loops to repeat it automatically.</p>
+      </article>
+
+      <!-- for -->
+      <article id="for" class="lesson-card fade-in" data-accent="blue" data-tags="for loop example">
+        <div class="flex items-start justify-between">
+          <h2 class="text-xl font-semibold">The <code>for</code> Loop</h2>
+          <span class="text-sm text-slate-500">use when iterations known</span>
+        </div>
+
+        <div class="mt-3 relative">
+          <pre aria-label="Code: for loop"><button class="copy-btn" data-copy>Copy</button><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;body&gt;
   &lt;p id="demo"&gt;&lt;/p&gt;
@@ -68,101 +159,237 @@
     document.getElementById("demo").innerHTML = text;
   &lt;/script&gt;
 &lt;/body&gt;
-&lt;/html&gt;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-      <button onclick="runCode('example1')" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Try It Yourself</button>
-      <iframe id="example1"></iframe>
-    </section>
+&lt;/html&gt;</code></pre>
 
-    <!-- while Loop -->
-    <section id="while">
-      <h2 class="text-2xl font-bold mb-2">The while Loop</h2>
-      <p>
-        The <code>while</code> loop runs as long as the condition is true.
-      </p>
-      <pre><code>let i = 1;
+          <div class="mt-3 flex items-center gap-3">
+            <button data-run="example1" class="bg-gradient-to-r from-indigo-500 to-cyan-400 text-white px-4 py-2 rounded shadow-sm">Try It Yourself</button>
+          </div>
+
+          <iframe id="example1" class="w-full mt-4 rounded-lg border" style="min-height:200px;"></iframe>
+        </div>
+      </article>
+
+      <!-- while -->
+      <article id="while" class="lesson-card fade-in" data-accent="teal" data-tags="while loop">
+        <h2 class="text-xl font-semibold">The <code>while</code> Loop</h2>
+        <p class="text-slate-700 mt-1">Runs while the condition is true.</p>
+
+        <div class="mt-3 relative">
+          <pre aria-label="Code: while loop"><button class="copy-btn" data-copy>Copy</button><code class="language-js">let i = 1;
 while (i &lt;= 5) {
   document.write("Number " + i + "&lt;br&gt;");
   i++;
-}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+}</code></pre>
 
-    <!-- do...while Loop -->
-    <section id="do-while">
-      <h2 class="text-2xl font-bold mb-2">The do...while Loop</h2>
-      <p>
-        The <code>do...while</code> loop runs the code at least once,  
-        even if the condition is false.
-      </p>
-      <pre><code>let j = 6;
+          <div class="mt-3">
+            <button data-run="example2" class="bg-gradient-to-r from-emerald-500 to-teal-400 text-white px-4 py-2 rounded shadow-sm">Try It Yourself</button>
+          </div>
+
+          <iframe id="example2" class="w-full mt-4 rounded-lg border" style="min-height:200px;"></iframe>
+        </div>
+      </article>
+
+      <!-- do-while -->
+      <article id="do-while" class="lesson-card fade-in" data-accent="purple" data-tags="do while loop">
+        <h2 class="text-xl font-semibold">The <code>do...while</code> Loop</h2>
+        <p class="text-slate-700 mt-1">Runs the block at least once, then repeats while condition is true.</p>
+
+        <div class="mt-3 relative">
+          <pre aria-label="Code: do while"><button class="copy-btn" data-copy>Copy</button><code class="language-js">let j = 6;
 do {
   document.write("Number is " + j + "&lt;br&gt;");
   j++;
-} while (j &lt;= 5);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+} while (j &lt;= 5);</code></pre>
 
-    <!-- for...of Loop -->
-    <section id="for-of">
-      <h2 class="text-2xl font-bold mb-2">The for...of Loop</h2>
-      <p>
-        The <code>for...of</code> loop is used to loop through arrays, strings, or lists.
-      </p>
-      <pre><code>let colors = ["Red", "Green", "Blue"];
+          <div class="mt-3">
+            <button data-run="example3" class="bg-gradient-to-r from-indigo-500 to-cyan-400 text-white px-4 py-2 rounded shadow-sm">Try It Yourself</button>
+          </div>
+
+          <iframe id="example3" class="w-full mt-4 rounded-lg border" style="min-height:200px;"></iframe>
+        </div>
+      </article>
+
+      <!-- for-of -->
+      <article id="for-of" class="lesson-card fade-in" data-accent="blue" data-tags="for of loop arrays">
+        <h2 class="text-xl font-semibold">The <code>for...of</code> Loop</h2>
+        <p class="text-slate-700 mt-1">Used to iterate arrays, strings and other iterable objects.</p>
+
+        <div class="mt-3 relative">
+          <pre aria-label="Code: for of"><button class="copy-btn" data-copy>Copy</button><code class="language-js">let colors = ["Red", "Green", "Blue"];
 for (let c of colors) {
   document.write(c + "&lt;br&gt;");
-}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+}</code></pre>
 
-    <!-- for...in Loop -->
-    <section id="for-in">
-      <h2 class="text-2xl font-bold mb-2">The for...in Loop</h2>
-      <p>
-        The <code>for...in</code> loop is used to loop through object properties.
-      </p>
-      <pre><code>let person = {name: "John", age: 25, city: "New York"};
+          <div class="mt-3">
+            <button data-run="example4" class="bg-gradient-to-r from-indigo-500 to-cyan-400 text-white px-4 py-2 rounded shadow-sm">Try It Yourself</button>
+          </div>
+
+          <iframe id="example4" class="w-full mt-4 rounded-lg border" style="min-height:200px;"></iframe>
+        </div>
+      </article>
+
+      <!-- for-in -->
+      <article id="for-in" class="lesson-card fade-in" data-accent="teal" data-tags="for in loop objects">
+        <h2 class="text-xl font-semibold">The <code>for...in</code> Loop</h2>
+        <p class="text-slate-700 mt-1">Used to iterate over object properties.</p>
+
+        <div class="mt-3 relative">
+          <pre aria-label="Code: for in"><button class="copy-btn" data-copy>Copy</button><code class="language-js">let person = {name: "John", age: 25, city: "New York"};
 for (let key in person) {
   document.write(key + ": " + person[key] + "&lt;br&gt;");
-}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-    </section>
+}</code></pre>
 
-    <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="javascript-e.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="javascript-g.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
-    </nav>
+          <div class="mt-3">
+            <button data-run="example5" class="bg-gradient-to-r from-indigo-500 to-cyan-400 text-white px-4 py-2 rounded shadow-sm">Try It Yourself</button>
+          </div>
 
-  </main>
+          <iframe id="example5" class="w-full mt-4 rounded-lg border" style="min-height:200px;"></iframe>
+        </div>
+      </article>
+
+      <!-- bottom nav -->
+      <nav class="flex justify-between items-center">
+        <a href="javascript-e.html" class="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-sm border">◀ Previous</a>
+        <a href="javascript-g.html" class="bg-white text-slate-900 px-4 py-2 rounded-lg shadow-sm border">Next ▶</a>
+      </nav>
+
+    </main>
+  </div>
 
   <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-    <p>© 2025 Susil. All rights reserved.</p>
+  <footer class="bg-white border-t mt-8">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-center text-sm text-slate-600">
+      © 2025 Susil. All rights reserved.
+    </div>
   </footer>
 
-  <!-- Script -->
+  <!-- Back to top -->
+  <button id="toTop" class="fixed bottom-6 right-6 hidden rounded-full p-3 shadow-lg bg-white text-slate-900 no-print" aria-label="Back to top">↑</button>
+
   <script>
-    function runCode(id) {
-      const iframe = document.getElementById(id);
-      const code = iframe.previousElementSibling.previousElementSibling.innerText;
-      iframe.srcdoc = code;
+    // a11y announcer
+    const announcer = document.getElementById('a11y-announcer');
+    function announce(msg){ announcer.textContent = msg; }
+
+    // highlight
+    document.addEventListener('DOMContentLoaded', () => Prism.highlightAll());
+
+    // decode html entities (so "&lt;div&gt;" becomes "<div>")
+    function decodeHtmlEntities(s){
+      const txt = document.createElement('textarea');
+      txt.innerHTML = s;
+      return txt.value;
+    }
+
+    // copy buttons (delegated)
+    document.addEventListener('click', async (e) => {
+      const copyBtn = e.target.closest('[data-copy]');
+      if(copyBtn){
+        const pre = copyBtn.closest('pre') || copyBtn.parentElement;
+        const codeEl = pre.querySelector('code');
+        if(!codeEl) return;
+        const text = codeEl.innerText;
+        try {
+          await navigator.clipboard.writeText(text);
+          const original = copyBtn.innerText;
+          copyBtn.textContent = 'Copied!';
+          copyBtn.style.backgroundColor = '#16a34a';
+          announce('Code copied to clipboard');
+          setTimeout(()=>{ copyBtn.textContent = original; copyBtn.style.backgroundColor = ''; }, 1400);
+        } catch(err){
+          announce('Unable to copy code');
+        }
+      }
+    });
+
+    // run snippet in iframe (find prior PRE/ CODE)
+    function runSnippetForId(iframeId){
+      const iframe = document.getElementById(iframeId);
+      if(!iframe) return;
+      let el = iframe.previousElementSibling;
+      while(el && !(el.tagName === 'PRE' || (el.querySelector && el.querySelector('code')))) el = el.previousElementSibling;
+      let codeEl = el ? (el.querySelector('code') || (el.tagName === 'CODE' ? el : null)) : null;
+
+      // fallback scan
+      if(!codeEl){
+        const pres = [...document.querySelectorAll('pre')];
+        for(const p of pres){
+          if(p.nextElementSibling === iframe || p.nextElementSibling?.contains(iframe)){ codeEl = p.querySelector('code'); break; }
+        }
+      }
+      if(!codeEl) return;
+      const raw = codeEl.innerText;
+      const html = decodeHtmlEntities(raw);
+      iframe.srcdoc = html;
       iframe.onload = () => {
-        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 40 + 'px';
+        try { iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 40 + 'px'; } catch(e){}
       };
     }
-    function copyCode(btn) {
-      const code = btn.parentElement.querySelector('code').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = 'Copied!';
-        btn.style.backgroundColor = '#16a34a';
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.style.backgroundColor = '#2563eb';
-        }, 1500);
-      });
-    }
-  </script>
 
+    // wire run buttons
+    document.querySelectorAll('[data-run]').forEach(btn => {
+      btn.addEventListener('click', () => runSnippetForId(btn.getAttribute('data-run')));
+    });
+
+    // filter input
+    const filterInput = document.getElementById('filterInput');
+    const cards = [...document.querySelectorAll('.lesson-card')];
+    filterInput.addEventListener('input', () => {
+      const q = filterInput.value.trim().toLowerCase();
+      cards.forEach(card => {
+        const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+        const text = card.innerText.toLowerCase();
+        const match = !q || tags.includes(q) || text.includes(q);
+        if(match){
+          card.classList.remove('hidden-card');
+          requestAnimationFrame(()=> card.classList.add('visible'));
+        } else {
+          card.classList.add('hidden-card');
+        }
+      });
+    });
+
+    // keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if(e.key === '/'){ e.preventDefault(); filterInput.focus(); }
+      if(e.key.toLowerCase() === 'g'){ window.scrollTo({top:0, behavior:'smooth'}); }
+      if(e.key === 'Escape' && !document.getElementById('mobileDrawer').classList.contains('hidden')) toggleDrawer();
+    });
+
+    // scrollspy
+    const sectionIds = ['intro','for','while','do-while','for-of','for-in'];
+    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+    const tocLinks = [...document.querySelectorAll('#toc a')];
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          tocLinks.forEach(a => a.classList.remove('active-link'));
+          const link = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+          if(link) link.classList.add('active-link');
+        }
+      });
+    }, { rootMargin: '-30% 0px -55% 0px', threshold: [0, 0.6] });
+    sections.forEach(s => s && observer.observe(s));
+
+    // back-to-top
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => { toTop.style.display = window.scrollY > 300 ? 'block' : 'none'; });
+    toTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+    // print
+    document.getElementById('printBtn').addEventListener('click', ()=> window.print());
+
+    // mobile drawer toggle
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    function toggleDrawer(){ mobileDrawer.classList.toggle('hidden'); }
+    document.getElementById('tocToggle').addEventListener('click', toggleDrawer);
+    window.toggleDrawer = toggleDrawer;
+
+    // initial reveal
+    document.querySelectorAll('.fade-in').forEach((el,i) => setTimeout(()=> el.classList.add('visible'), 80 * i));
+
+    // expose run for debugging
+    window.runSnippetForId = runSnippetForId;
+  </script>
 </body>
 </html>

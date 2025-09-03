@@ -1,60 +1,84 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>React Introduction</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    a { text-decoration: none; }
-    a:hover { text-decoration: underline; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React Introduction</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Segoe UI', sans-serif; background:#fdfdfd; }
+.container { padding-left:3rem; padding-right:3rem; }
+@media (max-width:768px){ .container{ padding-left:1rem; padding-right:1rem; } }
+pre { background:#1e1e2f; color:white; padding:1rem; border-radius:0.5rem; overflow-x:auto; position:relative; font-family:'Fira Code', monospace; }
+.copy-btn { position:absolute; top:0.5rem; right:0.5rem; background:#3b82f6; color:white; padding:0.25rem 0.5rem; border-radius:0.375rem; font-size:0.75rem; cursor:pointer; }
+.keyword { color:#f97316; font-weight:600; }
+.component { color:#10b981; }
+.value { color:#facc15; }
+.comment { color:#6b7280; font-style:italic; }
+#toTop { display:none; position:fixed; bottom:1.5rem; right:1.5rem; background:#3b82f6; color:white; font-weight:bold; border-radius:9999px; padding:0.5rem 0.75rem; cursor:pointer; z-index:50; }
+.toc-sticky { position:sticky; top:5.5rem; max-height:calc(100vh-6rem); overflow:auto; padding:0.5rem; background:#f1f5f9; border-radius:0.5rem; }
+.active-link { color:#3b82f6; font-weight:700; }
+.collapsible { cursor:pointer; user-select:none; font-weight:600; color:#1d4ed8; }
+.content-hidden { display:none; }
+</style>
 </head>
-<body class="flex flex-col bg-white text-gray-900 min-h-screen">
+<body class="flex flex-col min-h-screen">
 
-  <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-      <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
-    </div>
-  </header>
+<!-- Header -->
+<header class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+  <div class="container flex items-center justify-between py-4">
+    <a href="index.html" class="text-3xl font-extrabold tracking-wide">EduHub</a>
+    <span class="hidden md:block text-lg font-medium">React Introduction</span>
+  </div>
+</header>
+
+<div class="container grid lg:grid-cols-[220px_1fr] gap-8 py-8 flex-1">
+
+  <!-- TOC -->
+  <aside class="hidden lg:block">
+    <nav class="toc-sticky text-sm font-medium">
+      <p class="uppercase text-gray-700 text-xs mb-2">Contents</p>
+      <ul id="toc" class="space-y-1">
+        <li><a href="#intro">What is React?</a></li>
+        <li><a href="#how-react-works">How React Works</a></li>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#history">React History</a></li>
+        <li><a href="#why-learn">Why Learn React?</a></li>
+        <li><a href="#code-example">Example Code</a></li>
+      </ul>
+    </nav>
+  </aside>
 
   <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-12 max-w-6xl mx-auto mt-8">
+  <main class="space-y-12">
 
     <!-- Navigation Top -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="react-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
+    <nav class="flex justify-between mb-6">
+      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="react-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
     </nav>
 
     <!-- Intro -->
-    <section id="intro">
-      <h1 class="text-3xl font-bold mb-2">What is React?</h1>
+    <section id="intro" class="scroll-mt-24">
+      <h1 class="text-3xl font-bold mb-2 text-purple-600">What is React?</h1>
       <p>React is a front-end JavaScript library used to build interactive user interfaces.</p>
-      <p>React was developed by Facebook Software Engineer <strong>Jordan Walke</strong>.</p>
-      <p>It is also known as <strong>React.js</strong> or <strong>ReactJS</strong> and is used to create reusable UI components.</p>
+      <p>Developed by Facebook Software Engineer <strong>Jordan Walke</strong>, React enables creation of reusable UI components.</p>
     </section>
 
     <!-- How React Works -->
-    <section id="how-react-works">
-      <h2 class="text-2xl font-bold mb-2">How does React Work?</h2>
-      <p>React uses a <strong>Virtual DOM</strong> in memory to manage updates efficiently.</p>
+    <section id="how-react-works" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-2 text-green-600">How does React Work?</h2>
+      <p>React uses a <strong>Virtual DOM</strong> in memory to efficiently manage updates:</p>
       <ul class="list-disc ml-6 space-y-2">
-        <li>React finds out what changes have been made.</li>
-        <li>Only the affected parts of the UI are updated.</li>
-        <li>This improves performance and ensures predictable UI updates.</li>
+        <li>Detects which parts of the UI have changed</li>
+        <li>Updates only affected parts</li>
+        <li>Improves performance and predictability</li>
       </ul>
     </section>
 
     <!-- Prerequisites -->
-    <section id="prerequisites">
-      <h2 class="text-2xl font-bold mb-2">What You Should Already Know</h2>
+    <section id="prerequisites" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-2 text-blue-600">Prerequisites</h2>
       <ul class="list-disc ml-6 space-y-2">
         <li>HTML</li>
         <li>CSS</li>
@@ -63,40 +87,115 @@
     </section>
 
     <!-- React History -->
-    <section id="history">
-      <h2 class="text-2xl font-bold mb-2">React History</h2>
-      <p>The latest version of React.JS is <strong>19.0.0</strong> (December 2024).</p>
-      <p>Initial public release was <strong>0.3.0</strong> in July 2013. First used internally in Facebook's Newsfeed (2011).</p>
-      <p>Created by Facebook Software Engineer <strong>Jordan Walke</strong>.</p>
+    <section id="history" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-2 text-orange-600">React History</h2>
+      <p>Latest version: <strong>19.0.0</strong> (Dec 2024)</p>
+      <p>Initial release: <strong>0.3.0</strong> (July 2013)</p>
     </section>
 
     <!-- Why Learn React -->
-    <section id="why-learn">
-      <h2 class="text-2xl font-bold mb-2">Why Learn React?</h2>
+    <section id="why-learn" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-2 text-red-600">Why Learn React?</h2>
       <ul class="list-disc ml-6 space-y-2">
         <li>Reusable UI components</li>
-        <li>Fast rendering with Virtual DOM</li>
+        <li>Fast rendering via Virtual DOM</li>
         <li>Strong community support</li>
-        <li>Integration with modern tools like Redux and Next.js</li>
+        <li>Integrates with Redux, Next.js, and more</li>
       </ul>
     </section>
 
+    <!-- Example Code -->
+    <section id="code-example" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-2 text-purple-600">Example: Simple React Component</h2>
+      <pre><code><span class="keyword">import</span> React <span class="keyword">from</span> '<span class="value">react</span>';
+
+<span class="keyword">function</span> <span class="component">Greeting</span>() {
+  <span class="keyword">return</span> (
+    &lt;h1&gt;Hello, World!&lt;/h1&gt;
+  );
+}
+
+<span class="keyword">export default</span> <span class="component">Greeting</span>;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    </section>
+
+    <!-- Collapsible Advanced -->
+    <section class="scroll-mt-24">
+      <p class="mt-2 collapsible bg-yellow-100 px-2 py-1 rounded">Click for Advanced React Hooks Example</p>
+      <div class="content-hidden mt-2 bg-gray-50 p-4 rounded shadow">
+        <pre><code><span class="keyword">import</span> React, { <span class="component">useState</span> } <span class="keyword">from</span> '<span class="value">react</span>';
+
+<span class="keyword">function</span> <span class="component">Counter</span>() {
+  const [count, setCount] = <span class="keyword">useState</span>(0);
+  <span class="keyword">return</span> (
+    &lt;div&gt;
+      &lt;h1&gt;Count: {count}&lt;/h1&gt;
+      &lt;button onClick={() => setCount(count+1)}&gt;Increment&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+<span class="keyword">export default</span> <span class="component">Counter</span>;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+      </div>
+    </section>
+
     <!-- Navigation Bottom -->
-    <nav class="flex justify-between my-6" aria-label="Course navigation">
-      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        ◀ Previous
-      </a>
-      <a href="react-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">
-        Next ▶
-      </a>
+    <nav class="flex justify-between my-6">
+      <a href="courses.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">◀ Previous</a>
+      <a href="react-a.html" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600 transition">Next ▶</a>
     </nav>
 
   </main>
+</div>
 
-  <!-- Footer -->
-  <footer class="bg-blue-700 text-white py-6 mt-auto text-center">
-    <p>© 2025 Susil. All rights reserved.</p>
-  </footer>
+<!-- Footer -->
+<footer class="bg-blue-700 text-white py-6 mt-auto text-center">
+  <p>© 2025 Susil. All rights reserved.</p>
+</footer>
+
+<!-- Back to top -->
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+// Copy code functionality
+function copyCode(btn){
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';
+    btn.style.backgroundColor='#16a34a';
+    setTimeout(()=>{
+      btn.textContent='Copy';
+      btn.style.backgroundColor='#3b82f6';
+    },1500);
+  });
+}
+
+// Back to top
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', ()=>{ toTop.style.display = window.scrollY > 300 ? 'block':'none'; });
+toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// Collapsible sections
+document.querySelectorAll('.collapsible').forEach(item=>{
+  item.addEventListener('click', ()=>{
+    const content = item.nextElementSibling;
+    content.classList.toggle('content-hidden');
+  });
+});
+
+// TOC highlight
+const sections = [...document.querySelectorAll('section')];
+const tocLinks = [...document.querySelectorAll('#toc a')];
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      tocLinks.forEach(a=>a.classList.remove('active-link'));
+      const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+      active && active.classList.add('active-link');
+    }
+  });
+},{ rootMargin:'-30% 0px -65% 0px', threshold:[0,1] });
+sections.forEach(s=>s && observer.observe(s));
+</script>
 
 </body>
 </html>
