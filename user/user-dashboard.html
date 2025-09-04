@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en" x-data="dashboard()" x-init="init()" :class="dark ? 'dark' : ''" class="antialiased">
 <head>
   <meta charset="utf-8" />
@@ -70,7 +70,8 @@
     <!-- Sidebar -->
     <aside class="lg:col-span-3 relative z-30">
       <nav class="space-y-3">
-        <a href="./courses.html" class="flex items-center gap-3 p-4 rounded-xl bg-purple-800/70 hover:bg-purple-700 transition glass shadow-md">📖 <span>Courses</span></a>
+        <!-- FIXED PATHS -->
+        <a href="./courses/courses.html" class="flex items-center gap-3 p-4 rounded-xl bg-purple-800/70 hover:bg-purple-700 transition glass shadow-md">📖 <span>Courses</span></a>
         <a href="./exams.html" class="flex items-center gap-3 p-4 rounded-xl bg-purple-800/70 hover:bg-purple-700 transition glass shadow-md">🧪 <span>Exams</span></a>
         <a href="./routine.html" class="flex items-center gap-3 p-4 rounded-xl bg-purple-800/70 hover:bg-purple-700 transition glass shadow-md">🦁 <span>Routine</span></a>
       </nav>
@@ -135,10 +136,10 @@ function dashboard() {
     },
 
     continueLearning() {
-      window.location.href = "./courses.html";
+      window.location.href = "./courses/courses.html"; // FIXED
     },
     viewUpcomingExams() {
-      window.location.href = "./exams.html";
+      window.location.href = "./exams.html"; // FIXED
     },
 
     logout() {
