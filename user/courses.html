@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" x-data="courseDashboard()" x-init="init()" :class="darkMode ? 'dark' : ''">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Learning Dashboard</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e40af',    /* Blue */
+            secondary: '#2563eb',  /* Lighter Blue */
+            accent: '#22c55e',
+            amberCustom: '#f59e0b',
+          },
+          fontFamily: {
+            body: ['Segoe UI', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    /* Scrollbar styling */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.3); border-radius: 10px; }
+
+    /* Smooth progress animation */
+    .progress-bar { transition: width 1.2s ease-in-out; }
+
+    /* Base body style */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #1e40afff, #2563ebff);
+      color: #fff;
+      min-height: 100vh;
+      margin: 0;
+      padding: 1.5rem;
+      transition: background-color 0.4s ease;
+    }
+
+    /* Dark mode override */
+    .dark body {
+      background: #1a1a1a;
+      color: #e0e0e0;
+    }
+
+    /* Back button */
+    .back-btn {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      background: #22c55e;
+      color: white;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .back-btn:hover {
+      background: #16a34a;
+    }
+  </style>
+</head>
+
+<body class="transition-colors duration-300">
+  <main class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <header class="sticky top-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md z-20 rounded-xl px-6 py-4 mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <h1 class="text-4xl font-extrabold text-primary dark:text-accent select-none">
+        My Learning Dashboard
+      </h1>
+
+      <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
+        <!-- Search -->
+        <input
+          x-model.debounce.300ms="search"
+          type="search"
+          placeholder="Search courses..."
+          class="w-full sm:w-64 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent dark:text-gray-900"
+          aria-label="Search courses"
+        />
+
+        <!-- Sort -->
+        <select
+          x-model="sortBy"
+          class="rounded-lg px-3 py-3 bg-white dark:bg-gray-300 text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-accent"
+          aria-label="Sort courses"
+        >
+          <option value="default">Sort: Default</option>
+          <option value="progressDesc">Progress (High to Low)</option>
+          <option value="progressAsc">Progress (Low to High)</option>
+          <option value="titleAsc">Title (A - Z)</option>
+          <option value="titleDesc">Title (Z - A)</option>
+        </select>
+
+        <!-- Dark mode toggle -->
+        <button
+          @click="toggleDarkMode()"
+          class="rounded-lg px-3 py-3 bg-primary dark:bg-accent text-white dark:text-primary font-semibold focus:outline-none focus:ring-2 focus:ring-accent"
+          type="button"
+        >
+          <template x-if="darkMode">🌙 Dark</template>
+          <template x-if="!darkMode">☀️ Light</template>
+        </button>
+      </div>
+    </header>
+
+    <!-- Courses Grid -->
+    <section aria-label="Courses List" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <template x-for="course in sortedFilteredCourses()" :key="course.id">
+        <article tabindex="0"
+          class="bg-gray-900/90 rounded-xl p-6 shadow-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-accent transition-shadow flex flex-col"
+        >
+          <h2 class="text-xl font-semibold mb-2 text-amber-400" x-text="course.title"></h2>
+          <p class="flex-1 mb-4 text-gray-300" x-text="course.description"></p>
+
+          <div class="mb-4" aria-label="Course progress">
+            <div class="w-full bg-gray-700 rounded h-3 overflow-hidden">
+              <div class="bg-accent h-3 progress-bar" :style="`width: ${course.progress}%`"></div>
+            </div>
+            <p class="mt-1 text-accent font-semibold text-sm" x-text="course.progress + '%'"></p>
+          </div>
+
+          <a :href="course.link" target="_blank"
+             class="inline-block px-5 py-2 text-sm font-semibold text-white bg-accent rounded hover:bg-green-600 focus:ring-2 focus:ring-accent focus:outline-none transition-colors text-center">
+            Continue Learning
+          </a>
+        </article>
+      </template>
+
+      <!-- Empty state -->
+      <template x-if="sortedFilteredCourses().length === 0">
+        <div class="col-span-full flex flex-col items-center text-gray-300 mt-10 select-none">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 64 64" stroke="currentColor"
+               class="w-20 h-20 mb-4 opacity-50" aria-hidden="true">
+            <circle cx="32" cy="32" r="30" stroke-width="2" />
+            <line x1="20" y1="20" x2="44" y2="44" stroke-width="2" stroke-linecap="round" />
+            <line x1="44" y1="20" x2="20" y2="44" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <p class="text-lg">No courses match your search.</p>
+        </div>
+      </template>
+    </section>
+
+    <!-- Back Button -->
+    <div class="mt-12 text-center">
+      <a href="../user-dashboard.html" class="back-btn">← Back to Dashboard</a>
+    </div>
+  </main>
+
+  <!-- Alpine.js Component Script -->
+  <script>
+    function courseDashboard() {
+      return {
+        darkMode: false,
+        search: '',
+        sortBy: 'default',
+        courses: [
+          { id: 1, title: 'HTML', description: 'Structure web pages with semantic HTML elements.', progress: 85, link: 'html-course.html' },
+          { id: 2, title: 'CSS', description: 'Design responsive websites with Flexbox, Grid, and styling.', progress: 70, link: 'css-course.html' },
+          { id: 3, title: 'JavaScript', description: 'Make web pages interactive using ES6 and DOM logic.', progress: 60, link: 'javascript-course.html' },
+          { id: 4, title: 'Python', description: 'Automate tasks and build apps with Python fundamentals.', progress: 55, link: 'python-course.html' },
+          { id: 5, title: 'PHP', description: 'Handle dynamic server-side logic and user interactions.', progress: 45, link: 'php-course.html' },
+          { id: 6, title: 'C', description: 'Understand memory, pointers, and low-level program logic.', progress: 40, link: 'c-course.html' },
+          { id: 7, title: 'React', description: 'Build component-based UIs and manage frontend state.', progress: 35, link: 'react-course.html' },
+          { id: 8, title: 'Angular', description: 'Develop scalable apps using services, components & routing.', progress: 30, link: 'angular-course.html' },
+          { id: 9, title: 'SQL', description: 'Manage structured data with queries, joins, and filters.', progress: 75, link: 'sql-course.html' },
+          { id: 10, title: 'MySQL', description: 'Work with relational schemas, keys, and performance tuning.', progress: 50, link: 'mysql-course.html' },
+          { id: 11, title: 'Node.js', description: 'Build backend APIs using Express and async handling.', progress: 25, link: 'nodejs-course.html' },
+          { id: 12, title: 'NumPy', description: 'Use arrays and numerical operations for scientific computing.', progress: 35, link: 'numpy-course.html' },
+          { id: 13, title: 'Pandas', description: 'Analyze, clean, and transform data with DataFrames.', progress: 45, link: 'pandas-course.html' },
+          { id: 14, title: 'Django', description: 'Build secure web apps with Python’s powerful framework.', progress: 20, link: 'django-course.html' },
+          { id: 15, title: 'Git', description: 'Version control your projects and collaborate confidently.', progress: 70, link: 'git-course.html' },
+          { id: 16, title: 'Cybersecurity', description: 'Defend applications against attacks and vulnerabilities.', progress: 15, link: 'cybersecurity-course.html' },
+        ],
+        filteredCourses() {
+          const term = this.search.trim().toLowerCase();
+          return term
+            ? this.courses.filter(c =>
+                c.title.toLowerCase().includes(term) ||
+                c.description.toLowerCase().includes(term)
+              )
+            : this.courses;
+        },
+        sortedFilteredCourses() {
+          const arr = this.filteredCourses().slice();
+          switch (this.sortBy) {
+            case 'progressDesc': return arr.sort((a, b) => b.progress - a.progress);
+            case 'progressAsc':  return arr.sort((a, b) => a.progress - b.progress);
+            case 'titleAsc':     return arr.sort((a, b) => a.title.localeCompare(b.title));
+            case 'titleDesc':    return arr.sort((a, b) => b.title.localeCompare(a.title));
+            default:             return arr;
+          }
+        },
+        toggleDarkMode() {
+          this.darkMode = !this.darkMode;
+          localStorage.setItem('dashboard-darkMode', this.darkMode);
+        },
+        init() {
+          this.darkMode = localStorage.getItem('dashboard-darkMode') === 'true';
+          // Animate progress bars on page load
+          this.$nextTick(() => {
+            document.querySelectorAll('.progress-bar').forEach(bar => {
+              const w = bar.style.width;
+              bar.style.width = '0%';
+              setTimeout(() => (bar.style.width = w), 100);
+            });
+          });
+        }
+      };
+    }
+  </script>
+</body>
+</html>
